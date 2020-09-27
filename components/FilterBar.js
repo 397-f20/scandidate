@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -17,24 +18,59 @@ const categoryList = [
   "Work Authorization",
 ];
 
-const Pill = ({ category }) => {
-  return (
-    <TouchableOpacity style={styles.pill}>
-      <Text>{category}</Text>
-    </TouchableOpacity>
-  );
-};
+const GPAData = [
+  {
+    id: "0",
+    name: "No Minimum",
+  },
+  {
+    id: "1",
+    name: "1.0",
+  },
+  {
+    id: "2",
+    name: "2.0",
+  },
+  {
+    id: "3",
+    name: "3.0",
+  },
+  {
+    id: "4",
+    name: "4.0",
+  },
+];
 
 const FilterBar = () => {
-  return (
+  const [GPA, setGPA] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const GPAMenu = (
+    <Modal
+      animationType="none"
+      transparent={true}
+      style={styles.modal}
+      visible={true}
+    >
+      <Text style={{ fontSize: 20 }}>MODAL</Text>
+    </Modal>
+  );
+
+  const flatlist = (
     <FlatList
       data={categoryList}
       horizontal={true}
-      renderItem={({ item }) => <Pill category={item} />}
+      renderItem={({ item }) => (
+        <TouchableOpacity style={styles.pill}>
+          <Text>{item}</Text>
+        </TouchableOpacity>
+      )}
       showsHorizontalScrollIndicator={false}
       style={styles.container}
     />
   );
+
+  return flatlist;
 };
 
 const styles = StyleSheet.create({
@@ -42,6 +78,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     maxHeight: 40,
     width: "100%",
+  },
+  modal: {
+    backgroundColor: "#d2d2d2",
+    height: "50%",
+    position: "absolute",
+    width: "75%",
   },
   pill: {
     backgroundColor: "#d3d3d3",

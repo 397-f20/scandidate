@@ -2,8 +2,8 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 const CandidateCard = () => {
-  const name = "NAME NAME";
-  const major = "COMPUTER SCIENCE";
+  const name = "my name";
+  const major = "my major";
   return (
     <View style={styles.card}>
       <Text>{name}</Text>
