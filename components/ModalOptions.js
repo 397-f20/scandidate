@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
+        borderColor: "blue",
+        padding: 35,
         alignItems: "center",
     },
     saveButton: {
