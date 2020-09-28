@@ -46,6 +46,7 @@ const GPAData = [
 const FilterBar = ({showModal, setModalData}) => {
   const [GPA, setGPA] = useState("");
   const {colors} = useTheme();
+
   const filterPress = (item) => {
       showModal();
       setModalData(item);

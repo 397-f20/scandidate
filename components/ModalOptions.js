@@ -12,21 +12,19 @@ const ModalOptions = ({hideModal, modalVisible, modalData}) => {
     const {colors} = useTheme();
     const {modalStyle} = styles.modal;
     const GPAMenu = (
-        <Modal
-          visible={modalVisible}
-        >
-         <View style = {[styles.modal, {backgroundColor: colors.surface}]}>
-          <Text style={{ fontSize: 20 }}>{modalData}</Text>
-          <Button
-            mode="contained"
-            onPress={() => hideModal()}>
-            Save Filter
-          </Button>
-          <Button
-            mode="text"
-            onPress={() => hideModal()}>
-            Cancel
-          </Button>
+        <Modal visible={modalVisible}>
+          <View style = {[styles.modal, {backgroundColor: colors.surface}]}>
+              <Text style={{ fontSize: 20 }}>{modalData}</Text>
+              <Button
+                mode="contained"
+                onPress={() => hideModal()}>
+                Save Filter
+              </Button>
+              <Button
+                mode="text"
+                onPress={() => hideModal()}>
+                Cancel
+              </Button>
           </View>
         </Modal>
       );
