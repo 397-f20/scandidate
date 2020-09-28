@@ -1,22 +1,26 @@
 import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          component={RecruiterLandingScreen}
-          name="RecruiterLandingScreen"
-          options={{ title: "Home" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen
+                  component={RecruiterLandingScreen}
+                  name="RecruiterLandingScreen"
+                  options={{ title: "Home" }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+    </PaperProvider>
   );
 };
 

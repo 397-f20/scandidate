@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ModalOptions from './ModalOptions'
 
 const categoryList = [
   "GPA",
@@ -42,10 +41,8 @@ const GPAData = [
   },
 ];
 
-const FilterBar = () => {
+const FilterBar = ({showModal}) => {
   const [GPA, setGPA] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-
 
   const flatlist = (
     <View>
@@ -53,14 +50,13 @@ const FilterBar = () => {
       data={categoryList}
       horizontal={true}
       renderItem={({ item }) => (
-        <TouchableOpacity onPress = {() => setModalVisible(modalVisible)} style={styles.pill}>
+        <TouchableOpacity onPress = {() => showModal()} style={styles.pill}>
           <Text>{item}</Text>
         </TouchableOpacity>
       )}
       showsHorizontalScrollIndicator={false}
       style={styles.container}
     />
-    <ModalOptions setModalVisible = {setModalVisible} modalVisible = {modalVisible} />
     </View>
   );
 
@@ -72,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     maxHeight: 40,
     width: "100%",
-  }, 
+  },
   pill: {
     backgroundColor: "#d3d3d3",
     height: 30,
