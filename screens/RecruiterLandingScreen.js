@@ -34,7 +34,7 @@ const RecruiterLandingScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "flex-start",
+    alignItems: "stretch",
     flex: 1,
     justifyContent: "center",
   },
