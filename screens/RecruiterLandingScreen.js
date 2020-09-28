@@ -18,7 +18,10 @@ const RecruiterLandingScreen = () => {
             setModalData = {setModalData}
             modalData= {modalData}/>
           <Portal>
-            <ModalOptions hideModal = {hideModal} modalVisible = {modalVisible}/>
+            <ModalOptions
+                hideModal = {hideModal}
+                modalVisible = {modalVisible}
+                modalData = {modalData}/>
           </Portal>
         <ScrollView style={{ flex: 1 }}>
             <CandidateCard />

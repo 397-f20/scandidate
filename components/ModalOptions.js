@@ -8,7 +8,7 @@ import {
 import { Modal, Text, Button, useTheme } from 'react-native-paper';
 
 
-const ModalOptions = ({hideModal, modalVisible}) => {
+const ModalOptions = ({hideModal, modalVisible, modalData}) => {
     const {colors} = useTheme();
     const {modalStyle} = styles.modal;
     const GPAMenu = (
@@ -16,7 +16,7 @@ const ModalOptions = ({hideModal, modalVisible}) => {
           visible={modalVisible}
         >
          <View style = {[styles.modal, {backgroundColor: colors.surface}]}>
-          <Text style={{ fontSize: 20 }}>MODAL</Text>
+          <Text style={{ fontSize: 20 }}>{modalData}</Text>
           <Button
             mode="contained"
             onPress={() => hideModal()}>

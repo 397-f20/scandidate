@@ -46,6 +46,10 @@ const GPAData = [
 const FilterBar = ({showModal, setModalData}) => {
   const [GPA, setGPA] = useState("");
   const {colors} = useTheme();
+  const filterPress = (item) => {
+      showModal();
+      setModalData(item);
+  }
 
   const flatlist = (
     <View>
@@ -53,9 +57,9 @@ const FilterBar = ({showModal, setModalData}) => {
       data={categoryList}
       horizontal={true}
       renderItem={({ item }) => (
-        <Chip onPress = {() => showModal()} style = {styles.chip}>
-          <Text>{item}</Text>
-        </Chip>
+            <Chip onPress = {() => filterPress(item)} style = {styles.chip}>
+              <Text>{item}</Text>
+            </Chip>
       )}
       showsHorizontalScrollIndicator={false}
       style={[styles.container, {backgroundColor: colors.primary}]}

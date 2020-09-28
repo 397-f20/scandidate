@@ -1,16 +1,16 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Avatar, Card, Surface, useTheme } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import { Avatar, Card, Surface, Title, Caption, useTheme } from "react-native-paper";
 
 const CandidateCard = () => {
-  const name = "my name";
-  const major = "my major";
+  const name = "Amber Rebma";
+  const major = "Piano Performance";
   const {colors} = useTheme();
   return (
     <Card style = {styles.card}>
       <Avatar.Icon size={24} icon="account-circle" backgroundColor = {colors.accent}/>
-      <Text>{name}</Text>
-      <Text>{major}</Text>
+      <Title>{name}</Title>
+      <Caption>{major}</Caption>
     </Card>
   );
 };
