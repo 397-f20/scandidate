@@ -27,6 +27,16 @@ const RecruiterLandingScreen = () => {
             <CandidateCard />
             <CandidateCard />
             <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
+            <CandidateCard />
         </ScrollView>
     </SafeAreaView>
   );

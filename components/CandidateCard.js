@@ -25,7 +25,6 @@ const CandidateCard = () => {
 const styles = StyleSheet.create({
   card: {
     margin: 5,
-    padding: 10,
   },
 });
 
