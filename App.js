@@ -4,13 +4,25 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createStackNavigator();
 
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#8A5D3D',
+    accent: '#67BD45',
+    background: "#5A3E29",
+    surface: "#F1ECE2",
+    medium: "#307C3C"
+  },
+};
+
 const App = () => {
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
             <NavigationContainer>
               <Stack.Navigator>
                 <Stack.Screen

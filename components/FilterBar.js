@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Chip, useTheme } from "react-native-paper"
 
 const categoryList = [
   "GPA",
@@ -41,8 +42,10 @@ const GPAData = [
   },
 ];
 
-const FilterBar = ({showModal}) => {
+
+const FilterBar = ({showModal, setModalData}) => {
   const [GPA, setGPA] = useState("");
+  const {colors} = useTheme();
 
   const flatlist = (
     <View>
@@ -50,12 +53,12 @@ const FilterBar = ({showModal}) => {
       data={categoryList}
       horizontal={true}
       renderItem={({ item }) => (
-        <TouchableOpacity onPress = {() => showModal()} style={styles.pill}>
+        <Chip onPress = {() => showModal()} style = {styles.chip}>
           <Text>{item}</Text>
-        </TouchableOpacity>
+        </Chip>
       )}
       showsHorizontalScrollIndicator={false}
-      style={styles.container}
+      style={[styles.container, {backgroundColor: colors.primary}]}
     />
     </View>
   );
@@ -65,15 +68,13 @@ const FilterBar = ({showModal}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    paddingVertical: 4,
     maxHeight: 40,
     width: "100%",
   },
-  pill: {
-    backgroundColor: "#d3d3d3",
+  chip: {
     height: 30,
-    margin: 5,
-    padding: 5,
+    margin: 1,
   },
 });
 
