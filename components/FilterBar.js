@@ -8,63 +8,33 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Chip, useTheme } from "react-native-paper"
+import { Chip, useTheme } from "react-native-paper";
+import data from "../qualifications.json";
 
-const categoryList = [
-  "GPA",
-  "Major",
-  "Skills",
-  "Experience",
-  "Graduation Year",
-  "Work Authorization",
-];
+const categoryList = Object.values(data);
 
-const GPAData = [
-  {
-    id: "0",
-    name: "No Minimum",
-  },
-  {
-    id: "1",
-    name: "1.0",
-  },
-  {
-    id: "2",
-    name: "2.0",
-  },
-  {
-    id: "3",
-    name: "3.0",
-  },
-  {
-    id: "4",
-    name: "4.0",
-  },
-];
-
-
-const FilterBar = ({showModal, setModalData}) => {
+const FilterBar = ({ showModal, setModalData }) => {
   const [GPA, setGPA] = useState("");
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   const filterPress = (item) => {
-      showModal();
-      setModalData(item);
-  }
+    showModal();
+    setModalData(item);
+  };
 
   const flatlist = (
     <View>
-    <FlatList
-      data={categoryList}
-      horizontal={true}
-      renderItem={({ item }) => (
-            <Chip onPress = {() => filterPress(item)} style = {styles.chip}>
-              <Text>{item}</Text>
-            </Chip>
-      )}
-      showsHorizontalScrollIndicator={false}
-      style={[styles.container, {backgroundColor: colors.primary}]}
-    />
+      <FlatList
+        data={categoryList}
+        horizontal={true}
+        renderItem={({ item }) => (
+          <Chip onPress={() => filterPress(item)} style={styles.chip}>
+            <Text>{item.title}</Text>
+          </Chip>
+        )}
+        showsHorizontalScrollIndicator={false}
+        style={[styles.container, { backgroundColor: colors.primary }]}
+      />
     </View>
   );
 
