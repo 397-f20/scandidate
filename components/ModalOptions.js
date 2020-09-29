@@ -14,8 +14,8 @@ const ModalOptions = ({ hideModal, modalVisible, modalData }) => {
   const GPAMenu = (
     <Modal visible={modalVisible}>
       <View style={[styles.modal, { backgroundColor: colors.surface }]}>
-        <Text style={{ fontSize: 20 }}>{modalData.title}</Text>
-        <SingleSelect modalData={modalData.data} />
+        <Text style={styles.title }>{modalData.title}</Text>
+        {modalData.type == "multi-select" ?  <MultiSelect modalData={modalData.data} /> : <SingleSelect modalData={modalData.data} />}
         <Button mode="contained" onPress={() => hideModal()}>
           Save Filter
         </Button>
@@ -30,11 +30,10 @@ const ModalOptions = ({ hideModal, modalVisible, modalData }) => {
 };
 
 const SingleSelect = ({ modalData }) => {
-  const [checked, setChecked] = useState("2020");
+  const [checked, setChecked] = useState();
   const { colors } = useTheme();
-  console.log(checked);
   return (
-    <View>
+    <View style={styles.singleSelect}>
       <RadioButton.Group
         onValueChange={(checked) => setChecked(checked)}
         value={checked}
@@ -53,22 +52,51 @@ const SingleSelect = ({ modalData }) => {
   );
 };
 
+//multiselect the filters
+const MultiSelect = ({ modalData }) => {
+    const [checked, setChecked] = useState([]);
+    const { colors } = useTheme();
+    // selected.includes(course) ? selected.filter(x => x !== course) : [...selected, course]
+    return (
+      <View style={styles.singleSelect}>
+          <FlatList
+            data={modalData}
+            renderItem={({ item }) => (
+              <View style={styles.button}>
+                <RadioButton 
+                    status={ checked.includes(item.name) ? 'checked' : 'unchecked' } 
+                    onPress={() => checked.includes(item.name) ? setChecked(checked.filter(x => x !== item.name)) : setChecked([...checked, item.name])}
+                    value={item.name} />
+                <Text>{item.name}</Text>
+              </View>
+            )}
+          />
+
+      </View>
+    );
+  };
+  
+
 const styles = StyleSheet.create({
   modal: {
     margin: 20,
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
     height: "80%",
   },
   singleSelect: {
     flex: 1,
+    justifyContent: "flex-start",
   },
   button: {
     flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+
   },
+  title:{
+      alignSelf:"center",
+      fontSize: 20 ,
+  }
 });
 
 export default ModalOptions;

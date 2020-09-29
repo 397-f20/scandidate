@@ -9,11 +9,12 @@ const CandidateCard = ({studentDetailedView}) => {
   const avatar = props => <Avatar.Icon {...props} icon="account-circle"
       backgroundColor = {colors.accent}
   />
-
+  
+  const id = 100;
   // added on press event handler
   return (
     <Card style = {styles.card} 
-        onPress={() => studentDetailedView(name)}> 
+        onPress={() => studentDetailedView(id)}> 
       <Card.Title
         title={name}
         subtitle={major}

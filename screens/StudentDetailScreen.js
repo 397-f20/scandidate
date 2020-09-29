@@ -1,9 +1,12 @@
 import React, {useContext, useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 
 //retrive student's details 
-import LoadLocalData from "../components/LoadLocalData";
-console.log(LoadLocalData.getStudent);
+//load local .json dummy data and fetch the candidate infos
+// import * as localData from '../dummydata.json';
+// const students = localData.students;
+import students  from "../components/LoadLocalData";
+// const students = LoadLocalData.students;
 
 const Field = ({label, value}) => {
   return (
@@ -20,7 +23,9 @@ const StudentDetailScreen = ({route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Field label="Name" value={studentInfo} />
+        <Field label="ID" value={studentInfo} />
+        <Field label="Name" value={students[studentInfo].name} />
+        <Field label="Resume Link" value={students[studentInfo].resume_link} />
       </ScrollView>
     </SafeAreaView>
   );
