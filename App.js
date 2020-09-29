@@ -1,4 +1,7 @@
+import 'react-native-gesture-handler';
 import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
+import StudentDetailScreen from "./screens/StudentDetailScreen";
+
 import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
@@ -24,11 +27,15 @@ const App = () => {
   return (
     <PaperProvider theme={theme}>
             <NavigationContainer>
-              <Stack.Navigator>
+            <Stack.Navigator>
                 <Stack.Screen
                   component={RecruiterLandingScreen}
                   name="RecruiterLandingScreen"
                   options={{ title: "Home" }}
+                />
+                <Stack.Screen name="StudentDetailScreen"
+                    component={StudentDetailScreen}
+                    options={{ title: 'Student detail'}} 
                 />
               </Stack.Navigator>
             </NavigationContainer>

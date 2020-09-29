@@ -2,15 +2,22 @@ import CandidateCard from "../components/CandidateCard";
 import FilterBar from "../components/FilterBar";
 import ModalOptions from "../components/ModalOptions";
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button } from "react-native";
 import { Portal, Provider, useTheme } from 'react-native-paper';
 
-const RecruiterLandingScreen = () => {
+const RecruiterLandingScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState("Loading...");
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const {colors} = useTheme();
+
+  //add navigations to student's details 
+  const studentDetailedView = (studentInfo) => {
+    navigation.navigate('StudentDetailScreen', { studentInfo }); //param should be an id or something
+  };
+
+
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
         <FilterBar
@@ -24,8 +31,7 @@ const RecruiterLandingScreen = () => {
                 modalData = {modalData}/>
           </Portal>
         <ScrollView style={{ flex: 1 }}>
-            <CandidateCard />
-            <CandidateCard />
+            <CandidateCard studentDetailedView={studentDetailedView}/>
             <CandidateCard />
             <CandidateCard />
             <CandidateCard />

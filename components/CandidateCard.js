@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Avatar, Card, Surface, Title, Caption, useTheme } from "react-native-paper";
 
-const CandidateCard = () => {
+const CandidateCard = ({studentDetailedView}) => {
   const {colors} = useTheme();
   const name = "Amber Rebma";
   const major = "Piano Performance";
@@ -10,8 +10,10 @@ const CandidateCard = () => {
       backgroundColor = {colors.accent}
   />
 
+  // added on press event handler
   return (
-    <Card style = {styles.card}>
+    <Card style = {styles.card} 
+        onPress={() => studentDetailedView(name)}> 
       <Card.Title
         title={name}
         subtitle={major}
