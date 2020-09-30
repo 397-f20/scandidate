@@ -58,7 +58,7 @@ const StudentDetailScreen = ({ route }) => {
         <Field label="GPA" value={student.qualifications.GPA} />
         <Field
           label="Graduation Year"
-          value={student.qualifications.gradYear}
+          value={student.qualifications["Graduation Year"]}
         />
       </ScrollView>
     </SafeAreaView>

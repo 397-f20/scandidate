@@ -132,8 +132,6 @@ const Profile = ({ student }) => {
     );
   };
 
-  console.log("PROFILE");
-
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
