@@ -14,7 +14,6 @@ import data from "../qualifications.json";
 const categoryList = Object.values(data);
 
 const FilterBar = ({ showModal, setModalData }) => {
-  const [GPA, setGPA] = useState("");
   const { colors } = useTheme();
 
   const filterPress = (item) => {

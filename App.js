@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
 import StudentDetailScreen from "./screens/StudentDetailScreen";
 
@@ -7,7 +7,7 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
@@ -15,30 +15,31 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#005B7F',
-    accent: '#448CCB',
+    primary: "#005B7F",
+    accent: "#448CCB",
     background: "#F5F5F5",
     surface: "#F1ECE2",
-    medium: "#307C3C"
+    medium: "#307C3C",
   },
 };
 
 const App = () => {
   return (
     <PaperProvider theme={theme}>
-            <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                  component={RecruiterLandingScreen}
-                  name="RecruiterLandingScreen"
-                  options={{ title: "Home" }}
-                />
-                <Stack.Screen name="StudentDetailScreen"
-                    component={StudentDetailScreen}
-                    options={{ title: 'Student detail'}} 
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            component={RecruiterLandingScreen}
+            name="RecruiterLandingScreen"
+            options={{ title: "Home" }}
+          />
+          <Stack.Screen
+            name="StudentDetailScreen"
+            component={StudentDetailScreen}
+            options={{ title: "Student Detail" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </PaperProvider>
   );
 };
