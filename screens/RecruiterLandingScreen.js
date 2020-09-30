@@ -22,18 +22,30 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const hideModal = () => setModalVisible(false);
   const { colors } = useTheme();
 
+  console.log("recruiter", filterSettings);
   //add navigations to student's details
   const studentDetailedView = (studentInfo) => {
     navigation.navigate("StudentDetailScreen", { studentInfo });
   };
 
+  console.log(data.students);
   const filteredStudents = Object.entries(data.students)
-    .filter(
-      ([id, student]) =>
-        student.qualifications.GPA >= parseFloat(filterSettings["GPA"])
-    )
+    .filter(([id, student]) => {
+      let gpa = true;
+      let grad = true;
+      if (filterSettings["GPA"]) {
+        gpa = student.qualifications.GPA >= parseFloat(filterSettings["GPA"]);
+      }
+      if (filterSettings["Graduation Year"]) {
+        grad = filterSettings["Graduation Year"].includes(
+          student.qualifications["Graduation Year"]
+        );
+      }
+      return gpa && grad;
+    })
     .map((s) => s[0]);
 
+  console.log(filteredStudents);
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
@@ -43,6 +55,11 @@ const RecruiterLandingScreen = ({ navigation }) => {
         setModalData={setModalData}
         modalData={modalData}
       />
+      {Object.keys(filterSettings).length == 0 ? null : (
+        <Text>
+          {filteredStudents.length} student(s) matched your qualifications.
+        </Text>
+      )}
       <Portal>
         <ModalOptions
           filterSettings={filterSettings}
@@ -53,7 +70,11 @@ const RecruiterLandingScreen = ({ navigation }) => {
         />
       </Portal>
       <FlatList
-        data={filteredStudents}
+        data={
+          filteredStudents.length == 0
+            ? Object.keys(data.students)
+            : filteredStudents
+        }
         showsVerticalScrollIndicator={false}
         renderItem={(item) => (
           <CandidateCard id={item} studentDetailedView={studentDetailedView} />
