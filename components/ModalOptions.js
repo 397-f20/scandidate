@@ -24,10 +24,8 @@ const ModalOptions = ({
 }) => {
   const { colors } = useTheme();
   const { modalStyle } = styles.modal;
-  console.log(filterSettings[modalData.title]);
 
   const [checked, setChecked] = useState(filterSettings);
-  console.log("c", checked);
 
   const saveButton = () => {
     hideModal();

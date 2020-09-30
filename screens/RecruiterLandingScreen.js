@@ -1,7 +1,7 @@
 import CandidateCard from "../components/CandidateCard";
 import FilterBar from "../components/FilterBar";
 import ModalOptions from "../components/ModalOptions";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -31,22 +31,32 @@ const RecruiterLandingScreen = ({ navigation }) => {
     navigation.navigate("StudentDetailScreen", { studentInfo });
   };
 
-  console.log("fs", filterSettings);
-  const filteredStudents = Object.entries(data.students)
-    .filter(([id, student]) => {
-      let gpa = true;
-      let grad = true;
-      if (filterSettings["GPA"]) {
-        gpa = student.qualifications.GPA >= parseFloat(filterSettings["GPA"]);
-      }
-      if (filterSettings["Graduation Year"]) {
-        grad = filterSettings["Graduation Year"].includes(
-          student.qualifications["Graduation Year"]
-        );
-      }
-      return gpa && grad;
-    })
-    .map((s) => s[0]);
+  const filterStudents = () => {
+    let newScores = {};
+    Object.entries(data.students).map(([id, student]) => {
+      let score = 0;
+      Object.entries(filterSettings).map(([title, reqs]) => {
+        switch (title) {
+          case "GPA": {
+            if (reqs === null || student.qualifications.GPA >= parseFloat(reqs))
+              score++;
+            break;
+          }
+          case "Graduation Year":
+          case "Major": {
+            if (reqs.includes(student.qualifications[title])) score++;
+            break;
+          }
+        }
+      });
+
+      newScores[id] = score;
+    });
+
+    return Object.entries(newScores)
+      .filter(([id, score]) => score >= Object.keys(filterSettings).length)
+      .map((s) => s[0]);
+  };
 
   return (
     <SafeAreaView
@@ -59,7 +69,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
       />
       {filterSettings === initialSettings ? null : (
         <Text>
-          {filteredStudents.length} student(s) matched your qualifications.
+          {filterStudents().length} student(s) matched your qualifications.
         </Text>
       )}
       <Portal>
@@ -73,9 +83,9 @@ const RecruiterLandingScreen = ({ navigation }) => {
       </Portal>
       <FlatList
         data={
-          filteredStudents.length == 0
+          filterStudents().length == 0
             ? Object.keys(data.students)
-            : filteredStudents
+            : filterStudents()
         }
         showsVerticalScrollIndicator={false}
         renderItem={(item) => (
