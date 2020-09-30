@@ -17,18 +17,21 @@ import data from "../dummydata.json";
 const RecruiterLandingScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState("Loading...");
-  const [filterSettings, setFilterSettings] = useState({});
+  const initialSettings = {
+    GPA: null,
+    "Graduation Year": [],
+  };
+  const [filterSettings, setFilterSettings] = useState(initialSettings);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const { colors } = useTheme();
 
-  console.log("recruiter", filterSettings);
   //add navigations to student's details
   const studentDetailedView = (studentInfo) => {
     navigation.navigate("StudentDetailScreen", { studentInfo });
   };
 
-  console.log(data.students);
+  console.log("fs", filterSettings);
   const filteredStudents = Object.entries(data.students)
     .filter(([id, student]) => {
       let gpa = true;
@@ -45,7 +48,6 @@ const RecruiterLandingScreen = ({ navigation }) => {
     })
     .map((s) => s[0]);
 
-  console.log(filteredStudents);
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
@@ -55,7 +57,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
         setModalData={setModalData}
         modalData={modalData}
       />
-      {Object.keys(filterSettings).length == 0 ? null : (
+      {filterSettings === initialSettings ? null : (
         <Text>
           {filteredStudents.length} student(s) matched your qualifications.
         </Text>

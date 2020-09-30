@@ -60,6 +60,10 @@ const StudentDetailScreen = ({ route }) => {
           label="Graduation Year"
           value={student.qualifications["Graduation Year"]}
         />
+        <Field
+          label="Skills"
+          value={student.qualifications.skills.join(", ")}
+        />
       </ScrollView>
     </SafeAreaView>
   );

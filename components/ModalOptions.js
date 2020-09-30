@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -24,12 +24,17 @@ const ModalOptions = ({
 }) => {
   const { colors } = useTheme();
   const { modalStyle } = styles.modal;
-  const [checked, setChecked] = useState(filterSettings[modalData.title] ?? "");
+  console.log(filterSettings[modalData.title]);
+
+  const [checked, setChecked] = useState(filterSettings);
+  console.log("c", checked);
 
   const saveButton = () => {
     hideModal();
-    setFilterSettings({ ...filterSettings, [modalData.title]: checked });
-    setChecked(filterSettings[modalData.title] ?? "");
+    setFilterSettings({
+      ...filterSettings,
+      [modalData.title]: checked[modalData.title],
+    });
   };
 
   const SingleSelect = () => {
@@ -37,9 +42,9 @@ const ModalOptions = ({
       <View style={styles.singleSelect}>
         <RadioButton.Group
           onValueChange={(check) => {
-            setChecked(check);
+            setChecked({ ...checked, [modalData.title]: check });
           }}
-          value={checked}
+          value={checked[modalData.title]}
         >
           <FlatList
             data={modalData.data}
@@ -64,11 +69,26 @@ const ModalOptions = ({
             <View style={styles.button}>
               <Checkbox
                 onPress={() =>
-                  checked.includes(item.name)
-                    ? setChecked(checked.filter((x) => x !== item.name))
-                    : setChecked([...checked, item.name])
+                  checked[modalData.title].includes(item.name)
+                    ? setChecked({
+                        ...checked,
+                        [modalData.title]: checked.filter(
+                          (x) => x !== item.name
+                        ),
+                      })
+                    : setChecked({
+                        ...checked,
+                        [modalData.title]: [
+                          ...checked[modalData.title],
+                          item.name,
+                        ],
+                      })
                 }
-                status={checked.includes(item.name) ? "checked" : "unchecked"}
+                status={
+                  checked[modalData.title].includes(item.name)
+                    ? "checked"
+                    : "unchecked"
+                }
               />
               <Text>{item.name}</Text>
             </View>
