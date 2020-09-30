@@ -1,0 +1,128 @@
+{
+  "companies": {
+    "Google": {
+      "info": {
+        "field": "technology",
+        "location": "Chicago",
+        "profile_photo": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fblog.hubspot.com%2Fmarketing%2Fgoogle-logo-history&psig=AOvVaw0NrqQK4vbBRwcCyexUCc5F&ust=1601317122072000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJj3-KP5iewCFQAAAAAdAAAAABAD",
+        "size": 10000,
+        "website": "google.com"
+      },
+      "jobs": {
+        "Product Manager": {
+          "Description:": "managing products",
+          "Requirements": {
+            "GPA": 3.0,
+            "grad_year": [2020, 2021],
+            "skills": ["design", "communication", "java"]
+          }
+        },
+        "Software Engineer": {
+          "Description": "A software engineer",
+          "Requirements": {
+            "GPA": 4.0,
+            "grad_year": [2019, 2020],
+            "skills": ["java", "php", "communication"]
+          },
+          "nice_to_haves": {
+            "skills": ["python"]
+          }
+        }
+      },
+      "recruiters": {
+        "Jen B": {
+          "Folders": {
+            "PM": [102, 103, 104],
+            "SWE": [100, 101, 102]
+          },
+          "id": 201
+        }
+      }
+    }
+  },
+  "students": {
+    "100": {
+      "Preferences": {
+        "job": "Product Manager",
+        "job_type": "full time",
+        "location": "Chicago"
+      },
+      "name": "Benjamin Powell",
+      "profile_photo": "https://static.wikia.nocookie.net/heroes-and-villain/images/2/29/Profile_-_Hiccup-0.jpg/revision/latest?cb=20191009204421",
+      "qualifications": {
+        "GPA": 3.8,
+        "Graduation Year": "2020",
+        "degree": "master",
+        "major": "Computer Engineering",
+        "skills": ["communication", "java"]
+      },
+      "resume_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.charactour.com%2Fhub%2Fcharacters%2Fview%2FHiccup-Haddock-III.How-to-Train-Your-Dragon&psig=AOvVaw1SEbPHZvvQguGRBf24lK3V&ust=1601319309289000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzoreBiuwCFQAAAAAdAAAAABAD",
+      "university": "Northwestern University"
+    },
+    "101": {
+      "Preferences": {
+        "job": "Software Engineer",
+        "job_type": "internship",
+        "location": "any"
+      },
+      "name": "Amber Radish",
+      "profile_photo": "https://dictionary.cambridge.org/images/thumb/amber_noun_002_00895.jpg?version=5.0.120",
+      "qualifications": {
+        "GPA": 3.45,
+        "Graduation Year": "2021",
+        "degree": "bachelor",
+        "major": "Computer Science",
+        "skills": ["java", "communication"]
+      },
+      "resume_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gemsociety.org%2Farticle%2Famber-jewelry-and-gemstone-information%2F&psig=AOvVaw1m8srZGmPqcydqBfH6h3io&ust=1601318582388000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOimvdz-iewCFQAAAAAdAAAAABAD",
+      "university": "Northwestern University"
+    },
+    "102": {
+      "Preferences": {
+        "job": "Software Engineer",
+        "job_type": "internship",
+        "location": "Chicago"
+      },
+      "name": "Corby Blue",
+      "profile_photo": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2d/SSU_Kirby_artwork.png/220px-SSU_Kirby_artwork.png",
+      "qualifications": {
+        "GPA": 2.05,
+        "Graduation Year": "2022",
+        "degree": "bachelor",
+        "major": "Computer Science",
+        "skills": ["c++"]
+      },
+      "resume_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gemsociety.org%2Farticle%2Famber-jewelry-and-gemstone-information%2F&psig=AOvVaw1m8srZGmPqcydqBfH6h3io&ust=1601318582388000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOimvdz-iewCFQAAAAAdAAAAABAD",
+      "university": "Northwestern University"
+    },
+    "103": {
+      "Preferences": {
+        "job": "Software Engineer",
+        "job_type": "Full Time",
+        "location": "any"
+      },
+      "name": "Doug March",
+      "profile_photo": "https://vignette.wikia.nocookie.net/pixar/images/3/35/Dug-up.jpg/revision/latest/top-crop/width/360/height/450?cb=20090602035123",
+      "qualifications": {
+        "GPA": 2.9,
+        "Graduation Year": "2020",
+        "degree": "bachelor",
+        "major": "Computer Science",
+        "skills": ["c++", "java", "python", "design"]
+      },
+      "resume_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gemsociety.org%2Farticle%2Famber-jewelry-and-gemstone-information%2F&psig=AOvVaw1m8srZGmPqcydqBfH6h3io&ust=1601318582388000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOimvdz-iewCFQAAAAAdAAAAABAD",
+      "university": "Northwestern University"
+    }
+  },
+  "universities": {
+    "events": {
+      "NU Career Fair": {
+        "Date": "2020-10-02 16:00:00 CST",
+        "location": "Norris Student Center",
+        "recruiters": [200, 201, 202],
+        "students": [100, 101, 102, 103, 104]
+      }
+    },
+    "name": "Northwestern University"
+  }
+}
