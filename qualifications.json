@@ -50,5 +50,44 @@
         "name": "2024"
       }
     ]
+  },
+  "major": {
+    "title": "Major",
+    "type": "multi-select",
+    "data": [
+      {
+        "name": "Biology"
+      },
+      {
+        "name": "Communications"
+      },
+      {
+        "name": "Computer Engineering"
+      },
+      {
+        "name": "Computer Science"
+      },
+      {
+        "name": "Economics"
+      },
+      {
+        "name": "Industrial Engineering"
+      },
+      {
+        "name": "Mechanical Engineering"
+      },
+      {
+        "name": "Political Science"
+      },
+      {
+        "name": "Psychology"
+      },
+      {
+        "name": "Statistics"
+      },
+      {
+        "name": "Undecided"
+      }
+    ]
   }
 }

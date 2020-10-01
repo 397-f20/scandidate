@@ -112,6 +112,67 @@
       },
       "resume_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gemsociety.org%2Farticle%2Famber-jewelry-and-gemstone-information%2F&psig=AOvVaw1m8srZGmPqcydqBfH6h3io&ust=1601318582388000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOimvdz-iewCFQAAAAAdAAAAABAD",
       "university": "Northwestern University"
+    },
+    "104": {
+      "Preferences": {
+        "job": "Consultant",
+        "job_type": "Full Time",
+        "location": "New York"
+      },
+      "name": "Etelle LaBelle",
+      "profile_photo": "https://dodo.ac/np/images/9/95/Stella_NH.png",
+      "qualifications": {
+        "GPA": 4.0,
+        "Graduation Year": "2021",
+        "degree": "bachelor",
+        "major": "Political Science",
+        "skills": ["writing", "design", "communication"]
+      },
+      "resume_link": "https://dodo.ac/np/images/9/95/Stella_NH.png",
+      "university": "Northwestern University"
+    },
+    "105": {
+      "Preferences": {
+        "job": "Mechanical Engineer",
+        "job_type": "Full Time",
+        "location": "Houston"
+      },
+      "name": "Friday Saturday",
+      "profile_photo": "https://upload.wikimedia.org/wikipedia/commons/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
+      "qualifications": {
+        "GPA": 3.75,
+        "Graduation Year": "2022",
+        "degree": "doctorate",
+        "major": "Mechanical Engineering",
+        "skills": [
+          "soldering",
+          "design",
+          "communication",
+          "research",
+          "sketching",
+          "physics"
+        ]
+      },
+      "resume_link": "https://upload.wikimedia.org/wikipedia/commons/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
+      "university": "Northwestern University"
+    },
+    "106": {
+      "Preferences": {
+        "job": "Marketing Specialist",
+        "job_type": "internship",
+        "location": "remote"
+      },
+      "name": "Gerald Barr",
+      "profile_photo": "https://www.history.com/.image/t_share/MTY2MDc0NTQ2NTI3NDE0MjE5/smokey-bear-forest-fires-gettyimages-50599917.jpg",
+      "qualifications": {
+        "GPA": 3.8,
+        "Graduation Year": "2024",
+        "degree": "bachelor",
+        "major": "Psychology",
+        "skills": ["communication", "writing"]
+      },
+      "resume_link": "https://www.history.com/.image/t_share/MTY2MDc0NTQ2NTI3NDE0MjE5/smokey-bear-forest-fires-gettyimages-50599917.jpg",
+      "university": "Northwestern University"
     }
   },
   "universities": {
