@@ -219,11 +219,7 @@
         "Graduation Year": "2020",
         "degree": "JD",
         "major": "Political Science",
-        "skills": [
-          "leadership",
-          "public speaking",
-          "diplomacy"
-        ]
+        "skills": ["leadership", "public speaking", "diplomacy"]
       },
       "resume_link": "https://en.wikipedia.org/wiki/Barack_Obama",
       "university": "Harvard University"
@@ -246,7 +242,7 @@
       "resume_link": "https://www.history.com/.image/t_share/MTY2MDc0NTQ2NTI3NDE0MjE5/smokey-bear-forest-fires-gettyimages-50599917.jpg",
       "university": "Northwestern University"
     },
-    "107": {
+    "110": {
       "Preferences": {
         "job": "Software Engineer",
         "job_type": "Full Time",
@@ -264,7 +260,7 @@
       "resume_link": "https://twusa.org/wp-content/uploads/2018/04/junie-1.jpg",
       "university": "Northwestern University"
     },
-    "108": {
+    "111": {
       "Preferences": {
         "job": "Consultant",
         "job_type": "Full Time",
