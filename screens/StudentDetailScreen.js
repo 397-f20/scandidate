@@ -54,7 +54,7 @@ const StudentDetailScreen = ({ route }) => {
     >
       <ScrollView>
         <Profile student={student} />
-        <Field label="Degree" value={student.qualifications.degree} />
+        <Field label="Degree" value={student.qualifications.Degree} />
         <Field label="GPA" value={student.qualifications.GPA} />
         <Field
           label="Graduation Year"
@@ -83,14 +83,6 @@ const styles = StyleSheet.create({
   },
   fieldContainer: {
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
   },
   label: {
     fontWeight: "bold",

@@ -115,7 +115,7 @@ const Profile = ({ student }) => {
   const ContactHeader = () => {
     const avatar = student.profile_photo;
     const name = student.name;
-    const bio = student.qualifications.major;
+    const bio = student.qualifications.Major;
 
     return (
       <View style={styles.headerContainer}>

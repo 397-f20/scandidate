@@ -20,6 +20,8 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const initialSettings = {
     GPA: null,
     "Graduation Year": [],
+    Major: [],
+    Degree: [],
   };
   const [filterSettings, setFilterSettings] = useState(initialSettings);
   const showModal = () => setModalVisible(true);
@@ -42,14 +44,18 @@ const RecruiterLandingScreen = ({ navigation }) => {
               score++;
             break;
           }
+          case "Degree":
           case "Graduation Year":
           case "Major": {
-            if (reqs.includes(student.qualifications[title])) score++;
+            if (
+              reqs.length === 0 ||
+              reqs.includes(student.qualifications[title])
+            )
+              score++;
             break;
           }
         }
       });
-
       newScores[id] = score;
     });
 

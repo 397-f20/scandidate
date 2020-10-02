@@ -70,9 +70,11 @@ const ModalOptions = ({
                   checked[modalData.title].includes(item.name)
                     ? setChecked({
                         ...checked,
-                        [modalData.title]: checked.filter(
-                          (x) => x !== item.name
-                        ),
+                        [modalData.title]: [
+                          ...checked[modalData.title].filter(
+                            (x) => x !== item.name
+                          ),
+                        ],
                       })
                     : setChecked({
                         ...checked,

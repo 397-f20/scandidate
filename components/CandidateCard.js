@@ -25,7 +25,7 @@ const CandidateCard = ({ id, studentDetailedView }) => {
     <Card style={styles.card} onPress={() => studentDetailedView(id.item)}>
       <Card.Title
         title={student.name}
-        subtitle={student.qualifications.major}
+        subtitle={student.qualifications.Major}
         left={avatar}
       />
     </Card>

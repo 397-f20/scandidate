@@ -4,24 +4,31 @@
     "type": "single-select",
     "data": [
       {
-        "id": "0",
-        "name": "No Minimum"
+        "name": "4.0"
       },
       {
-        "id": "1",
-        "name": "1.0"
+        "name": "3.5"
       },
       {
-        "id": "2",
-        "name": "2.0"
-      },
-      {
-        "id": "3",
         "name": "3.0"
       },
       {
-        "id": "4",
-        "name": "4.0"
+        "name": "2.5"
+      },
+      {
+        "name": "2.0"
+      },
+      {
+        "name": "1.5"
+      },
+      {
+        "name": "1.0"
+      },
+      {
+        "name": "0.5"
+      },
+      {
+        "name": "0.0"
       }
     ]
   },
@@ -87,6 +94,21 @@
       },
       {
         "name": "Undecided"
+      }
+    ]
+  },
+  "degree": {
+    "title": "Degree",
+    "type": "multi-select",
+    "data": [
+      {
+        "name": "Bachelor's"
+      },
+      {
+        "name": "Master's"
+      },
+      {
+        "name": "Doctorate"
       }
     ]
   }
