@@ -142,7 +142,7 @@
       "qualifications": {
         "GPA": 3.75,
         "Graduation Year": "2022",
-        "Degree": "doctorate",
+        "Degree": "Doctorate",
         "Major": "Mechanical Engineering",
         "skills": [
           "soldering",
@@ -167,8 +167,8 @@
       "qualifications": {
         "GPA": 3.4,
         "Graduation Year": "2021",
-        "degree": "bachelor",
-        "major": "Neuroscience",
+        "Degree": "Bachelor's",
+        "Major": "Neuroscience",
         "skills": [
           "music",
           "video games",
@@ -192,8 +192,8 @@
       "qualifications": {
         "GPA": 1.9,
         "Graduation Year": "2024",
-        "degree": "bachelor",
-        "major": "Agricultural Sciences",
+        "Degree": "Bachelor's",
+        "Major": "Agricultural Sciences",
         "skills": [
           "planting",
           "subsisting",
@@ -217,8 +217,8 @@
       "qualifications": {
         "GPA": 4.0,
         "Graduation Year": "2020",
-        "degree": "JD",
-        "major": "Political Science",
+        "Degree": "Juris Doctor",
+        "Major": "Political Science",
         "skills": ["leadership", "public speaking", "diplomacy"]
       },
       "resume_link": "https://en.wikipedia.org/wiki/Barack_Obama",

@@ -63,6 +63,9 @@
     "type": "multi-select",
     "data": [
       {
+        "name": "Agricultural Sciences"
+      },
+      {
         "name": "Biology"
       },
       {
@@ -82,6 +85,9 @@
       },
       {
         "name": "Mechanical Engineering"
+      },
+      {
+        "name": "Neuroscience"
       },
       {
         "name": "Political Science"
@@ -106,6 +112,9 @@
       },
       {
         "name": "Master's"
+      },
+      {
+        "name": "Juris Doctor"
       },
       {
         "name": "Doctorate"
