@@ -52,6 +52,7 @@ const ModalOptions = ({
                 <Text>{item.name}</Text>
               </View>
             )}
+            keyExtractor={(item, index) => index.toString()}
           />
         </RadioButton.Group>
       </View>
@@ -63,6 +64,7 @@ const ModalOptions = ({
       <View style={styles.singleSelect}>
         <FlatList
           data={modalData.data}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.button}>
               <Checkbox
@@ -121,7 +123,6 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   singleSelect: {
-    flex: 1,
     justifyContent: "flex-start",
   },
   button: {

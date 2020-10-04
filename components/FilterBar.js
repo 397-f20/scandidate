@@ -31,6 +31,7 @@ const FilterBar = ({ showModal, setModalData }) => {
             <Text>{item.title}</Text>
           </Chip>
         )}
+        keyExtractor={(item, index) => index.toString()}
         showsHorizontalScrollIndicator={false}
         style={[styles.container, { backgroundColor: colors.primary }]}
       />
