@@ -12,7 +12,6 @@ import {
   Button,
 } from "react-native";
 import { Portal, Provider, useTheme } from "react-native-paper";
-import data1 from "../dummydata.json";
 import { firebase } from "../firebase";
 
 
@@ -50,16 +49,9 @@ const RecruiterLandingScreen = ({ navigation }) => {
     db.on('value', handleData, error => alert(error));
     return () => { db.off('value', handleData); };
   }, []);
-
-  //add navigations to student's details
-  const studentDetailedView = (studentInfo) => {
-    navigation.navigate("StudentDetailScreen", { studentInfo });
-  };
-
   
 
   const filterStudents = () => {
-    console.log(data)
     let newScores = {};
     Object.entries(data.students).map(([id, student]) => {
       let score = 0;
@@ -119,10 +111,12 @@ const RecruiterLandingScreen = ({ navigation }) => {
             ? Object.keys(data.students)
             : filterStudents()
         }
+        keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={(item) => (
-          <CandidateCard id={item} studentDetailedView={studentDetailedView} />
+          <CandidateCard studData={data.students[item.index]} id = {item.index} navigation={navigation} />
         )}
+
       />
     </SafeAreaView>
   );

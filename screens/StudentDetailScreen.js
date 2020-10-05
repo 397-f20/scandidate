@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import { useTheme } from "react-native-paper";
-import students from "../components/LoadLocalData";
 import Profile from "./profile";
 
 const Field = ({ label, value }) => {
@@ -20,30 +19,8 @@ const Field = ({ label, value }) => {
   );
 };
 
-const dum = {
-  Preferences: {
-    job: "Product Manager",
-    job_type: "full time",
-    location: "Chicago",
-  },
-  name: "Benjamin Powell",
-  profile_photo:
-    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.charactour.com%2Fhub%2Fcharacters%2Fview%2FHiccup-Haddock-III.How-to-Train-Your-Dragon&psig=AOvVaw1SEbPHZvvQguGRBf24lK3V&ust=1601319309289000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzoreBiuwCFQAAAAAdAAAAABAD",
-  qualifications: {
-    GPA: 3.8,
-    gradYear: 2020,
-    degree: "master",
-    major: "Computer Engineering",
-    skills: ["communication", "java"],
-  },
-  resume_link:
-    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.charactour.com%2Fhub%2Fcharacters%2Fview%2FHiccup-Haddock-III.How-to-Train-Your-Dragon&psig=AOvVaw1SEbPHZvvQguGRBf24lK3V&ust=1601319309289000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzoreBiuwCFQAAAAAdAAAAABAD",
-  university: "Northwestern University",
-};
-
 const StudentDetailScreen = ({ route }) => {
-  const studentInfo = route.params.studentInfo;
-  const student = students[studentInfo];
+  const student = route.params.studData;
   const { colors } = useTheme();
 
   return (

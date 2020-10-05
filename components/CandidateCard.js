@@ -8,47 +8,11 @@ import {
   Caption,
   useTheme,
 } from "react-native-paper";
-//import data from "./LoadLocalData";
-import { firebase } from "../firebase";
-
-
-const fixStudents = json => ({
-  ...json,
-  students: Object.values(json.students)
-});
 
 
 
-const CandidateCard = ({ id, studentDetailedView }) => {
-  const [data, setData] = useState({ students : []});
-  
+const CandidateCard = ({ studData, index, navigation }) => {
   const { colors } = useTheme();
-
-  console.log(id)
-  
-  
-
-  // database
-  useEffect(() => {
-    const db = firebase.database().ref();
-    const handleData = snap => {
-      if (snap.val()) {
-        setData(fixStudents(snap.val()));
-        console.log(data.students);
-      } 
-    }
-    db.on('value', handleData, error => alert(error));
-    console.log(data);
-    return () => { db.off('value', handleData); };
-    
-  }, []);
-
-  const studentList = data.students;
-  const student = studentList[id.item];
-
-  
-
-
   const avatar = (props) => (
     <Avatar.Icon
       {...props}
@@ -56,12 +20,12 @@ const CandidateCard = ({ id, studentDetailedView }) => {
       backgroundColor={colors.accent}
     />
   );
-
+  
   return (
-    <Card style={styles.card} onPress={() => studentDetailedView(id.item)}>
+    <Card style={styles.card} onPress={() => navigation.navigate("StudentDetailScreen", { studData })}>
       <Card.Title
-        title={student.name}
-        subtitle={student.qualifications.Major}
+        title={studData.name}
+        subtitle={studData.qualifications.Major}
         left={avatar}
       />
     </Card>
