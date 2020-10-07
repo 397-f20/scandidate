@@ -3,20 +3,47 @@ import { View, StyleSheet } from "react-native";
 import {
   Avatar,
   Card,
+  IconButton,
+  Menu,
   Surface,
   Title,
   Caption,
   useTheme,
 } from "react-native-paper";
 
-const CandidateCard = ({ studData, index, navigation }) => {
+const CandidateCard = ({ studData, index, navigation, setFoldersVisible }) => {
   const { colors } = useTheme();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
+
   const avatar = (props) => (
     <Avatar.Icon
       {...props}
       icon="account-circle"
       backgroundColor={colors.accent}
     />
+  );
+
+  const dots = <IconButton icon="dots-vertical" onPress={openMenu} />;
+
+  const menu = (
+    <Menu
+      visible={menuVisible}
+      onDismiss={closeMenu}
+      anchor={dots}
+      contentStyle={{ backgroundColor: colors.background }}
+    >
+      <Menu.Item onPress={() => {}} title="Hide Profile" />
+      <Menu.Item
+        onPress={() => {
+          closeMenu();
+          setFoldersVisible(true);
+        }}
+        title="Add to Folder"
+      />
+      <Menu.Item onPress={() => {}} title="Add a Note" />
+    </Menu>
   );
 
   return (
@@ -28,6 +55,7 @@ const CandidateCard = ({ studData, index, navigation }) => {
         title={studData.name}
         subtitle={studData.qualifications.Major}
         left={avatar}
+        right={() => menu}
       />
     </Card>
   );

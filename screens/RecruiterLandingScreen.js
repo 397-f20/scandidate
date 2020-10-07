@@ -1,5 +1,6 @@
 import CandidateCard from "../components/CandidateCard";
 import FilterBar from "../components/FilterBar";
+import FoldersModal from "../components/FoldersModal";
 import ModalOptions from "../components/ModalOptions";
 import React, { useState, useEffect } from "react";
 import {
@@ -22,6 +23,7 @@ const fixStudents = (json) => ({
 const RecruiterLandingScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState("Loading...");
+  const [foldersVisible, setFoldersVisible] = useState(false);
   const initialSettings = {
     GPA: null,
     "Graduation Year": [],
@@ -32,6 +34,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const [filterSettings, setFilterSettings] = useState(initialSettings);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
+  const hideFolders = () => setFoldersVisible(false);
   const { colors } = useTheme();
 
   // database
@@ -102,6 +105,9 @@ const RecruiterLandingScreen = ({ navigation }) => {
           setFilterSettings={setFilterSettings}
         />
       </Portal>
+      <Portal>
+        <FoldersModal hideModal={hideFolders} modalVisible={foldersVisible} />
+      </Portal>
       <FlatList
         data={
           filterStudents().length == 0
@@ -115,6 +121,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
             studData={data.students[item.item]}
             id={item.item}
             navigation={navigation}
+            setFoldersVisible={setFoldersVisible}
           />
         )}
       />
