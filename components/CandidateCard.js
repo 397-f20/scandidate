@@ -9,8 +9,6 @@ import {
   useTheme,
 } from "react-native-paper";
 
-
-
 const CandidateCard = ({ studData, index, navigation }) => {
   const { colors } = useTheme();
   const avatar = (props) => (
@@ -20,9 +18,12 @@ const CandidateCard = ({ studData, index, navigation }) => {
       backgroundColor={colors.accent}
     />
   );
-  
+
   return (
-    <Card style={styles.card} onPress={() => navigation.navigate("StudentDetailScreen", { studData })}>
+    <Card
+      style={styles.card}
+      onPress={() => navigation.navigate("StudentDetailScreen", { studData })}
+    >
       <Card.Title
         title={studData.name}
         subtitle={studData.qualifications.Major}
