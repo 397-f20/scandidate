@@ -1,5 +1,8 @@
 node_modules/**/*
 .expo/*
+.expo-shared/*
+.vscode/*
+.firebase/*
 .vscode/*
 npm-debug.*
 *.jks

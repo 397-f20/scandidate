@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Avatar,
@@ -8,10 +8,8 @@ import {
   Caption,
   useTheme,
 } from "react-native-paper";
-import data from "./LoadLocalData";
 
-const CandidateCard = ({ id, studentDetailedView }) => {
-  const student = data[id.item];
+const CandidateCard = ({ studData, index, navigation }) => {
   const { colors } = useTheme();
   const avatar = (props) => (
     <Avatar.Icon
@@ -22,10 +20,13 @@ const CandidateCard = ({ id, studentDetailedView }) => {
   );
 
   return (
-    <Card style={styles.card} onPress={() => studentDetailedView(id.item)}>
+    <Card
+      style={styles.card}
+      onPress={() => navigation.navigate("StudentDetailScreen", { studData })}
+    >
       <Card.Title
-        title={student.name}
-        subtitle={student.qualifications.Major}
+        title={studData.name}
+        subtitle={studData.qualifications.Major}
         left={avatar}
       />
     </Card>

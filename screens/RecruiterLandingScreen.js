@@ -12,7 +12,12 @@ import {
   Button,
 } from "react-native";
 import { Portal, Provider, useTheme } from "react-native-paper";
-import data from "../dummydata.json";
+import { firebase } from "../firebase";
+
+const fixStudents = (json) => ({
+  ...json,
+  students: Object.values(json.students),
+});
 
 const RecruiterLandingScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,15 +28,25 @@ const RecruiterLandingScreen = ({ navigation }) => {
     Major: [],
     Degree: [],
   };
+  const [data, setData] = useState({ students: [] });
   const [filterSettings, setFilterSettings] = useState(initialSettings);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const { colors } = useTheme();
 
-  //add navigations to student's details
-  const studentDetailedView = (studentInfo) => {
-    navigation.navigate("StudentDetailScreen", { studentInfo });
-  };
+  // database
+  useEffect(() => {
+    const db = firebase.database().ref();
+    const handleData = (snap) => {
+      if (snap.val()) {
+        setData(fixStudents(snap.val()));
+      }
+    };
+    db.on("value", handleData, (error) => alert(error));
+    return () => {
+      db.off("value", handleData);
+    };
+  }, []);
 
   const filterStudents = () => {
     let newScores = {};
@@ -93,9 +108,14 @@ const RecruiterLandingScreen = ({ navigation }) => {
             ? Object.keys(data.students)
             : filterStudents()
         }
+        keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={(item) => (
-          <CandidateCard id={item} studentDetailedView={studentDetailedView} />
+          <CandidateCard
+            studData={data.students[item.item]}
+            id={item.item}
+            navigation={navigation}
+          />
         )}
       />
     </SafeAreaView>
