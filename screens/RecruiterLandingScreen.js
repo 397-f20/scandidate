@@ -15,15 +15,11 @@ import {
 import { Portal, Provider, useTheme } from "react-native-paper";
 import { firebase } from "../firebase";
 
-const fixStudents = (json) => ({
-  ...json,
-  students: Object.values(json.students),
-});
-
 const RecruiterLandingScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState("Loading...");
   const [foldersVisible, setFoldersVisible] = useState(false);
+  const [studentID, setStudentID] = useState(null);
   const initialSettings = {
     GPA: null,
     "Graduation Year": [],
@@ -39,10 +35,10 @@ const RecruiterLandingScreen = ({ navigation }) => {
 
   // database
   useEffect(() => {
-    const db = firebase.database().ref();
+    const db = firebase.database().ref("students");
     const handleData = (snap) => {
       if (snap.val()) {
-        setData(fixStudents(snap.val()));
+        setData({students: snap.val()});
       }
     };
     db.on("value", handleData, (error) => alert(error));
@@ -106,7 +102,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
         />
       </Portal>
       <Portal>
-        <FoldersModal hideModal={hideFolders} modalVisible={foldersVisible} />
+        <FoldersModal hideModal={hideFolders} modalVisible={foldersVisible} studentID={studentID}/>
       </Portal>
       <FlatList
         data={
@@ -122,6 +118,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
             id={item.item}
             navigation={navigation}
             setFoldersVisible={setFoldersVisible}
+            setStudentID={setStudentID}
           />
         )}
       />
