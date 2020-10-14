@@ -20,6 +20,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const [modalData, setModalData] = useState("Loading...");
   const [foldersVisible, setFoldersVisible] = useState(false);
   const [studentID, setStudentID] = useState(null);
+
   const initialSettings = {
     GPA: null,
     "Graduation Year": [],
@@ -32,6 +33,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const hideModal = () => setModalVisible(false);
   const hideFolders = () => setFoldersVisible(false);
   const { colors } = useTheme();
+
 
   // database
   useEffect(() => {
@@ -49,6 +51,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
 
   const filterStudents = () => {
     let newScores = {};
+    let matches = 0;
     Object.entries(data.students).map(([id, student]) => {
       let score = 0;
       Object.entries(filterSettings).map(([title, reqs]) => {
@@ -70,12 +73,29 @@ const RecruiterLandingScreen = ({ navigation }) => {
           }
         }
       });
+      if (score >= Object.keys(filterSettings).length){
+        matches++;
+      }
       newScores[id] = score;
     });
 
-    return Object.entries(newScores)
-      .filter(([id, score]) => score >= Object.keys(filterSettings).length)
-      .map((s) => s[0]);
+    if (Object.entries(filterSettings)[1].length === 0){
+      matches = Object.entries(data.students).length;
+    }
+    console.log('number of exact matches = ', matches);
+    let filtered = Object.entries(newScores);
+    filtered = filtered.sort(sorter).reverse();
+
+    function sorter(a, b) {
+      if(a[1]==b[1]){
+        return 0;
+      }
+      else{
+        return (a[1] < b[1]) ? -1 : 1;
+      }
+    }
+
+    return filtered.map((s) => s[0]);
   };
 
   return (
