@@ -10,10 +10,40 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  TouchableOpacity,
 } from "react-native";
-import { Portal, Provider, useTheme } from "react-native-paper";
+import { Chip, Portal, Provider, useTheme,Button } from "react-native-paper";
 import { firebase } from "../firebase";
+
+
+
+var numSelected = 0; //calculate the width of the filter number text
+function CountNum(props){ //count how many filters has been selected and display in text
+  let count = 0; //count the filters that's not selected
+  let lenCount = 0; //count the length of filters
+  if(props.clearedSetting){
+      numSelected = 0;
+      return <Text> {numSelected} </Text>
+  }
+  Object.entries(props.filterSettings).map(([name, value]) => {
+      lenCount ++;
+      if(value == null){
+          count++;
+      }
+      else{
+          if(value.length == 0){
+              count++;
+          }
+      } 
+  } )
+  numSelected = lenCount - count;
+  if(numSelected == 0){
+      return <Text> {numSelected} </Text>
+  }
+  else{
+      return <Text style={styles.filterText}> {numSelected} </Text>
+  }
+}
 
 const RecruiterLandingScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,6 +56,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
     Major: [],
     Degree: [],
   };
+
   const [data, setData] = useState({ students: [] });
   const [filterSettings, setFilterSettings] = useState(initialSettings);
   const showModal = () => setModalVisible(true);
@@ -78,20 +109,36 @@ const RecruiterLandingScreen = ({ navigation }) => {
       .map((s) => s[0]);
   };
 
+  //determine if the selected filters will be cleared or not
+  const [clearedSetting, setClearedSetting] = useState(false); 
+  const clearFilter = () => { //called when press the x button
+    setClearedSetting(true);
+    setFilterSettings(initialSettings);
+  };
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
+      
       <FilterBar
         showModal={showModal}
         setModalData={setModalData}
         modalData={modalData}
+        filterSettings={filterSettings} //based on filterSettings highlight the filterBar
+        setClearedSetting={setClearedSetting}//once pressed the filterBar, clearOption is resetted
       />
       {filterSettings === initialSettings ? null : (
         <Text>
           {filterStudents().length} student(s) matched your qualifications.
         </Text>
       )}
+
+      <Chip style={styles.chipSelection}>  {/* add the clear filter option on the right */}
+        <CountNum filterSettings={filterSettings} clearedSetting={clearedSetting} /> 
+        <Button onPress={() => clearFilter()} style={[styles.buttonStyle]}> x </Button>
+      </Chip>   
+
       <Portal>
         <ModalOptions
           filterSettings={filterSettings}
@@ -122,6 +169,8 @@ const RecruiterLandingScreen = ({ navigation }) => {
           />
         )}
       />
+      
+
     </SafeAreaView>
   );
 };
@@ -132,6 +181,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  chipSelection:{
+    width: 50 + (numSelected.toString().length)*10,
+    position: 'absolute',
+    right:10,
+    top: 3,
+  },
+  buttonStyle: {
+    borderRadius: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    width: 10,
+    height: 10,
+  },
+  filterText:{
+    color: "#ebae34",
+    textAlignVertical: "top",
+    fontWeight: "bold",
+  }
 });
 
 export default RecruiterLandingScreen;
