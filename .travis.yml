@@ -6,4 +6,5 @@ cache:
   - node_modules
 script:
   - npm install --global expo-cli
+  - npm test
   - npm run build

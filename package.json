@@ -8,7 +8,8 @@
     "eject": "expo eject",
     "build": "expo build:web",
     "predeploy": "expo build:web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting",
+    "test": "test --passWithNoTests"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
