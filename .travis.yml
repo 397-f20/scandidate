@@ -5,5 +5,5 @@ cache:
   directories:
   - node_modules
 script:
-  - npm test
+  - npm install --global expo-cli
   - npm run build
