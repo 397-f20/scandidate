@@ -1,33 +1,65 @@
-import React, { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
-import { Checkbox, Modal, Text, Button, useTheme } from "react-native-paper";
+import React, { useEffect, useState } from "react";
+import {firebase} from '../firebase';
+import { Alert, StyleSheet, View, FlatList } from "react-native";
+import { Checkbox, List, Modal, Text, Button, useTheme } from "react-native-paper";
 
-const data = {
-  Favorites: [],
-  Maybe: [],
-};
+const db = firebase.database().ref('companies/Google/recruiters/Jen B/Folders');
 
-const FoldersModal = ({ hideModal, modalVisible }) => {
+const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
   const { colors } = useTheme();
   const [checked, setChecked] = useState([]);
+  const [folders, setFolders] = useState({});
+
+  // database
+  useEffect(() => {
+    const handleData = (snapshot) => {
+      if (snapshot.val()){
+        setFolders(snapshot.val());
+      }
+    }
+    db.on("value", handleData, (error) => alert(error));
+    return () => {
+      db.off("value", handleData);
+    };
+  }, []);
 
   const saveButton = () => {
+    checked.map(folder => {
+      if (folders[folder].includes(parseInt(studentID))){
+        console.log("This student has already been added to the " + folder + " folder")
+      }
+      else {
+        const newList = [...folders[folder], parseInt(studentID)]
+        db.child(folder).set(newList)
+      }
+    });
     hideModal();
+    setChecked([]);
   };
 
   const Folders = () => {
     return (
       <View style={styles.singleSelect}>
         <FlatList
-          data={Object.keys(data)}
+          data={Object.keys(folders)}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={styles.button}>
+            <View style={styles.row}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <List.Icon size={24} icon="folder-outline" />
+                <Text>{item}</Text>
+              </View>
               <Checkbox
-                onPress={() => setChecked([...checked, item])}
+                onPress={() => {checked.includes(item) ? 
+                  setChecked(
+                    checked.filter(
+                      (x) => x !== item
+                    ),
+                ): setChecked([...checked, item])}}
                 status={checked.includes(item) ? "checked" : "unchecked"}
+                style={styles.checkbox}
               />
-              <Text>{item}</Text>
+              
             </View>
           )}
         />
@@ -43,7 +75,10 @@ const FoldersModal = ({ hideModal, modalVisible }) => {
         <Button mode="contained" onPress={() => saveButton()}>
           Save
         </Button>
-        <Button mode="text" onPress={() => hideModal()}>
+        <Button mode="text" onPress={() => {
+            hideModal();
+            setChecked([]);
+          }}>
           Cancel
         </Button>
       </View>
@@ -52,17 +87,26 @@ const FoldersModal = ({ hideModal, modalVisible }) => {
 };
 
 const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  checkbox: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
+    right: 0,
+  },
   modal: {
     margin: 20,
     borderRadius: 20,
     padding: 35,
   },
   singleSelect: {
+    flex: 1,
     justifyContent: "flex-start",
-  },
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   title: {
     alignSelf: "center",

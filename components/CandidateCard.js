@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-const CandidateCard = ({ studData, index, navigation, setFoldersVisible }) => {
+const CandidateCard = ({ studData, id, navigation, setFoldersVisible, setStudentID}) => {
   const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
@@ -39,6 +39,7 @@ const CandidateCard = ({ studData, index, navigation, setFoldersVisible }) => {
         onPress={() => {
           closeMenu();
           setFoldersVisible(true);
+          setStudentID(id);
         }}
         title="Add to Folder"
       />
