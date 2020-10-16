@@ -24,8 +24,6 @@ const FolderContents = ({ route, navigation }) => {
     };
   }, []);
 
-  console.log("int ", data.students[100]);
-
   const List = () => {
     return (
       <FlatList
