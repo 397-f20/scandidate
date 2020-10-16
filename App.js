@@ -1,15 +1,20 @@
 import "react-native-gesture-handler";
 import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
 import StudentDetailScreen from "./screens/StudentDetailScreen";
+import FolderScreen from "./screens/FolderScreen";
 
 import React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { List, BottomNavigation, DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -27,7 +32,21 @@ const App = () => {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Tab.Navigator>
+          <Tab.Screen component={RecruiterLandingScreen}
+            name="RecruiterLandingScreen" options={{ title: "Home", tabBarIcon: ({color, size})=>(<List.Icon name="home" color={color} size={20} icon='account-group'/>)}} />
+            <Tab.Screen component={FolderScreen}
+            name="FolderScreen" options={{ title: "My Folders" , tabBarIcon: ({color, size})=>(<List.Icon name="home" color={color} size={20} icon='folder-outline' />)}}/>
+
+        </Tab.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
+  );
+};
+
+const home = () =>{
+  return(
+    <Stack.Navigator>
           <Stack.Screen
             component={RecruiterLandingScreen}
             name="RecruiterLandingScreen"
@@ -39,10 +58,8 @@ const App = () => {
             options={{ title: "Student Detail" }}
           />
         </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
