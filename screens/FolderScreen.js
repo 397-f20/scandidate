@@ -1,13 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FlatList, ScrollView, StyleSheet } from "react-native";
 import { firebase } from "../firebase";
-import { Appbar, List, useTheme } from "react-native-paper";
-
+import { Appbar, List, useTheme, Button, Portal } from "react-native-paper";
+import AddFolderModal from "../components/AddFolderModal";
 const db = firebase.database().ref("companies/Google/recruiters/Jen B/Folders");
+
+
 
 const FolderScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const [folders, setFolders] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const one = 1;
   // database
   useEffect(() => {
@@ -33,7 +37,7 @@ const FolderScreen = ({ navigation }) => {
               navigation.navigate("FolderContents", { folder: item })
             }
             title={item[0]}
-            description={item[1].length + " candidates"}
+            description={item[1].length-1 + " candidate(s)"}
             left={(props) => <List.Icon {...props} icon="folder" size={24} />}
           />
         )}
@@ -45,16 +49,27 @@ const FolderScreen = ({ navigation }) => {
     return (
       <Appbar.Header>
         <Appbar.Content title="My Folders" />
+        <Appbar.Action icon="plus" onPress={() => {setModalVisible(true)}} />
       </Appbar.Header>
     );
   };
+
 
   return (
     <ScrollView style={{ backgroundColor: colors.background }}>
       <Header />
       <Folders />
+      <Portal>
+        <AddFolderModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            folders={folders}
+        />
+      </Portal>
     </ScrollView>
   );
 };
+
+
 
 export default FolderScreen;

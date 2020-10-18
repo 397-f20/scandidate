@@ -5,6 +5,7 @@ import { firebase } from "../firebase";
 import { Appbar, List, useTheme } from "react-native-paper";
 
 const FolderContents = ({ route, navigation }) => {
+  const { colors } = useTheme();
   const folder = route.params.folder;
   const title = folder[0];
   const students = folder[1];
@@ -46,7 +47,21 @@ const FolderContents = ({ route, navigation }) => {
     );
   };
 
-  return <List />;
+  const Header = () => {
+    return (
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title={title} />
+      </Appbar.Header>
+    );
+  };
+
+  return (  
+    <ScrollView style={{ backgroundColor: colors.background }}>
+        <Header />
+        <List />
+    </ScrollView>
+  );
 };
 
 export default FolderContents;
