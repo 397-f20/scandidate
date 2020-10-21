@@ -45,7 +45,28 @@ function CountNum(props){ //count how many filters has been selected and display
   }
 }
 
+function ShowCount(props){
+    const clearFilter = () => { //called when press the x button
+        props.setClearedSetting(true);
+        props.setFilterSettings(props.initialSettings);
+        props.setIsSelected(false);
+    };
+    if(!props.isSelected){
+        return null;
+    }
+    else{
+        return (
+            <View style={[styles.chipSelection, {backgroundColor: props.colors.primary, }]}>
+        <Chip style={[styles.chip]} onClose={() => clearFilter()}>  {/* add the clear filter option on the right */}
+            <CountNum filterSettings={props.filterSettings} clearedSetting={props.clearedSetting} /> 
+        </Chip>
+        </View>);
+    }
+
+}
+
 const RecruiterLandingScreen = ({ navigation }) => {
+  const [isSelected, setIsSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState("Loading...");
   const [foldersVisible, setFoldersVisible] = useState(false);
@@ -62,6 +83,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const hideFolders = () => setFoldersVisible(false);
+  const showCount = () => setIsSelected(true);
   const { colors } = useTheme();
 
   // database
@@ -111,10 +133,6 @@ const RecruiterLandingScreen = ({ navigation }) => {
 
   //determine if the selected filters will be cleared or not
   const [clearedSetting, setClearedSetting] = useState(false); 
-  const clearFilter = () => { //called when press the x button
-    setClearedSetting(true);
-    setFilterSettings(initialSettings);
-  };
 
   return (
     <SafeAreaView
@@ -127,6 +145,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
         modalData={modalData}
         filterSettings={filterSettings} //based on filterSettings highlight the filterBar
         setClearedSetting={setClearedSetting}//once pressed the filterBar, clearOption is resetted
+        isSelected={isSelected}
       />
       {filterSettings === initialSettings ? null : (
         <Text>
@@ -134,10 +153,12 @@ const RecruiterLandingScreen = ({ navigation }) => {
         </Text>
       )}
 
-      <Chip style={styles.chipSelection}>  {/* add the clear filter option on the right */}
-        <CountNum filterSettings={filterSettings} clearedSetting={clearedSetting} /> 
-        <Button onPress={() => clearFilter()} style={[styles.buttonStyle]}> x </Button>
-      </Chip>   
+
+      <ShowCount filterSettings={filterSettings} clearedSetting={clearedSetting} 
+                setClearedSetting={setClearedSetting} setFilterSettings={setFilterSettings} 
+                initialSettings={initialSettings} setIsSelected={setIsSelected}
+                isSelected={isSelected} colors={colors}/>
+
 
       <Portal>
         <ModalOptions
@@ -146,6 +167,8 @@ const RecruiterLandingScreen = ({ navigation }) => {
           modalVisible={modalVisible}
           modalData={modalData}
           setFilterSettings={setFilterSettings}
+          showCount={showCount}
+
         />
       </Portal>
       <Portal>
@@ -182,17 +205,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   chipSelection:{
-    width: 50 + (numSelected.toString().length)*10,
+    width: 60 + (numSelected.toString().length)*10,
     position: 'absolute',
-    right:10,
-    top: 3,
+    right:0,
+    top: 0,
+    paddingVertical: 4,
+    maxHeight: 40,
   },
-  buttonStyle: {
-    borderRadius: 0,
-    flexDirection: "row",
-    alignItems: "center",
-    width: 10,
-    height: 10,
+  chip: {
+    height: 30,
+    margin: 1,
   },
   filterText:{
     color: "#ebae34",

@@ -30,9 +30,10 @@ function TextStyle(props) { //change the text color if being selected
   }
   
 
-const FilterBar = ({ showModal, setModalData, filterSettings, setClearedSetting}) => {
+const FilterBar = ({ showModal, setModalData, filterSettings, setClearedSetting, isSelected}) => {
   const { colors } = useTheme();
   const [cleared, setCleared] = useState(false);
+  const [shrinkSize, setShrinkSize] = useState("100%");
   const filterPress = (item) => {
     showModal();
     setModalData(item);
@@ -40,7 +41,7 @@ const FilterBar = ({ showModal, setModalData, filterSettings, setClearedSetting}
     setClearedSetting(false);
   };
 
-
+  const shrinksize = isSelected ? "81%" : "100%";
   const flatlist = (
     <View>
       <FlatList
@@ -53,12 +54,13 @@ const FilterBar = ({ showModal, setModalData, filterSettings, setClearedSetting}
         )}
         keyExtractor={(item, index) => index.toString()}
         showsHorizontalScrollIndicator={false}
-        style={[styles.container, { backgroundColor: colors.primary }]}
+        style={[styles.container, { 
+            backgroundColor: colors.primary, 
+            width: shrinksize, }]}
       />
       
     </View>
-  );
-
+  );      
   return flatlist;
 };
 
@@ -66,7 +68,6 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 4,
     maxHeight: 40,
-    width: "100%",
   },
   chip: {
     height: 30,

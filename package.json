@@ -9,7 +9,13 @@
     "build": "expo build:web",
     "predeploy": "expo build:web",
     "deploy-hosting": "npm run predeploy && firebase deploy --only hosting",
-    "test": "test --passWithNoTests"
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ]
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -20,6 +26,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@react-native-community/checkbox": "^0.5.4",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/bottom-tabs": "^5.9.2",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "babel-loader": "^8.1.0",
@@ -41,7 +48,9 @@
     "react-native-web": "^0.13.14"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "jest-expo": "^39.0.0",
+    "react-test-renderer": "^16.14.0"
   },
   "private": true
 }

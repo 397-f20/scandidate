@@ -21,20 +21,21 @@ const ModalOptions = ({
   modalVisible,
   modalData,
   setFilterSettings,
+  showCount,
 }) => {
   const { colors } = useTheme();
   const { modalStyle } = styles.modal;
 
   const [checked, setChecked] = useState(filterSettings);
-
   const saveButton = () => {
     hideModal();
     setFilterSettings({
       ...filterSettings,
       [modalData.title]: checked[modalData.title],
     });
+    showCount();
   };
-
+  
   const SingleSelect = () => {
     return (
       <View style={styles.singleSelect}>
