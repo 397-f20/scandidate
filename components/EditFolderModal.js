@@ -1,7 +1,9 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { firebase } from "../firebase";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, FlatList } from "react-native";
 import {
+  Checkbox,
+  List,
   Modal,
   Text,
   Button,
@@ -11,10 +13,15 @@ import {
 
 const db = firebase.database().ref("companies/Google/recruiters/Jen B/Folders");
 
-const AddFolderModal = ({ folders, modalVisible, setModalVisible }) => {
+const EditFolderModal = ({ 
+    setEditFolderVisible, 
+    editFolderVisible, 
+    selectedFolder,
+    folders }) => {
   const { colors } = useTheme();
-  const [folderName, setFolderName] = React.useState("");
 
+  const [submitError, setSubmitError] = useState("");
+  const [newFolderName, setNewFolderName] = React.useState(selectedFolder);
   // database
   useEffect(() => {
     const handleData = (snapshot) => {
@@ -29,42 +36,45 @@ const AddFolderModal = ({ folders, modalVisible, setModalVisible }) => {
 
   //add the folder name to the db
   const saveButton = () => {
-    if (folderName != "") {
-      //check if the folder name already exists in db
-      if (Object.keys(folders).includes(folderName)) {
-        alert("Already Existing! ");
-        setFolderName("");
-      } else {
-        //if not then add to the folder
+    if (selectedFolder != "") {
+        //check if the folder name already exists in db
+        if (selectedFolder == newFolderName) {
+            alert("Please Enter a Different Name! ");
+        } else {
+        //if not then changing the folder name
+        const prevContent = folders[selectedFolder];
         const newfolderObj = {
-          ...folders,
-          [folderName]: [-1],
+            ...folders,
+            [newFolderName]: prevContent,
         };
+        // adding it
         db.set(newfolderObj).catch((error) => {
           alert(error.message);
         });
-
-        setModalVisible(false);
+        //removing the previous folder
+        db.child(selectedFolder).remove().catch(error => { alert(error.message); });
+        setNewFolderName("");
+        setEditFolderVisible(false);    
       }
     }
   };
 
   return (
-    <Modal visible={modalVisible}>
+    <Modal visible={editFolderVisible}>
       <View style={[styles.modal, { backgroundColor: colors.surface }]}>
-        <Text style={styles.title}>Create a New Folder</Text>
+        <Text style={styles.title}>Edit Folder Name</Text>
         <TextInput
-          label="Folder Name"
-          value={folderName}
-          onChangeText={(folderName) => setFolderName(folderName)}
+          label="New Folder Name"
+          value={newFolderName}
+          onChangeText={(newFolderName) => setNewFolderName(newFolderName)}
         />
         <Button mode="contained" onPress={() => saveButton()}>
-          Save
+          Rename
         </Button>
         <Button
           mode="text"
           onPress={() => {
-            setModalVisible(false);
+            setEditFolderVisible(false);
           }}
         >
           Cancel
@@ -102,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddFolderModal;
+export default EditFolderModal;

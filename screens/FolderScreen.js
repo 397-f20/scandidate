@@ -3,31 +3,23 @@ import { Alert, FlatList, ScrollView, StyleSheet } from "react-native";
 import { firebase } from "../firebase";
 import {
   Appbar,
-  Card,
-  IconButton,
-  List,
-  Menu,
   useTheme,
-  Button,
   Portal,
 } from "react-native-paper";
 import AddFolderModal from "../components/AddFolderModal";
 import FolderCard from "../components/FolderCard";
 import DeleteFolderDialog from "../components/DeleteFolderDialog";
+import EditFolderModal from "../components/EditFolderModal";
 const db = firebase.database().ref("companies/Google/recruiters/Jen B/Folders");
 
 const FolderScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const [folders, setFolders] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
   const [deleteFolderVisible, setDeleteFolderVisible] = useState(false);
+  const [editFolderVisible, setEditFolderVisible] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState("");
-  const openMenu = () => {
-    setMenuVisible(true);
-    console.log("menu is open");
-  };
-  const closeMenu = () => setMenuVisible(false);
+
 
   // database
   useEffect(() => {
@@ -51,6 +43,7 @@ const FolderScreen = ({ navigation }) => {
           navigation={navigation}
           item={item}
           setDeleteFolderVisible={setDeleteFolderVisible}
+          setEditFolderVisible={setEditFolderVisible}
           setSelectedFolder={setSelectedFolder}/ >
         )}
       />
@@ -84,6 +77,12 @@ const FolderScreen = ({ navigation }) => {
         setDeleteFolderVisible={setDeleteFolderVisible}
         deleteFolderVisible={deleteFolderVisible}
         selectedFolder={selectedFolder}
+        />
+        <EditFolderModal
+        setEditFolderVisible={setEditFolderVisible}
+        editFolderVisible={editFolderVisible}
+        selectedFolder={selectedFolder}
+        folders={folders}
         />
       </Portal>
     </ScrollView>

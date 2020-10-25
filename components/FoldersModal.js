@@ -29,6 +29,7 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
         console.log("This student has already been added to the " + folder + " folder")
       }
       else {
+          
         const newList = [...folders[folder], parseInt(studentID)]
         db.child(folder).set(newList)
       }

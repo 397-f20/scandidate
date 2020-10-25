@@ -14,31 +14,45 @@ import {
   useTheme,
 } from "react-native-paper";
 
-const FolderCard = ({navigation, item, setDeleteFolderVisible, setSelectedFolder}) => {
+const FolderCard = ({
+  navigation,
+  item,
+  setDeleteFolderVisible,
+  setEditFolderVisible,
+  setSelectedFolder,
+}) => {
   const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
-  const openMenu = () => setMenuVisible(true);
-  const closeMenu = () => setMenuVisible(false);
+
 
   const folderIcon = (props) => (
     <List.Icon {...props} icon="folder" size={24} />
   );
 
-  const dots = <IconButton icon="dots-vertical" onPress={openMenu} />;
+  const dots = <IconButton icon="dots-vertical" onPress={ () => {setMenuVisible(true);} } />;
   const menu = () => {
     return (
       <Menu
         visible={menuVisible}
-        onDismiss={() => {closeMenu();}}
+        onDismiss={() => {
+            setMenuVisible(false);
+        }}
         anchor={dots}
         contentStyle={{ backgroundColor: colors.background }}
       >
-        <Menu.Item onPress={() => {closeMenu()}} title="Edit Folder Name" />
         <Menu.Item
           onPress={() => {
-              setDeleteFolderVisible(true);
-              setSelectedFolder(item[0]);
-              closeMenu();
+            setEditFolderVisible(true);
+            setSelectedFolder(item[0]);
+            setMenuVisible(false);
+          }}
+          title="Edit Folder Name"
+        />
+        <Menu.Item
+          onPress={() => {
+            setDeleteFolderVisible(true);
+            setSelectedFolder(item[0]);
+            setMenuVisible(false);
           }}
           title="Delete Folder"
         />
@@ -46,19 +60,17 @@ const FolderCard = ({navigation, item, setDeleteFolderVisible, setSelectedFolder
     );
   };
   return (
-      <Card
-        style={styles.card}
-        onPress={() =>
-          navigation.navigate("FolderContents", { folder: item })
-        }
-      >
-        <Card.Title
-          title={item[0]}
-          subtitle={item[1].length - 1 + " candidate(s)"}
-          left={folderIcon}
-          right={menu}
-        />
-      </Card>
+    <Card
+      style={styles.card}
+      onPress={() => navigation.navigate("FolderContents", { folder: item })}
+    >
+      <Card.Title
+        title={item[0]}
+        subtitle={item[1].length - 1 + " candidate(s)"}
+        left={folderIcon}
+        right={menu}
+      />
+    </Card>
   );
 };
 
