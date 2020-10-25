@@ -23,7 +23,6 @@ const AddFolderModal = ({folders, modalVisible, setModalVisible }) => {
 
   //add the folder name to the db
   const saveButton = () => {
-    Alert(folderName)
     if(folderName != ""){
         //check if the folder name already exists in db
         if (Object.keys(folders).includes(folderName)){
@@ -31,7 +30,7 @@ const AddFolderModal = ({folders, modalVisible, setModalVisible }) => {
             setFolderName("");
         }
         else{//if not then add to the folder
-            const newfolderObj = { 
+            const newfolderObj = {
                 ...folders,
                 [folderName]: [-1],
             };

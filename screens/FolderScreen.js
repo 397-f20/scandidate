@@ -12,6 +12,8 @@ import {
   Portal,
 } from "react-native-paper";
 import AddFolderModal from "../components/AddFolderModal";
+import FolderCard from "../components/FolderCard";
+import DeleteFolderDialog from "../components/DeleteFolderDialog";
 const db = firebase.database().ref("companies/Google/recruiters/Jen B/Folders");
 
 const FolderScreen = ({ navigation }) => {
@@ -19,6 +21,8 @@ const FolderScreen = ({ navigation }) => {
   const [folders, setFolders] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [deleteFolderVisible, setDeleteFolderVisible] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState("");
   const openMenu = () => {
     setMenuVisible(true);
     console.log("menu is open");
@@ -37,69 +41,21 @@ const FolderScreen = ({ navigation }) => {
       db.off("value", handleData);
     };
   }, []);
-
-  const folderIcon = (props) => (
-    <List.Icon {...props} icon="folder" size={24} />
-  );
-
-  const dots = (
-    <IconButton
-      icon="dots-vertical"
-      onPress={() => {
-        openMenu();
-        console.log("menu", menuVisible);
-      }}
-    />
-  );
-
   const Folders = () => {
     return (
       <FlatList
         data={Object.entries(folders)}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <Card
-            style={styles.card}
-            onPress={() =>
-              navigation.navigate("FolderContents", { folder: item })
-            }
-          >
-            <Card.Title
-              title={item[0]}
-              subtitle={item[1].length - 1 + " candidate(s)"}
-              left={folderIcon}
-              right={() => menu}
-            />
-          </Card>
+          <FolderCard
+          navigation={navigation}
+          item={item}
+          setDeleteFolderVisible={setDeleteFolderVisible}
+          setSelectedFolder={setSelectedFolder}/ >
         )}
       />
     );
   };
-
-  const menu = () => {
-    console.log("menu is here");
-    return (
-      <Menu
-        visible={menuVisible}
-        onDismiss={() => {
-          console.log("dismissed");
-          closeMenu();
-        }}
-        anchor={dots}
-        contentStyle={{ backgroundColor: colors.background }}
-      >
-        <Menu.Item onPress={() => {}} title="Edit Folder Name" />
-        <Menu.Item
-          onPress={() => {
-            // Alert.alert("Are u sure");
-            // closeMenu();
-          }}
-          title="Delete Folder"
-        />
-      </Menu>
-    );
-  };
-
   const Header = () => {
     return (
       <Appbar.Header>
@@ -123,6 +79,11 @@ const FolderScreen = ({ navigation }) => {
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
           folders={folders}
+        />
+        <DeleteFolderDialog
+        setDeleteFolderVisible={setDeleteFolderVisible}
+        deleteFolderVisible={deleteFolderVisible}
+        selectedFolder={selectedFolder}
         />
       </Portal>
     </ScrollView>
