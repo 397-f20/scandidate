@@ -35,7 +35,7 @@ const ModalOptions = ({
     });
     showCount();
   };
-  
+
   const SingleSelect = () => {
     return (
       <View style={styles.singleSelect}>
@@ -102,9 +102,11 @@ const ModalOptions = ({
   };
 
   return (
-    <Modal visible={modalVisible}>
+    <Modal visible={modalVisible} onDismiss={hideModal}>
       <View style={[styles.modal, { backgroundColor: colors.surface }]}>
-        <Text style={styles.title}>{modalData.title}</Text>
+        <Text style={styles.title}>
+        {(modalData.title === "GPA") ? "Minimum GPA" : modalData.title}
+        </Text>
         {modalData.type === "multi-select" ? <MultiSelect /> : <SingleSelect />}
         <Button mode="contained" onPress={() => saveButton()}>
           Save Filter

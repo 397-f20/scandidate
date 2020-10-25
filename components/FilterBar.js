@@ -28,7 +28,7 @@ function TextStyle(props) { //change the text color if being selected
         return <Text style={styles.filterText}>{item.title}</Text>;
     }
   }
-  
+
 
 const FilterBar = ({ showModal, setModalData, filterSettings, setClearedSetting, isSelected}) => {
   const { colors } = useTheme();
@@ -54,19 +54,20 @@ const FilterBar = ({ showModal, setModalData, filterSettings, setClearedSetting,
         )}
         keyExtractor={(item, index) => index.toString()}
         showsHorizontalScrollIndicator={false}
-        style={[styles.container, { 
-            backgroundColor: colors.primary, 
+        style={[styles.container, {
+            backgroundColor: colors.primary,
             width: shrinksize, }]}
       />
-      
+
     </View>
-  );      
+  );
   return flatlist;
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 4,
+    paddingHorizontal:4,
     maxHeight: 40,
   },
   chip: {

@@ -34,7 +34,7 @@ function CountNum(props){ //count how many filters has been selected and display
           if(value.length == 0){
               count++;
           }
-      } 
+      }
   } )
   numSelected = lenCount - count;
   if(numSelected == 0){
@@ -58,7 +58,7 @@ function ShowCount(props){
         return (
             <View style={[styles.chipSelection, {backgroundColor: props.colors.primary, }]}>
         <Chip style={[styles.chip]} onClose={() => clearFilter()}>  {/* add the clear filter option on the right */}
-            <CountNum filterSettings={props.filterSettings} clearedSetting={props.clearedSetting} /> 
+            <CountNum filterSettings={props.filterSettings} clearedSetting={props.clearedSetting} />
         </Chip>
         </View>);
     }
@@ -132,13 +132,13 @@ const RecruiterLandingScreen = ({ navigation }) => {
   };
 
   //determine if the selected filters will be cleared or not
-  const [clearedSetting, setClearedSetting] = useState(false); 
+  const [clearedSetting, setClearedSetting] = useState(false);
 
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      
+
       <FilterBar
         showModal={showModal}
         setModalData={setModalData}
@@ -148,14 +148,14 @@ const RecruiterLandingScreen = ({ navigation }) => {
         isSelected={isSelected}
       />
       {filterSettings === initialSettings ? null : (
-        <Text>
+        <Text style={styles.resultSummary}>
           {filterStudents().length} student(s) matched your qualifications.
         </Text>
       )}
 
 
-      <ShowCount filterSettings={filterSettings} clearedSetting={clearedSetting} 
-                setClearedSetting={setClearedSetting} setFilterSettings={setFilterSettings} 
+      <ShowCount filterSettings={filterSettings} clearedSetting={clearedSetting}
+                setClearedSetting={setClearedSetting} setFilterSettings={setFilterSettings}
                 initialSettings={initialSettings} setIsSelected={setIsSelected}
                 isSelected={isSelected} colors={colors}/>
 
@@ -192,7 +192,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
           />
         )}
       />
-      
+
 
     </SafeAreaView>
   );
@@ -215,6 +215,10 @@ const styles = StyleSheet.create({
   chip: {
     height: 30,
     margin: 1,
+  },
+  resultSummary:{
+    paddingHorizontal: 10,
+    paddingVertical: 5
   },
   filterText:{
     color: "#ebae34",
