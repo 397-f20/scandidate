@@ -11,7 +11,13 @@ import {
   useTheme,
 } from "react-native-paper";
 
-const CandidateCard = ({ studData, id, navigation, setFoldersVisible, setStudentID}) => {
+const CandidateCard = ({
+  studData,
+  id,
+  navigation,
+  setFoldersVisible,
+  setStudentID,
+}) => {
   const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
