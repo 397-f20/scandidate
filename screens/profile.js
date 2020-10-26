@@ -115,7 +115,7 @@ const Profile = ({ student }) => {
   const ContactHeader = () => {
     const avatar = student.profile_photo;
     const name = student.name;
-    const bio = student.qualifications.Major;
+    const major = student.qualifications.Major;
 
     return (
       <View style={styles.headerContainer}>
@@ -125,7 +125,7 @@ const Profile = ({ student }) => {
             <Text style={styles.userNameText}>{name}</Text>
           </View>
           <View style={styles.userBioRow}>
-            <Text style={styles.userBioText}>{bio}</Text>
+            <Text style={styles.userBioText}>{major}</Text>
           </View>
         </View>
       </View>

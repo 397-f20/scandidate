@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import {
   Avatar,
   Card,
@@ -23,13 +23,18 @@ const CandidateCard = ({
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
 
-  const avatar = (props) => (
-    <Avatar.Icon
-      {...props}
-      icon="account-circle"
-      backgroundColor={colors.accent}
-    />
-  );
+  const avatar = (props) => {
+      const photo = studData.profile_photo;
+      if (photo == "placeholder") {
+        return (
+            <Avatar.Icon
+          {...props}
+          icon="account-circle"
+          backgroundColor={colors.accent}
+        /> );
+      }
+      return (<Image style={styles.photo} source = {{uri: photo}} />);
+  };
 
   const dots = <IconButton icon="dots-vertical" onPress={openMenu} />;
 
@@ -72,6 +77,11 @@ const styles = StyleSheet.create({
   card: {
     margin: 5,
   },
+  photo: {
+      height: 40,
+      width: 40,
+      borderRadius: 40 / 2
+  }
 });
 
 export default CandidateCard;
