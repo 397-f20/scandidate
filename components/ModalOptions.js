@@ -49,7 +49,7 @@ const ModalOptions = ({
             data={modalData.data}
             renderItem={({ item }) => (
               <View style={styles.button}>
-                <RadioButton value={item.name} />
+                <RadioButton.Android value={item.name} />
                 <Text>{item.name}</Text>
               </View>
             )}
@@ -68,7 +68,7 @@ const ModalOptions = ({
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.button}>
-              <Checkbox
+              <Checkbox.Android 
                 onPress={() =>
                   checked[modalData.title].includes(item.name)
                     ? setChecked({
