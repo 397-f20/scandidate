@@ -50,7 +50,7 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
                 <List.Icon size={24} icon="folder-outline" />
                 <Text>{item}</Text>
               </View>
-              <Checkbox
+              <Checkbox.Android 
                 onPress={() => {checked.includes(item) ? 
                   setChecked(
                     checked.filter(
@@ -89,16 +89,17 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
 
 const styles = StyleSheet.create({
   row: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
   checkbox: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
+    // flex: 1,
+    // alignSelf: 'flex-end',
+    // justifyContent: 'flex-end',
     right: 0,
+    backgroundColor:  '#fff',
   },
   modal: {
     margin: 20,
@@ -106,8 +107,9 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   singleSelect: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "flex-start",
+    flexDirection: "column",
   },
   title: {
     alignSelf: "center",
