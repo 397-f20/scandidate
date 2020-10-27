@@ -11,9 +11,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
   List,
   BottomNavigation,
+
   DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Stack = createStackNavigator();
@@ -32,8 +34,10 @@ const theme = {
 };
 
 const App = () => {
+
   return (
     <PaperProvider theme={theme}>
+
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen
@@ -68,8 +72,10 @@ const App = () => {
           />
         </Tab.Navigator>
       </NavigationContainer>
+
     </PaperProvider>
   );
+
 };
 
 const folders = () => {

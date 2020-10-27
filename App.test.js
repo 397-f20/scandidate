@@ -1,15 +1,24 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-
+import renderer, { act, create } from 'react-test-renderer';
 import App from './App';
 
 describe('<App />', () => {
-  it('has 1 child', () => {
-    const tree = renderer.create(<App />).toJSON();
-    expect(tree.children.length).toBe(1);
+    jest.useFakeTimers();
+    let tree;
+it('renders ',async() => {
+    await act(async() => {
+      tree = renderer.create(
+          <App/>
+      );
+    });
   });
-  it('renders correctly', () => {
-    const tree = renderer.create(<App />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+it('has 1 child', async () => {
+    await act( async () => {
+     tree = renderer.create(
+          <App/>
+      );
+    });
+    tree = tree.toJSON()
+     expect(tree.children.length).toBe(1);
+    });
 });
