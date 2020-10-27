@@ -11,14 +11,5 @@ it('renders ',async() => {
           <App/>
       );
     });
-  });
-it('has 1 child', async () => {
-    await act( async () => {
-     tree = renderer.create(
-          <App/>
-      );
-    });
-    tree = tree.toJSON()
-     expect(tree.children.length).toBe(1);
-    });
+});
 });
