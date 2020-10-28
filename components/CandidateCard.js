@@ -24,16 +24,17 @@ const CandidateCard = ({
   const closeMenu = () => setMenuVisible(false);
 
   const avatar = (props) => {
-      const photo = studData.profile_photo;
-      if (photo == "placeholder") {
-        return (
-            <Avatar.Icon
+    const photo = studData.profile_photo;
+    if (photo == "placeholder") {
+      return (
+        <Avatar.Icon
           {...props}
           icon="account-circle"
           backgroundColor={colors.accent}
-        /> );
-      }
-      return (<Image style={styles.photo} source = {{uri: photo}} />);
+        />
+      );
+    }
+    return <Image style={styles.photo} source={{ uri: photo }} />;
   };
 
   const dots = <IconButton icon="dots-vertical" onPress={openMenu} />;
@@ -61,7 +62,9 @@ const CandidateCard = ({
   return (
     <Card
       style={styles.card}
-      onPress={() => navigation.navigate("StudentDetailScreen", { studData })}
+      onPress={() =>
+        navigation.navigate("StudentDetailScreen", { studData, id })
+      }
     >
       <Card.Title
         title={studData.name}
@@ -78,10 +81,10 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   photo: {
-      height: 40,
-      width: 40,
-      borderRadius: 40 / 2
-  }
+    height: 40,
+    width: 40,
+    borderRadius: 40 / 2,
+  },
 });
 
 export default CandidateCard;

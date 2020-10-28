@@ -68,7 +68,7 @@ const ModalOptions = ({
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.button}>
-              <Checkbox.Android 
+              <Checkbox.Android
                 onPress={() =>
                   checked[modalData.title].includes(item.name)
                     ? setChecked({
@@ -105,7 +105,7 @@ const ModalOptions = ({
     <Modal visible={modalVisible} onDismiss={hideModal}>
       <View style={[styles.modal, { backgroundColor: colors.surface }]}>
         <Text style={styles.title}>
-        {(modalData.title === "GPA") ? "Minimum GPA" : modalData.title}
+          {modalData.title === "GPA" ? "Minimum GPA" : modalData.title}
         </Text>
         {modalData.type === "multi-select" ? <MultiSelect /> : <SingleSelect />}
         <Button mode="contained" onPress={() => saveButton()}>

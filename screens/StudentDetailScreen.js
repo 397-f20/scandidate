@@ -7,8 +7,9 @@ import {
   View,
   Image,
 } from "react-native";
-import { useTheme } from "react-native-paper";
+import { useTheme, Button, Portal } from "react-native-paper";
 import Profile from "./profile";
+import FoldersModal from "../components/FoldersModal";
 
 const Field = ({ label, value }) => {
   return (
@@ -20,7 +21,13 @@ const Field = ({ label, value }) => {
 };
 
 const StudentDetailScreen = ({ route }) => {
+  const [foldersVisible, setFoldersVisible] = useState(false);
+  const hideFolders = () => setFoldersVisible(false);
+  const openFolders = () => setFoldersVisible(true);
+
   const student = route.params.studData;
+  const id = route.params.id;
+
   const { colors } = useTheme();
 
   return (
@@ -29,6 +36,14 @@ const StudentDetailScreen = ({ route }) => {
         backgroundColor: colors.background,
       })}
     >
+      <Button
+        icon="plus"
+        onPress={openFolders}
+        //mode="contained"
+        style={styles.button}
+      >
+        Add to Folder
+      </Button>
       <ScrollView>
         <Profile student={student} />
         <Field label="Degree" value={student.qualifications.Degree} />
@@ -42,6 +57,14 @@ const StudentDetailScreen = ({ route }) => {
           value={student.qualifications.skills.join(", ")}
         />
       </ScrollView>
+
+      <Portal>
+        <FoldersModal
+          hideModal={hideFolders}
+          modalVisible={foldersVisible}
+          studentID={id}
+        />
+      </Portal>
     </SafeAreaView>
   );
 };
@@ -50,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between", //"center",
   },
   field: {
     height: 40,
@@ -63,6 +86,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: "bold",
+  },
+  button: {
+    width: 200,
+    height: 40,
   },
 });
 

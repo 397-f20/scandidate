@@ -12,57 +12,64 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { Chip, Portal, Provider, useTheme,Button } from "react-native-paper";
+import { Chip, Portal, Provider, useTheme, Button } from "react-native-paper";
 import { firebase } from "../firebase";
 
-
-
 var numSelected = 0; //calculate the width of the filter number text
-function CountNum(props){ //count how many filters has been selected and display in text
+function CountNum(props) {
+  //count how many filters has been selected and display in text
   let count = 0; //count the filters that's not selected
   let lenCount = 0; //count the length of filters
-  if(props.clearedSetting){
-      numSelected = 0;
-      return <Text> {numSelected} </Text>
+  if (props.clearedSetting) {
+    numSelected = 0;
+    return <Text> {numSelected} </Text>;
   }
   Object.entries(props.filterSettings).map(([name, value]) => {
-      lenCount ++;
-      if(value == null){
-          count++;
+    lenCount++;
+    if (value == null) {
+      count++;
+    } else {
+      if (value.length == 0) {
+        count++;
       }
-      else{
-          if(value.length == 0){
-              count++;
-          }
-      }
-  } )
+    }
+  });
   numSelected = lenCount - count;
-  if(numSelected == 0){
-      return <Text> {numSelected} </Text>
-  }
-  else{
-      return <Text style={styles.filterText}> {numSelected} </Text>
+  if (numSelected == 0) {
+    return <Text> {numSelected} </Text>;
+  } else {
+    return <Text style={styles.filterText}> {numSelected} </Text>;
   }
 }
 
-function ShowCount(props){
-    const clearFilter = () => { //called when press the x button
-        props.setClearedSetting(true);
-        props.setFilterSettings(props.initialSettings);
-        props.setIsSelected(false);
-    };
-    if(!props.isSelected){
-        return null;
-    }
-    else{
-        return (
-            <View style={[styles.chipSelection, {backgroundColor: props.colors.primary, }]}>
-        <Chip style={[styles.chip]} onClose={() => clearFilter()}>  {/* add the clear filter option on the right */}
-            <CountNum filterSettings={props.filterSettings} clearedSetting={props.clearedSetting} />
+function ShowCount(props) {
+  const clearFilter = () => {
+    //called when press the x button
+    props.setClearedSetting(true);
+    props.setFilterSettings(props.initialSettings);
+    props.setIsSelected(false);
+  };
+  if (!props.isSelected) {
+    return null;
+  } else {
+    return (
+      <View
+        style={[
+          styles.chipSelection,
+          { backgroundColor: props.colors.primary },
+        ]}
+      >
+        <Chip style={[styles.chip]} onClose={() => clearFilter()}>
+          {" "}
+          {/* add the clear filter option on the right */}
+          <CountNum
+            filterSettings={props.filterSettings}
+            clearedSetting={props.clearedSetting}
+          />
         </Chip>
-        </View>);
-    }
-
+      </View>
+    );
+  }
 }
 
 const RecruiterLandingScreen = ({ navigation }) => {
@@ -91,7 +98,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
     const db = firebase.database().ref("students");
     const handleData = (snap) => {
       if (snap.val()) {
-        setData({students: snap.val()});
+        setData({ students: snap.val() });
       }
     };
     db.on("value", handleData, (error) => alert(error));
@@ -138,13 +145,12 @@ const RecruiterLandingScreen = ({ navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-
       <FilterBar
         showModal={showModal}
         setModalData={setModalData}
         modalData={modalData}
         filterSettings={filterSettings} //based on filterSettings highlight the filterBar
-        setClearedSetting={setClearedSetting}//once pressed the filterBar, clearOption is resetted
+        setClearedSetting={setClearedSetting} //once pressed the filterBar, clearOption is resetted
         isSelected={isSelected}
       />
       {filterSettings === initialSettings ? null : (
@@ -153,12 +159,16 @@ const RecruiterLandingScreen = ({ navigation }) => {
         </Text>
       )}
 
-
-      <ShowCount filterSettings={filterSettings} clearedSetting={clearedSetting}
-                setClearedSetting={setClearedSetting} setFilterSettings={setFilterSettings}
-                initialSettings={initialSettings} setIsSelected={setIsSelected}
-                isSelected={isSelected} colors={colors}/>
-
+      <ShowCount
+        filterSettings={filterSettings}
+        clearedSetting={clearedSetting}
+        setClearedSetting={setClearedSetting}
+        setFilterSettings={setFilterSettings}
+        initialSettings={initialSettings}
+        setIsSelected={setIsSelected}
+        isSelected={isSelected}
+        colors={colors}
+      />
 
       <Portal>
         <ModalOptions
@@ -168,11 +178,14 @@ const RecruiterLandingScreen = ({ navigation }) => {
           modalData={modalData}
           setFilterSettings={setFilterSettings}
           showCount={showCount}
-
         />
       </Portal>
       <Portal>
-        <FoldersModal hideModal={hideFolders} modalVisible={foldersVisible} studentID={studentID}/>
+        <FoldersModal
+          hideModal={hideFolders}
+          modalVisible={foldersVisible}
+          studentID={studentID}
+        />
       </Portal>
       <FlatList
         data={
@@ -192,8 +205,6 @@ const RecruiterLandingScreen = ({ navigation }) => {
           />
         )}
       />
-
-
     </SafeAreaView>
   );
 };
@@ -204,10 +215,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  chipSelection:{
-    width: 60 + (numSelected.toString().length)*10,
-    position: 'absolute',
-    right:0,
+  chipSelection: {
+    width: 60 + numSelected.toString().length * 10,
+    position: "absolute",
+    right: 0,
     top: 0,
     paddingVertical: 4,
     maxHeight: 40,
@@ -216,15 +227,15 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 1,
   },
-  resultSummary:{
+  resultSummary: {
     paddingHorizontal: 10,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
-  filterText:{
+  filterText: {
     color: "#ebae34",
     textAlignVertical: "top",
     fontWeight: "bold",
-  }
+  },
 });
 
 export default RecruiterLandingScreen;
