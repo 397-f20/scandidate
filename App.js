@@ -38,7 +38,7 @@ const App = () => {
   return (
     <PaperProvider theme={theme}>
 
-      <NavigationContainer>
+      <NavigationContainer data-cy='nav'>
         <Tab.Navigator>
           <Tab.Screen
             component={home}

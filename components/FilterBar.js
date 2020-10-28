@@ -57,7 +57,7 @@ const FilterBar = ({
           <Chip
             onPress={() => filterPress(item)}
             style={styles.chip}
-            data-cy={item}
+            data-cy="chip"
           >
             <TextStyle
               item={item}

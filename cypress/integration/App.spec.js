@@ -5,9 +5,19 @@ describe("Test App", () => {
 
   it("opens with Filter Bar", () => {
     cy.visit("/");
-    cy.get("[data-cy=numQual]").should(
-      "contain",
-      "45 student(s) matched your qualifications."
-    );
+    //cy.wait(10000);
+    // cy.get("[data-cy=nav]").should(
+    //   "contain",
+    //   "45 student(s) matched your qualifications."
+    // );
   });
 });
+
+
+
+describe('<FilterBar />', () => {
+  it('Find attribute', () => {
+    cy.visit('/')
+    cy.get('div[role=button]').contains("Graduation Year")
+  });
+}); 
