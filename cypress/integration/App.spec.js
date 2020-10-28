@@ -17,7 +17,8 @@ describe("Test App", () => {
 
 describe('<FilterBar />', () => {
   it('Find attribute', () => {
-    cy.visit('/')
-    cy.get('div[role=button]').contains("Graduation Year")
+    cy.visit('/');
+    cy.get('div[role=button]').contains("Graduation Year").click();
+    cy.get('div[role=button]').contains("Cancel");
   });
 }); 
