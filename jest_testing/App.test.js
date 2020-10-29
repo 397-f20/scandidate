@@ -1,6 +1,6 @@
 import React from "react";
 import renderer, { act, create } from "react-test-renderer";
-import App from "./App";
+import App from "../App";
 
 jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper"); //removes useNativeDriver error
 

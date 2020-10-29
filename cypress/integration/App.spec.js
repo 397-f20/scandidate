@@ -21,4 +21,4 @@ describe('<FilterBar />', () => {
     cy.get('div[role=button]').contains("Graduation Year").click();
     cy.get('div[role=button]').contains("Cancel");
   });
-}); 
+});
