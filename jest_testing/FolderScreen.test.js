@@ -4,7 +4,7 @@ import RecruiterLandingScreen from "../screens/RecruiterLandingScreen";
 import FolderScreen from "../screens/FolderScreen";
 import { render, fireEvent } from '@testing-library/react-native'; 
 // npm install --save-dev @testing-library/react-native
-import '@testing-library/jest-dom/extend-expect'
+// import '@testing-library/jest-dom/extend-expect'
 // npm install --save-dev @testing-library/jest-dom
 
 jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper"); //removes useNativeDriver error
