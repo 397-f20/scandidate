@@ -1,16 +1,16 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
-import RecruiterLandingScreen from "../screens/RecruiterLandingScreen";
+import FolderScreen from "../screens/FolderScreen";
 
 jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper"); //removes useNativeDriver error
 
-describe("<RecruiterLandingScreen />", () => {
-  it("RecruiterLandingScreen renders", async () => {
+describe("<FolderScreen />", () => {
+  it("FolderScreen renders", async () => {
     jest.useFakeTimers();
     let tree;
 
     await act(async () => {
-      tree = renderer.create(<RecruiterLandingScreen />);
+      tree = renderer.create(<FolderScreen />);
     });
     tree = tree.toJSON();
 
