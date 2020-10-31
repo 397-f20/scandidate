@@ -5,6 +5,7 @@ import {
   Appbar,
   useTheme,
   Portal,
+  Provider as PaperProvider,
 } from "react-native-paper";
 import AddFolderModal from "../components/AddFolderModal";
 import FolderCard from "../components/FolderCard";
@@ -64,6 +65,7 @@ const FolderScreen = ({ navigation }) => {
   };
 
   return (
+    <PaperProvider>
     <ScrollView style={{ backgroundColor: colors.background }}>
       <Header />
       <Folders />
@@ -86,6 +88,7 @@ const FolderScreen = ({ navigation }) => {
         />
       </Portal>
     </ScrollView>
+    </PaperProvider>
   );
 };
 

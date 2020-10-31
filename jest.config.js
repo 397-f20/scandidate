@@ -10,7 +10,11 @@ module.exports = {
   ],
   "testPathIgnorePatterns": [ 
     "<rootDir>/cypress/"
-  ]
+  ],
+//   testRegex: '.+\\.test.js',
+//   moduleFileExtensions: ['test.js', 'js'],
+//   testEnvironment: "node",
+
 
 
 
