@@ -8,7 +8,7 @@ before_script:
   - npm install -g npm@latest
 script:
   - npm install --global expo-cli
-  - npm ci
+  - npm install
   - npx jest --ci
   - npm test
   - npm run build
