@@ -21,7 +21,6 @@ const FolderScreen = ({ navigation }) => {
   const [editFolderVisible, setEditFolderVisible] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState("");
 
-
   // database
   useEffect(() => {
     const handleData = (snapshot) => {
@@ -34,6 +33,7 @@ const FolderScreen = ({ navigation }) => {
       db.off("value", handleData);
     };
   }, []);
+
   const Folders = () => {
     return (
       <FlatList
@@ -41,11 +41,12 @@ const FolderScreen = ({ navigation }) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <FolderCard
-          navigation={navigation}
-          item={item}
-          setDeleteFolderVisible={setDeleteFolderVisible}
-          setEditFolderVisible={setEditFolderVisible}
-          setSelectedFolder={setSelectedFolder}/ >
+            navigation={navigation}
+            item={item}
+            setDeleteFolderVisible={setDeleteFolderVisible}
+            setEditFolderVisible={setEditFolderVisible}
+            setSelectedFolder={setSelectedFolder}
+          />
         )}
       />
     );
@@ -66,28 +67,28 @@ const FolderScreen = ({ navigation }) => {
 
   return (
     <PaperProvider>
-    <ScrollView style={{ backgroundColor: colors.background }}>
-      <Header />
-      <Folders />
-      <Portal>
-        <AddFolderModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          folders={folders}
-        />
-        <DeleteFolderDialog
-        setDeleteFolderVisible={setDeleteFolderVisible}
-        deleteFolderVisible={deleteFolderVisible}
-        selectedFolder={selectedFolder}
-        />
-        <EditFolderModal
-        setEditFolderVisible={setEditFolderVisible}
-        editFolderVisible={editFolderVisible}
-        selectedFolder={selectedFolder}
-        folders={folders}
-        />
-      </Portal>
-    </ScrollView>
+      <ScrollView style={{ backgroundColor: colors.background }}>
+        <Header />
+        <Folders />
+        <Portal>
+          <AddFolderModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            folders={folders}
+          />
+          <DeleteFolderDialog
+            setDeleteFolderVisible={setDeleteFolderVisible}
+            deleteFolderVisible={deleteFolderVisible}
+            selectedFolder={selectedFolder}
+          />
+          <EditFolderModal
+            setEditFolderVisible={setEditFolderVisible}
+            editFolderVisible={editFolderVisible}
+            selectedFolder={selectedFolder}
+            folders={folders}
+          />
+        </Portal>
+      </ScrollView>
     </PaperProvider>
   );
 };
