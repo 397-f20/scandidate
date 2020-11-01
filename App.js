@@ -11,12 +11,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
   List,
   BottomNavigation,
-
   DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import LoginScreen from "./screens/LoginScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,11 +34,9 @@ const theme = {
 };
 
 const App = () => {
-
   return (
     <PaperProvider theme={theme}>
-
-      <NavigationContainer data-cy='nav'>
+      <NavigationContainer data-cy="nav">
         <Tab.Navigator>
           <Tab.Screen
             component={home}
@@ -72,10 +70,8 @@ const App = () => {
           />
         </Tab.Navigator>
       </NavigationContainer>
-
     </PaperProvider>
   );
-
 };
 
 const folders = () => {
@@ -98,6 +94,11 @@ const folders = () => {
 const home = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        component={LoginScreen}
+        name="LoginScreen"
+        options={{ title: "Login" }}
+      />
       <Stack.Screen
         component={RecruiterLandingScreen}
         name="RecruiterLandingScreen"
