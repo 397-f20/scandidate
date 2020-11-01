@@ -3,11 +3,11 @@ import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
 import StudentDetailScreen from "./screens/StudentDetailScreen";
 import FolderScreen from "./screens/FolderScreen";
 import FolderContents from "./screens/FolderContents";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import { firebase } from "./firebase";
 import {
   List,
   BottomNavigation,
@@ -20,6 +20,7 @@ import LoginScreen from "./screens/LoginScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Login = createStackNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -34,43 +35,85 @@ const theme = {
 };
 
 const App = () => {
+  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((auth) => {
+      setAuth(auth);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (auth && auth.uid) {
+      const db = firebase.database().ref("users").child(auth.uid);
+      const handleData = (snap) => {
+        setUser({ uid: auth.uid, ...snap.val() });
+      };
+      db.on("value", handleData, (error) => alert(error));
+      return () => {
+        db.off("value", handleData);
+      };
+    } else {
+      setUser(null);
+    }
+  }, [auth]);
+
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer data-cy="nav">
-        <Tab.Navigator>
-          <Tab.Screen
-            component={home}
-            name="Home"
-            options={{
-              title: "Home",
-              tabBarIcon: ({ color, size }) => (
-                <List.Icon
-                  name="home"
-                  color={color}
-                  size={20}
-                  icon="account-group"
-                />
-              ),
-            }}
+        <Login.Navigator>
+          <Login.Screen
+            component={LoginScreen}
+            name="LoginScreen"
+            options={{ title: "Login" }}
+            initialParams={{ auth, setAuth, user, setUser }}
           />
-          <Tab.Screen
-            component={folders}
-            name="Folders"
-            options={{
-              title: "My Folders",
-              tabBarIcon: ({ color, size }) => (
-                <List.Icon
-                  name="home"
-                  color={color}
-                  size={20}
-                  icon="folder-outline"
-                />
-              ),
-            }}
+          <Login.Screen
+            component={tabs}
+            name="tabs"
+            options={{ headerShown: false }}
           />
-        </Tab.Navigator>
+        </Login.Navigator>
       </NavigationContainer>
     </PaperProvider>
+  );
+};
+
+const tabs = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        component={home}
+        name="Home"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <List.Icon
+              name="home"
+              color={color}
+              size={20}
+              icon="account-group"
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={folders}
+        name="Folders"
+        options={{
+          title: "My Folders",
+          tabBarIcon: ({ color, size }) => (
+            <List.Icon
+              name="home"
+              color={color}
+              size={20}
+              icon="folder-outline"
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -94,11 +137,6 @@ const folders = () => {
 const home = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        component={LoginScreen}
-        name="LoginScreen"
-        options={{ title: "Login" }}
-      />
       <Stack.Screen
         component={RecruiterLandingScreen}
         name="RecruiterLandingScreen"
