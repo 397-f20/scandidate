@@ -20,14 +20,26 @@ describe("<CandidateCard />", () => {
           "skills" : "performance, singing, music composition"
       }
   };
+  filterSettings = {
+    GPA: null,
+    "Graduation Year": [],
+    Major: ["Vocal Performance", "Piano Performance"],
+    Degree: [],
+  };
   it("renders", async () => {
     await act(async () => {
       tree = renderer.create(<CandidateCard studData = {studdata} id = "200" />);
     });
   });
-  it("has the candidate's name and major", async () => {
+  it("has the candidate's name", async () => {
     const { getByText } = render(<CandidateCard studData = {studdata} id = "200" />);
     const name = getByText('Jason Derulo');
-    const major = getByText('Vocal Performance');
+  });
+  it("shows when the candidate is qualified for the filter", async () => {
+    const { getByText } = render(<CandidateCard
+        studData = {studdata}
+        id = "200"
+        filterSettings = {filterSettings} />);
+    const name = getByText("Major: Vocal Performance");
   });
 });

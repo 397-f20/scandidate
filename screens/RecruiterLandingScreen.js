@@ -142,7 +142,6 @@ const RecruiterLandingScreen = ({ navigation }) => {
     if (Object.entries(filterSettings)[1].length === 0){
       matches = Object.entries(data.students).length;
     }
-    console.log('number of exact matches = ', matches);
     let filtered = Object.entries(newScores);
     filtered = filtered.sort(sorter).reverse();
 
@@ -155,7 +154,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
       }
     }
 
-    return filtered.map((s) => s[0]);
+    return [filtered.map((s) => s[0]), matches];
   };
 
   //determine if the selected filters will be cleared or not
@@ -175,7 +174,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
       />
       {filterSettings === initialSettings ? null : (
         <Text style={styles.resultSummary}>
-          {filterStudents().length} student(s) matched your qualifications.
+          {filterStudents()[1]} student(s) matched your qualifications perfectly.
         </Text>
       )}
 
@@ -209,9 +208,9 @@ const RecruiterLandingScreen = ({ navigation }) => {
       </Portal>
       <FlatList
         data={
-          filterStudents().length == 0
+          filterStudents()[1] == 0
             ? Object.keys(data.students)
-            : filterStudents()
+            : filterStudents()[0]
         }
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
