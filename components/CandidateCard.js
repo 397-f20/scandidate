@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-const CandidateCard = ({ studData, id, navigation, setFoldersVisible, setStudentID}) => {
+const CandidateCard = ({ studData, id, navigation, setFoldersVisible, setStudentID, filterSettings}) => {
   const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
@@ -46,6 +46,28 @@ const CandidateCard = ({ studData, id, navigation, setFoldersVisible, setStudent
       <Menu.Item onPress={() => {}} title="Add a Note" />
     </Menu>
   );
+  const description = (student) => {
+      var ret = [];
+      Object.entries(filterSettings).map(([title, reqs]) => {
+        switch (title) {
+          case "GPA": {
+            if (student.qualifications.GPA >= parseFloat(reqs))
+              ret.push("GPA: " + student.qualifications.GPA);
+            break;
+          }
+          case "Degree":
+          case "Graduation Year":
+          case "Major": {
+            if (
+              reqs.includes(student.qualifications[title])
+            )
+              ret.push(title + ": " + student.qualifications[title]);
+            break;
+          }
+        }
+    });
+    return ret.join("\n")
+  }
 
   return (
     <Card
@@ -54,7 +76,7 @@ const CandidateCard = ({ studData, id, navigation, setFoldersVisible, setStudent
     >
       <Card.Title
         title={studData.name}
-        subtitle={studData.qualifications.Major}
+        subtitle={description(studData)}
         left={avatar}
         right={() => menu}
       />

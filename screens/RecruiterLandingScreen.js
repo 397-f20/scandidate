@@ -139,6 +139,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
             navigation={navigation}
             setFoldersVisible={setFoldersVisible}
             setStudentID={setStudentID}
+            filterSettings={filterSettings}
           />
         )}
       />
