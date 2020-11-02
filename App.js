@@ -12,7 +12,7 @@ import {
   List,
   BottomNavigation,
   DefaultTheme,
-  Provider as PaperProvider,
+  Provider as PaperProvider
 } from "react-native-paper";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -30,8 +30,8 @@ const theme = {
     accent: "#448CCB",
     background: "#F5F5F5",
     surface: "#F1ECE2",
-    medium: "#307C3C",
-  },
+    medium: "#307C3C"
+  }
 };
 
 const App = () => {
@@ -39,18 +39,22 @@ const App = () => {
   const [auth, setAuth] = useState();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((auth) => {
+    firebase.auth().onAuthStateChanged(auth => {
       setAuth(auth);
+      console.log(auth);
     });
   }, []);
 
   useEffect(() => {
     if (auth && auth.uid) {
-      const db = firebase.database().ref("users").child(auth.uid);
-      const handleData = (snap) => {
+      const db = firebase
+        .database()
+        .ref("users")
+        .child(auth.uid);
+      const handleData = snap => {
         setUser({ uid: auth.uid, ...snap.val() });
       };
-      db.on("value", handleData, (error) => alert(error));
+      db.on("value", handleData, error => alert(error));
       return () => {
         db.off("value", handleData);
       };
@@ -95,7 +99,7 @@ const tabs = () => {
               size={20}
               icon="account-group"
             />
-          ),
+          )
         }}
       />
       <Tab.Screen
@@ -110,7 +114,7 @@ const tabs = () => {
               size={20}
               icon="folder-outline"
             />
-          ),
+          )
         }}
       />
     </Tab.Navigator>
@@ -156,8 +160,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
 
 export default App;
