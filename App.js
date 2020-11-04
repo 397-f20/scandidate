@@ -41,7 +41,7 @@ const App = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(auth => {
       setAuth(auth);
-      console.log(auth);
+      //console.log(auth);
     });
   }, []);
 

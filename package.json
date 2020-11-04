@@ -12,7 +12,7 @@
     "test": "jest",
     "cypress:open": "cypress open",
     "cypress:ci": "cypress run --config video=false",
-    "test:ci": "jest --watchAll=false && start-server-and-test start http://localhost:19006 cypress:ci"
+    "test:ci": "jest --watchAll=false && start-server-and-test web http://localhost:19006 cypress:ci"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",

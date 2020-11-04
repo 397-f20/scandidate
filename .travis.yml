@@ -16,8 +16,6 @@ before_script:
 script:
   - npm install --global expo-cli
   - npm install
-  - npx jest --ci
-  - npm test
   - npm run test:ci
   - npm run build
 after_success:
