@@ -11,7 +11,6 @@ import AddFolderModal from "../components/AddFolderModal";
 import FolderCard from "../components/FolderCard";
 import DeleteFolderDialog from "../components/DeleteFolderDialog";
 import EditFolderModal from "../components/EditFolderModal";
-const db = firebase.database().ref("companies/Google/recruiters/Jen B/Folders");
 
 const FolderScreen = ({ navigation }) => {
   const { colors } = useTheme();
@@ -23,6 +22,13 @@ const FolderScreen = ({ navigation }) => {
 
   // database
   useEffect(() => {
+    const db =
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase
+            .database()
+            .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+        : null;
+
     const handleData = (snapshot) => {
       if (snapshot.val()) {
         setFolders(snapshot.val());
