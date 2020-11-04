@@ -49,9 +49,4 @@ describe('Folders', () => {
         }
     })
 
-
-    // it('should fail', () => {
-    //     console.log('Hello World')
-    //     expect(1).toBe(2)
-    // })
 });
