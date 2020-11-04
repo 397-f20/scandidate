@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Text, TextInput, View, StyleSheet } from "react-native";
 import { firebase } from "../firebase";
 
+const db = firebase.database().ref("users");
+
 const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -33,11 +35,24 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
     };
 
     const onSignUp = () => {
-        // console.log("sign up entered");
+        var errorCode = "success";
+        const signUpAction = () => {
+            // console.log("im outside: ", errorCode);
+            if (errorCode == "success") {
+                user = firebase.auth().currentUser.uid;
+                // update the list of users
+                db.update({[user]: {
+                    "Folders" : {"Favorites" : [-1]}
+                }});
+                // make a new favorites folder for the new user
+
+            }
+        }
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .catch(err => setLoginError(err.message));
+            .catch(err => setLoginError(err.message))
+            .then(signUpAction)
     };
 
     return (
