@@ -1,15 +1,14 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { firebase } from "../firebase";
 import { StyleSheet, View } from "react-native";
-import {
-  Modal,
-  Text,
-  Button,
-  useTheme,
-  TextInput,
-} from "react-native-paper";
+import { Modal, Text, Button, useTheme, TextInput } from "react-native-paper";
 
-const db = firebase.database().ref("companies/Google/recruiters/Jen B/Folders");
+let db =
+  firebase.auth() && firebase.auth().currentUser
+    ? firebase
+        .database()
+        .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+    : null;
 
 const AddFolderModal = ({ folders, modalVisible, setModalVisible }) => {
   const { colors } = useTheme();
@@ -17,6 +16,13 @@ const AddFolderModal = ({ folders, modalVisible, setModalVisible }) => {
 
   // database
   useEffect(() => {
+    db =
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase
+            .database()
+            .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+        : null;
+
     const handleData = (snapshot) => {
       if (snapshot.val()) {
       }
