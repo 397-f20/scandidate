@@ -18,8 +18,6 @@ describe("<RecruiterLandingScreen />", () => {
       tree = renderer.create(<RecruiterLandingScreen />);
     });
     tree = tree.toJSON();
-
-    //   expect(tree.type).toBe('RCTSafeAreaView');
   });
 });
 
