@@ -92,6 +92,7 @@ const CandidateCard = ({
       <Card.Title
         title={studData.name}
         subtitle={description(studData)}
+        subtitleStyle={styles.subtitle}
         left={avatar}
         right={() => menu}
       />
@@ -108,6 +109,9 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 40 / 2,
   },
+  subtitle: {
+    color: "green",
+  }
 });
 
 export default CandidateCard;
