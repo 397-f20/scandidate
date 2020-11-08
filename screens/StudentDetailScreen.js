@@ -15,7 +15,6 @@ const Field = ({ label, value }) => {
   return (
     <View style={styles.fieldContainer}>
       <Text style={styles.label}>{label}</Text>
-
       <Text style={styles.field}>{value}</Text>
     </View>
   );

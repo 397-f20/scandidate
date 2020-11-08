@@ -17,8 +17,9 @@ const CandidateCard = ({
   navigation,
   setFoldersVisible,
   setStudentID,
-  filterSettings
-}) => {  const { colors } = useTheme();
+  filterSettings,
+}) => {
+  const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
@@ -59,28 +60,26 @@ const CandidateCard = ({
     </Menu>
   );
   const description = (student) => {
-      if (filterSettings == null) return "";
-      var ret = [];
-      Object.entries(filterSettings).map(([title, reqs]) => {
-        switch (title) {
-          case "GPA": {
-            if (student.qualifications.GPA >= parseFloat(reqs))
-              ret.push("GPA: " + student.qualifications.GPA);
-            break;
-          }
-          case "Degree":
-          case "Graduation Year":
-          case "Major": {
-            if (
-              reqs.includes(student.qualifications[title])
-            )
-              ret.push(title + ": " + student.qualifications[title]);
-            break;
-          }
+    if (filterSettings == null) return "";
+    var ret = [];
+    Object.entries(filterSettings).map(([title, reqs]) => {
+      switch (title) {
+        case "GPA": {
+          if (student.qualifications.GPA >= parseFloat(reqs))
+            ret.push("GPA: " + student.qualifications.GPA);
+          break;
         }
+        case "Degree":
+        case "Graduation Year":
+        case "Major": {
+          if (reqs.includes(student.qualifications[title]))
+            ret.push(title + ": " + student.qualifications[title]);
+          break;
+        }
+      }
     });
-    return ret.join("\n")
-  }
+    return ret.join("\n");
+  };
 
   return (
     <Card
@@ -90,7 +89,13 @@ const CandidateCard = ({
       }
     >
       <Card.Title
-        title={studData.name}
+        title={studData.name.replace(/&#(?:x([\da-f]+)|(\d+));/gi, function (
+          _,
+          hex,
+          dec
+        ) {
+          return String.fromCharCode(dec || +("0x" + hex));
+        })}
         subtitle={description(studData)}
         left={avatar}
         right={() => menu}
