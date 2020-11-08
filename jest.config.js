@@ -4,20 +4,15 @@
  */
 
 module.exports = {
-  preset: 'jest-expo',
+  preset: "jest-expo",
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)',
+    "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)",
   ],
-  "testPathIgnorePatterns": [ 
-    "<rootDir>/cypress/"
-  ],
-//   testRegex: '.+\\.test.js',
-//   moduleFileExtensions: ['test.js', 'js'],
-//   testEnvironment: "node",
+  testPathIgnorePatterns: ["<rootDir>/cypress/"],
 
-
-
-
+  //   testRegex: '.+\\.test.js',
+  //   moduleFileExtensions: ['test.js', 'js'],
+  //   testEnvironment: "jsdom",
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -144,6 +139,7 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ["<rootDir>setup-tests.js"], //for enzyme setup
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

@@ -17,8 +17,10 @@ const CandidateCard = ({
   navigation,
   setFoldersVisible,
   setStudentID,
-  filterSettings
-}) => {  const { colors } = useTheme();
+  filterSettings,
+  setNotesVisible,
+}) => {
+  const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
@@ -55,32 +57,36 @@ const CandidateCard = ({
         }}
         title="Add to Folder"
       />
-      <Menu.Item onPress={() => {}} title="Add a Note" />
+      <Menu.Item
+        onPress={() => {
+          closeMenu();
+          setNotesVisible(true);
+        }}
+        title="Add a Note"
+      />
     </Menu>
   );
   const description = (student) => {
-      if (filterSettings == null) return "";
-      var ret = [];
-      Object.entries(filterSettings).map(([title, reqs]) => {
-        switch (title) {
-          case "GPA": {
-            if (student.qualifications.GPA >= parseFloat(reqs))
-              ret.push("GPA: " + student.qualifications.GPA);
-            break;
-          }
-          case "Degree":
-          case "Graduation Year":
-          case "Major": {
-            if (
-              reqs.includes(student.qualifications[title])
-            )
-              ret.push(title + ": " + student.qualifications[title]);
-            break;
-          }
+    if (filterSettings == null) return "";
+    var ret = [];
+    Object.entries(filterSettings).map(([title, reqs]) => {
+      switch (title) {
+        case "GPA": {
+          if (student.qualifications.GPA >= parseFloat(reqs))
+            ret.push("GPA: " + student.qualifications.GPA);
+          break;
         }
+        case "Degree":
+        case "Graduation Year":
+        case "Major": {
+          if (reqs.includes(student.qualifications[title]))
+            ret.push(title + ": " + student.qualifications[title]);
+          break;
+        }
+      }
     });
-    return ret.join("\n")
-  }
+    return ret.join("\n");
+  };
 
   return (
     <Card
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: "green",
-  }
+  },
 });
 
 export default CandidateCard;

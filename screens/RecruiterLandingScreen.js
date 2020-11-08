@@ -2,6 +2,7 @@ import CandidateCard from "../components/CandidateCard";
 import FilterBar from "../components/FilterBar";
 import FoldersModal from "../components/FoldersModal";
 import ModalOptions from "../components/ModalOptions";
+import NotesModal from "../components/NotesModal";
 import React, { useState, useEffect } from "react";
 import {
   FlatList,
@@ -78,6 +79,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const [modalData, setModalData] = useState("Loading...");
   const [foldersVisible, setFoldersVisible] = useState(false);
   const [studentID, setStudentID] = useState(null);
+  const [notesVisible, setNotesVisible] = useState(false);
 
   const initialSettings = {
     GPA: null,
@@ -91,9 +93,10 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const hideFolders = () => setFoldersVisible(false);
+  const hideNotes = () => setNotesVisible(false);
+  const showNotes = () => setNotesVisible(true);
   const showCount = () => setIsSelected(true);
   const { colors } = useTheme();
-
 
   // database
   useEffect(() => {
@@ -133,24 +136,23 @@ const RecruiterLandingScreen = ({ navigation }) => {
           }
         }
       });
-      if (score >= Object.keys(filterSettings).length){
+      if (score >= Object.keys(filterSettings).length) {
         matches++;
       }
       newScores[id] = score;
     });
 
-    if (Object.entries(filterSettings)[1].length === 0){
+    if (Object.entries(filterSettings)[1].length === 0) {
       matches = Object.entries(data.students).length;
     }
     let filtered = Object.entries(newScores);
     filtered = filtered.sort(sorter).reverse();
 
     function sorter(a, b) {
-      if(a[1]==b[1]){
+      if (a[1] == b[1]) {
         return 0;
-      }
-      else{
-        return (a[1] < b[1]) ? -1 : 1;
+      } else {
+        return a[1] < b[1] ? -1 : 1;
       }
     }
 
@@ -174,7 +176,8 @@ const RecruiterLandingScreen = ({ navigation }) => {
       />
       {filterSettings === initialSettings ? null : (
         <Text style={styles.resultSummary}>
-          {filterStudents()[1]} student(s) matched your qualifications perfectly.
+          {filterStudents()[1]} student(s) matched your qualifications
+          perfectly.
         </Text>
       )}
 
@@ -206,6 +209,13 @@ const RecruiterLandingScreen = ({ navigation }) => {
           studentID={studentID}
         />
       </Portal>
+      <Portal>
+        <NotesModal
+          hideModal={hideNotes}
+          modalVisible={notesVisible}
+          studentID={studentID}
+        />
+      </Portal>
       <FlatList
         data={
           filterStudents()[1] == 0
@@ -222,6 +232,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
             setFoldersVisible={setFoldersVisible}
             setStudentID={setStudentID}
             filterSettings={filterSettings}
+            setNotesVisible={setNotesVisible}
           />
         )}
       />
