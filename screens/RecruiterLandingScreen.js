@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import { Chip, Portal, Provider, useTheme, Button } from "react-native-paper";
 import { firebase } from "../firebase";
@@ -57,7 +57,7 @@ function ShowCount(props) {
       <View
         style={[
           styles.chipSelection,
-          { backgroundColor: props.colors.primary },
+          { backgroundColor: props.colors.primary }
         ]}
       >
         <Chip style={[styles.chip]} onClose={() => clearFilter()}>
@@ -85,7 +85,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
     GPA: null,
     "Graduation Year": [],
     Major: [],
-    Degree: [],
+    Degree: []
   };
 
   const [data, setData] = useState({ students: [] });
@@ -101,12 +101,12 @@ const RecruiterLandingScreen = ({ navigation }) => {
   // database
   useEffect(() => {
     const db = firebase.database().ref("students");
-    const handleData = (snap) => {
+    const handleData = snap => {
       if (snap.val()) {
         setData({ students: snap.val() });
       }
     };
-    db.on("value", handleData, (error) => alert(error));
+    db.on("value", handleData, error => alert(error));
     return () => {
       db.off("value", handleData);
     };
@@ -156,7 +156,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
       }
     }
 
-    return [filtered.map((s) => s[0]), matches];
+    return [filtered.map(s => s[0]), matches];
   };
 
   //determine if the selected filters will be cleared or not
@@ -224,7 +224,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
         }
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
-        renderItem={(item) => (
+        renderItem={item => (
           <CandidateCard
             studData={data.students[item.item]}
             id={item.item}
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "stretch",
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "center"
   },
   chipSelection: {
     width: 60 + numSelected.toString().length * 10,
@@ -252,21 +252,21 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     paddingVertical: 4,
-    maxHeight: 40,
+    maxHeight: 40
   },
   chip: {
     height: 30,
-    margin: 1,
+    margin: 1
   },
   resultSummary: {
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 5
   },
   filterText: {
     color: "#ebae34",
     textAlignVertical: "top",
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 });
 
 export default RecruiterLandingScreen;

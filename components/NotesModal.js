@@ -10,7 +10,7 @@ let db =
         .ref("users/" + firebase.auth().currentUser.uid + "/Notes")
     : null;
 
-const NotesModal = ({ notes, modalVisible, setModalVisible, studentID }) => {
+const NotesModal = ({ hideModal, modalVisible, studentID }) => {
   const { colors } = useTheme();
   const [notesText, setNotesText] = React.useState("");
 
@@ -39,9 +39,9 @@ const NotesModal = ({ notes, modalVisible, setModalVisible, studentID }) => {
       //check if the folder name already exists in db
 
       //if not then changing the folder name
-      console.log(studentID);
+      console.log(parseInt(studentID));
       db.update({
-        [studentID]: [notesText]
+        [parseInt(studentID)]: notesText
       }).catch(error => {
         alert(error.message);
       });
@@ -81,7 +81,7 @@ const NotesModal = ({ notes, modalVisible, setModalVisible, studentID }) => {
         <Button
           mode="text"
           onPress={() => {
-            setModalVisible(false);
+            hideModal();
           }}
         >
           Cancel

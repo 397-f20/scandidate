@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {firebase} from '../firebase';
+import { firebase } from "../firebase";
 import { Alert, StyleSheet, View, FlatList } from "react-native";
-import { Checkbox, List, Modal, Text, Button, useTheme } from "react-native-paper";
+import {
+  Checkbox,
+  List,
+  Modal,
+  Text,
+  Button,
+  useTheme
+} from "react-native-paper";
 
 let db =
   firebase.auth() && firebase.auth().currentUser
@@ -18,32 +25,33 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
   // database
   useEffect(() => {
     db =
-    firebase.auth() && firebase.auth().currentUser
-      ? firebase
-          .database()
-          .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
-      : null;
-      
-    const handleData = (snapshot) => {
-      if (snapshot.val()){
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase
+            .database()
+            .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+        : null;
+
+    const handleData = snapshot => {
+      if (snapshot.val()) {
         setFolders(snapshot.val());
       }
-    }
-    db.on("value", handleData, (error) => alert(error));
+    };
+    db.on("value", handleData, error => alert(error));
     return () => {
       db.off("value", handleData);
     };
   }, []);
 
   const saveButton = () => {
+    console.log(studentID);
     checked.map(folder => {
-      if (folders[folder].includes(parseInt(studentID))){
-        console.log("This student has already been added to the " + folder + " folder")
-      }
-      else {
-          
-        const newList = [...folders[folder], parseInt(studentID)]
-        db.child(folder).set(newList)
+      if (folders[folder].includes(parseInt(studentID))) {
+        console.log(
+          "This student has already been added to the " + folder + " folder"
+        );
+      } else {
+        const newList = [...folders[folder], parseInt(studentID)];
+        db.child(folder).set(newList);
       }
     });
     hideModal();
@@ -58,21 +66,19 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.row}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <List.Icon size={24} icon="folder-outline" />
                 <Text>{item}</Text>
               </View>
-              <Checkbox.Android 
-                onPress={() => {checked.includes(item) ? 
-                  setChecked(
-                    checked.filter(
-                      (x) => x !== item
-                    ),
-                ): setChecked([...checked, item])}}
+              <Checkbox.Android
+                onPress={() => {
+                  checked.includes(item)
+                    ? setChecked(checked.filter(x => x !== item))
+                    : setChecked([...checked, item]);
+                }}
                 status={checked.includes(item) ? "checked" : "unchecked"}
                 style={styles.checkbox}
               />
-              
             </View>
           )}
         />
@@ -88,10 +94,13 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
         <Button mode="contained" onPress={() => saveButton()}>
           Save
         </Button>
-        <Button mode="text" onPress={() => {
+        <Button
+          mode="text"
+          onPress={() => {
             hideModal();
             setChecked([]);
-          }}>
+          }}
+        >
           Cancel
         </Button>
       </View>
@@ -111,22 +120,22 @@ const styles = StyleSheet.create({
     // alignSelf: 'flex-end',
     // justifyContent: 'flex-end',
     right: 0,
-    backgroundColor:  '#fff',
+    backgroundColor: "#fff"
   },
   modal: {
     margin: 20,
     borderRadius: 20,
-    padding: 35,
+    padding: 35
   },
   singleSelect: {
     // flex: 1,
     justifyContent: "flex-start",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   title: {
     alignSelf: "center",
-    fontSize: 20,
-  },
+    fontSize: 20
+  }
 });
 
 export default FoldersModal;
