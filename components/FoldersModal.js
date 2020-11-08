@@ -3,7 +3,12 @@ import {firebase} from '../firebase';
 import { Alert, StyleSheet, View, FlatList } from "react-native";
 import { Checkbox, List, Modal, Text, Button, useTheme } from "react-native-paper";
 
-const db = firebase.database().ref('companies/Google/recruiters/Jen B/Folders');
+let db =
+  firebase.auth() && firebase.auth().currentUser
+    ? firebase
+        .database()
+        .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+    : null;
 
 const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
   const { colors } = useTheme();
@@ -12,6 +17,13 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
 
   // database
   useEffect(() => {
+    db =
+    firebase.auth() && firebase.auth().currentUser
+      ? firebase
+          .database()
+          .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+      : null;
+      
     const handleData = (snapshot) => {
       if (snapshot.val()){
         setFolders(snapshot.val());
