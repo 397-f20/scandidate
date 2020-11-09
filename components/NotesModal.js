@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { firebase } from "../firebase";
 import { StyleSheet, View } from "react-native";
 import { Modal, Text, Button, useTheme, TextInput } from "react-native-paper";
@@ -12,7 +12,7 @@ let db =
 
 const NotesModal = ({ hideModal, modalVisible, studentID }) => {
   const { colors } = useTheme();
-  const [notesText, setNotesText] = React.useState("");
+  const [notesText, setNotesText] = useState("");
 
   // database
   useEffect(() => {
@@ -23,11 +23,11 @@ const NotesModal = ({ hideModal, modalVisible, studentID }) => {
             .ref("users/" + firebase.auth().currentUser.uid + "/Notes")
         : null;
 
-    const handleData = snapshot => {
+    const handleData = (snapshot) => {
       if (snapshot.val()) {
       }
     };
-    db.on("value", handleData, error => alert(error));
+    db.on("value", handleData, (error) => alert(error));
     return () => {
       db.off("value", handleData);
     };
@@ -36,46 +36,36 @@ const NotesModal = ({ hideModal, modalVisible, studentID }) => {
   //add the folder name to the db
   const saveButton = () => {
     if (notesText != "") {
-      //check if the folder name already exists in db
+      //check if the note is empty
 
-      //if not then changing the folder name
+      //if not then updating note
       console.log(parseInt(studentID));
       db.update({
-        [parseInt(studentID)]: notesText
-      }).catch(error => {
+        [parseInt(studentID)]: notesText,
+      }).catch((error) => {
         alert(error.message);
       });
-
-      // const prevContent = folders[selectedFolder];
-      // const newfolderObj = {
-      //   ...folders,
-      //   [newFolderName]: prevContent
-      // };
-      // // adding it
-      // db.set(newfolderObj).catch(error => {
-      //   alert(error.message);
-      // });
-      // //removing the previous folder
-      // db.child(selectedFolder)
-      //   .remove()
-      //   .catch(error => {
-      //     alert(error.message);
-      //   });
-      // setNewFolderName("");
-      // setEditFolderVisible(false);
     }
   };
 
   return (
     <Modal visible={modalVisible}>
       <View style={[styles.modal, { backgroundColor: colors.surface }]}>
-        <Text style={styles.title}>Create a New Folder</Text>
+        <Text style={styles.title}>Add Note</Text>
         <TextInput
           label="Notes"
           value={notesText}
-          onChangeText={notesText => setNotesText(notesText)}
+          onChangeText={(notesText) => setNotesText(notesText)}
+          //style={styles.textIn}
         />
-        <Button mode="contained" onPress={() => saveButton()}>
+
+        <Button
+          mode="contained"
+          onPress={() => {
+            hideModal();
+            saveButton();
+          }}
+        >
           Save
         </Button>
         <Button
@@ -96,27 +86,35 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   checkbox: {
     flex: 1,
     alignSelf: "flex-end",
     justifyContent: "flex-end",
-    right: 0
+    right: 0,
   },
   modal: {
     margin: 20,
+    flex: 1,
     borderRadius: 20,
-    padding: 35
+    padding: 35,
   },
   singleSelect: {
     flex: 1,
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   title: {
     alignSelf: "center",
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
+  textIn: {
+    height: 400,
+    width: 400,
+    margin: 20,
+    flex: 1,
+    alignContent: "center",
+  },
 });
 
 export default NotesModal;
