@@ -39,7 +39,6 @@ const NotesModal = ({ hideModal, modalVisible, studentID }) => {
       //check if the note is empty
 
       //if not then updating note
-      console.log(parseInt(studentID));
       db.update({
         [parseInt(studentID)]: notesText,
       }).catch((error) => {

@@ -2,9 +2,18 @@ import React, { useContext, useState, useEffect } from "react";
 import CandidateCard from "../components/CandidateCard";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { firebase } from "../firebase";
-import { Appbar, List, useTheme } from "react-native-paper";
+import { Appbar, List, useTheme, Portal } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import FoldersModal from "../components/FoldersModal";
+import NotesModal from "../components/NotesModal";
 
 const FolderContents = ({ route, navigation }) => {
+  const [notesVisible, setNotesVisible] = useState(false);
+  const [foldersVisible, setFoldersVisible] = useState(false);
+  const hideNotes = () => setNotesVisible(false);
+  const hideFolders = () => setFoldersVisible(false);
+
+  const [studentID, setStudentID] = useState(null);
   const { colors } = useTheme();
   const folder = route.params.folder;
   const title = folder[0];
@@ -27,23 +36,43 @@ const FolderContents = ({ route, navigation }) => {
 
   const List = () => {
     return (
-      <FlatList
-        data={students}
-        keyExtractor={(index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        renderItem={(item) => {
-          if (data.students[item.item] == null) {
-            return null;
-          }
-          return (
-            <CandidateCard
-              studData={data.students[item.item]}
-              id={item.item}
-              navigation={navigation}
-            />
-          );
-        }}
-      />
+      <SafeAreaView>
+        <Portal>
+          <FoldersModal
+            hideModal={hideFolders}
+            modalVisible={foldersVisible}
+            studentID={studentID}
+          />
+        </Portal>
+        <Portal>
+          <NotesModal
+            hideModal={hideNotes}
+            modalVisible={notesVisible}
+            studentID={studentID}
+          />
+        </Portal>
+        <FlatList
+          data={students}
+          keyExtractor={(index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          renderItem={(item) => {
+            if (data.students[item.item] == null) {
+              return null;
+            }
+            return (
+              <CandidateCard
+                studData={data.students[item.item]}
+                id={item.item}
+                navigation={navigation}
+                setFoldersVisible={setFoldersVisible}
+                setStudentID={setStudentID}
+                //filterSettings={filterSettings}
+                setNotesVisible={setNotesVisible}
+              />
+            );
+          }}
+        />
+      </SafeAreaView>
     );
   };
 
@@ -56,10 +85,10 @@ const FolderContents = ({ route, navigation }) => {
     );
   };
 
-  return (  
+  return (
     <ScrollView style={{ backgroundColor: colors.background }}>
-        <Header />
-        <List />
+      <Header />
+      <List />
     </ScrollView>
   );
 };
