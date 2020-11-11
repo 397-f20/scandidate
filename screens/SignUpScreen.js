@@ -17,45 +17,55 @@ const SignUpScreen = ({ navigation, auth, setAuth, user, setUser }) => {
 
   const { colors } = useTheme();
 
-
-
   async function onSignUp() {
     setSignupError("");
-    if(role == "Select your role"){
-        setSignupError("Please select your role")
-        return
+    if (role == "Select your role") {
+      setSignupError("Please select your role");
+      return;
     }
-    if(email == ""){
-        setSignupError("Please provide an email address")
-        return
+    if (email == "") {
+      setSignupError("Please provide an email address");
+      return;
     }
-    if(password != confirmPassword){
-        setSignupError("Password does not match")
-        return
+    if (password != confirmPassword) {
+      setSignupError("Password does not match");
+      return;
     }
     var errorCode = "success";
-    const signUpAction = () => {
-      if (errorCode == "success") {
+    const signUpAction = (roleIn) => {
+      if (errorCode != "success") {
+        return;
+      }
+
+      if (roleIn == "Recruiter") {
         user = firebase.auth().currentUser.uid;
         // update the list of users
         db.update({
           [user]: {
             Folders: { Favorites: [-1] },
+            role: [roleIn],
           },
         });
+        console.log("navigating to recruiter landing screen");
+        navigation.navigate("tabs");
+      } else {
+        //for students
+        user = firebase.auth().currentUser.uid;
+
+        db.update({
+          [user]: {
+            role: [roleIn],
+          },
+        });
+        console.log("navigating to student landing screen");
+        navigation.navigate("StudentLandingScreen");
       }
     };
-    if(role == "Student"){
-        //do something
-    }
-    if(role == "Recruiter"){
-        firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .catch((err) => setSignupError(err.message))
-        .then(signUpAction);
-    }
-
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch((err) => setSignupError(err.message))
+      .then(signUpAction(role));
   }
 
   const selectRole = (
@@ -118,8 +128,8 @@ const SignUpScreen = ({ navigation, auth, setAuth, user, setUser }) => {
         secureTextEntry={true}
         style={styles.input}
       />
-     <Button title={"Sign Up"} style={styles.input} onPress={onSignUp} />
-     <Text>{signupError}</Text> 
+      <Button title={"Sign Up"} style={styles.input} onPress={onSignUp} />
+      <Text>{signupError}</Text>
     </View>
   );
 };
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1"
+    backgroundColor: "#ecf0f1",
   },
   input: {
     width: 200,
@@ -138,14 +148,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     marginHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   roleSelect: {
     backgroundColor: "white",
     padding: 5,
     borderBottomWidth: 2,
-    width: 125
-  }
+    width: 125,
+  },
 });
 
 export default SignUpScreen;

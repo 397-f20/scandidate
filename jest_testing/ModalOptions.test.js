@@ -1,8 +1,9 @@
 import "react-native";
 import React from "react";
-import { fireEvent, render, waitFor } from "react-native-testing-library";
+//import { fireEvent, render, waitFor } from "react-native-testing-library";
 import { expect, it } from "@jest/globals";
 import ModalOptions from "../components/ModalOptions";
+import { render } from "@testing-library/react-native";
 
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
@@ -11,6 +12,7 @@ import RecruiterLandingScreen from "../screens/RecruiterLandingScreen";
 import FilterBar from "../components/FilterBar";
 
 configure({ adapter: new Adapter() });
+jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper"); //removes useNativeDriver error
 
 const data = {
   title: "GPA",

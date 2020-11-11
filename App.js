@@ -1,6 +1,7 @@
 import "react-native-gesture-handler";
 import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
 import StudentDetailScreen from "./screens/StudentDetailScreen";
+import StudentLandingScreen from "./screens/StudentLandingScreen";
 import FolderScreen from "./screens/FolderScreen";
 import FolderContents from "./screens/FolderContents";
 import React, { useEffect, useState } from "react";
@@ -80,6 +81,11 @@ const App = () => {
           <Login.Screen
             component={tabs}
             name="tabs"
+            options={{ headerShown: false }}
+          />
+          <Login.Screen
+            component={StudentLandingScreen}
+            name="StudentLandingScreen"
             options={{ headerShown: false }}
           />
         </Login.Navigator>
