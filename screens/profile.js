@@ -90,6 +90,14 @@ const styles = StyleSheet.create({
   },
 });
 
+function TextStyle(props) {
+    //change the text color if being selected
+    let name = props.name.replace(/&#(?:x([\da-f]+)|(\d+));/ig, function (_, hex, dec) {            
+        return String.fromCharCode(dec || +('0x' + hex))          
+    })
+    return <Text>{name}</Text>
+}
+
 const Profile = ({ student }) => {
   const renderLabel = () => {
     let labels = [];
@@ -122,7 +130,7 @@ const Profile = ({ student }) => {
         <View style={styles.userRow}>
           <Image style={styles.userImage} source={{ uri: avatar }} />
           <View style={styles.userNameRow}>
-            <Text style={styles.userNameText}>{name}</Text>
+            <TextStyle style={styles.userNameText} name={student.name}>{name}</TextStyle>
           </View>
           <View style={styles.userBioRow}>
             <Text style={styles.userBioText}>{major}</Text>

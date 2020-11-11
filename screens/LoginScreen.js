@@ -15,6 +15,7 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
       if (errorCode == "success") {
         navigation.navigate("tabs");
       }
+      navigation.navigate("tabs"); //easier for debugging
     };
     firebase
       .auth()
