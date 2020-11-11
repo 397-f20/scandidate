@@ -75,6 +75,7 @@ const App = () => {
             component={SignUpScreen}
             name="signup"
             options={{ title: "Sign Up" }}
+            initialParams={{ auth, setAuth, user, setUser }}
           />
           <Login.Screen
             component={tabs}
