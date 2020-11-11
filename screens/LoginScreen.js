@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Image, Text, TextInput, View, StyleSheet } from "react-native";
+import {
+  Button,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
 import { firebase } from "../firebase";
 
 const db = firebase.database().ref("users");
@@ -69,9 +77,11 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
         secureTextEntry={true}
         style={styles.input}
       />
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "column" }}>
         <Button title={"Login"} style={styles.input} onPress={onLogin} />
-        <Button title={"Sign Up"} style={styles.input} onPress={onSignUp} />
+        <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+          <Text>Sign Up</Text>
+        </TouchableOpacity>
       </View>
       <Text>{loginError}</Text>
     </View>

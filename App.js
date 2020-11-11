@@ -17,6 +17,7 @@ import {
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "./screens/LoginScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,6 +70,11 @@ const App = () => {
             name="LoginScreen"
             options={{ title: "Login" }}
             initialParams={{ auth, setAuth, user, setUser }}
+          />
+          <Login.Screen
+            component={SignUpScreen}
+            name="signup"
+            options={{ title: "Sign Up" }}
           />
           <Login.Screen
             component={tabs}
