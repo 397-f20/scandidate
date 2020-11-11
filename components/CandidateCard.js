@@ -8,7 +8,7 @@ import {
   Surface,
   Title,
   Caption,
-  useTheme
+  useTheme,
 } from "react-native-paper";
 
 const CandidateCard = ({
@@ -18,14 +18,14 @@ const CandidateCard = ({
   setFoldersVisible,
   setStudentID,
   filterSettings,
-  setNotesVisible
+  setNotesVisible,
 }) => {
   const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
 
-  const avatar = props => {
+  const avatar = (props) => {
     const photo = studData.profile_photo;
     if (photo == "placeholder") {
       return (
@@ -67,7 +67,7 @@ const CandidateCard = ({
       />
     </Menu>
   );
-  const description = student => {
+  const description = (student) => {
     if (filterSettings == null) return "";
     var ret = [];
     Object.entries(filterSettings).map(([title, reqs]) => {
@@ -97,7 +97,13 @@ const CandidateCard = ({
       }
     >
       <Card.Title
-        title={studData.name}
+        title={studData.name.replace(/&#(?:x([\da-f]+)|(\d+));/gi, function (
+          _,
+          hex,
+          dec
+        ) {
+          return String.fromCharCode(dec || +("0x" + hex));
+        })}
         subtitle={description(studData)}
         subtitleStyle={styles.subtitle}
         left={avatar}
@@ -109,16 +115,16 @@ const CandidateCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    margin: 5
+    margin: 5,
   },
   photo: {
     height: 40,
     width: 40,
-    borderRadius: 40 / 2
+    borderRadius: 40 / 2,
   },
   subtitle: {
-    color: "green"
-  }
+    color: "green",
+  },
 });
 
 export default CandidateCard;

@@ -7,7 +7,7 @@ import {
   Modal,
   Text,
   Button,
-  useTheme
+  useTheme,
 } from "react-native-paper";
 
 let db =
@@ -31,20 +31,19 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
             .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
         : null;
 
-    const handleData = snapshot => {
+    const handleData = (snapshot) => {
       if (snapshot.val()) {
         setFolders(snapshot.val());
       }
     };
-    db.on("value", handleData, error => alert(error));
+    db.on("value", handleData, (error) => alert(error));
     return () => {
       db.off("value", handleData);
     };
   }, []);
 
   const saveButton = () => {
-    console.log(studentID);
-    checked.map(folder => {
+    checked.map((folder) => {
       if (folders[folder].includes(parseInt(studentID))) {
         console.log(
           "This student has already been added to the " + folder + " folder"
@@ -73,7 +72,7 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
               <Checkbox.Android
                 onPress={() => {
                   checked.includes(item)
-                    ? setChecked(checked.filter(x => x !== item))
+                    ? setChecked(checked.filter((x) => x !== item))
                     : setChecked([...checked, item]);
                 }}
                 status={checked.includes(item) ? "checked" : "unchecked"}
@@ -113,29 +112,29 @@ const styles = StyleSheet.create({
     // flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   checkbox: {
     // flex: 1,
     // alignSelf: 'flex-end',
     // justifyContent: 'flex-end',
     right: 0,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   modal: {
     margin: 20,
     borderRadius: 20,
-    padding: 35
+    padding: 35,
   },
   singleSelect: {
     // flex: 1,
     justifyContent: "flex-start",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   title: {
     alignSelf: "center",
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 export default FoldersModal;

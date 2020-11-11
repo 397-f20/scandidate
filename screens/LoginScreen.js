@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, TextInput, View, StyleSheet } from "react-native";
+import { Button, Image, Text, TextInput, View, StyleSheet } from "react-native";
 import { firebase } from "../firebase";
 
 const db = firebase.database().ref("users");
@@ -50,8 +50,12 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../icon.png")}
+        style={{ height: 100, width: 100 }}
+      />
       <Text style={{ fontSize: 40 }}>Scandidate</Text>
-      <Text style={{ fontSize: 40 }}>Recruiter Login</Text>
+      <Text style={{ fontSize: 30 }}>Recruiter Login</Text>
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}

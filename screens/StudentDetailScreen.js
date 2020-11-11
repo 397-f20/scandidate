@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between", //"center",
   },
   field: {
-    height: 40,
-    width: 400,
+    flex: 1,
+    marginHorizontal: 10,
     padding: 5,
     backgroundColor: "white",
   },
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
+    marginHorizontal: 10,
     fontWeight: "bold",
   },
   button: {
