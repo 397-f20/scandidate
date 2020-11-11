@@ -18,6 +18,7 @@ const CandidateCard = ({
   setFoldersVisible,
   setStudentID,
   filterSettings,
+  setNotesVisible,
 }) => {
   const { colors } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -56,7 +57,14 @@ const CandidateCard = ({
         }}
         title="Add to Folder"
       />
-      <Menu.Item onPress={() => {}} title="Add a Note" />
+      <Menu.Item
+        onPress={() => {
+          closeMenu();
+          setNotesVisible(true);
+          setStudentID(id);
+        }}
+        title="Add a Note"
+      />
     </Menu>
   );
   const description = (student) => {
@@ -97,6 +105,7 @@ const CandidateCard = ({
           return String.fromCharCode(dec || +("0x" + hex));
         })}
         subtitle={description(studData)}
+        subtitleStyle={styles.subtitle}
         left={avatar}
         right={() => menu}
       />
@@ -112,6 +121,9 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 40 / 2,
+  },
+  subtitle: {
+    color: "green",
   },
 });
 

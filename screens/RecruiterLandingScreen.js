@@ -2,6 +2,7 @@ import CandidateCard from "../components/CandidateCard";
 import FilterBar from "../components/FilterBar";
 import FoldersModal from "../components/FoldersModal";
 import ModalOptions from "../components/ModalOptions";
+import NotesModal from "../components/NotesModal";
 import React, { useState, useEffect } from "react";
 import {
   FlatList,
@@ -10,7 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import { Chip, Portal, Provider, useTheme, Button } from "react-native-paper";
 import { firebase } from "../firebase";
@@ -56,7 +57,7 @@ function ShowCount(props) {
       <View
         style={[
           styles.chipSelection,
-          { backgroundColor: props.colors.primary },
+          { backgroundColor: props.colors.primary }
         ]}
       >
         <Chip style={[styles.chip]} onClose={() => clearFilter()}>
@@ -78,12 +79,13 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const [modalData, setModalData] = useState("Loading...");
   const [foldersVisible, setFoldersVisible] = useState(false);
   const [studentID, setStudentID] = useState(null);
+  const [notesVisible, setNotesVisible] = useState(false);
 
   const initialSettings = {
     GPA: null,
     "Graduation Year": [],
     Major: [],
-    Degree: [],
+    Degree: []
   };
 
   const [data, setData] = useState({ students: [] });
@@ -91,19 +93,20 @@ const RecruiterLandingScreen = ({ navigation }) => {
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const hideFolders = () => setFoldersVisible(false);
+  const hideNotes = () => setNotesVisible(false);
+  const showNotes = () => setNotesVisible(true);
   const showCount = () => setIsSelected(true);
   const { colors } = useTheme();
-
 
   // database
   useEffect(() => {
     const db = firebase.database().ref("students");
-    const handleData = (snap) => {
+    const handleData = snap => {
       if (snap.val()) {
         setData({ students: snap.val() });
       }
     };
-    db.on("value", handleData, (error) => alert(error));
+    db.on("value", handleData, error => alert(error));
     return () => {
       db.off("value", handleData);
     };
@@ -133,28 +136,27 @@ const RecruiterLandingScreen = ({ navigation }) => {
           }
         }
       });
-      if (score >= Object.keys(filterSettings).length){
+      if (score >= Object.keys(filterSettings).length) {
         matches++;
       }
       newScores[id] = score;
     });
 
-    if (Object.entries(filterSettings)[1].length === 0){
+    if (Object.entries(filterSettings)[1].length === 0) {
       matches = Object.entries(data.students).length;
     }
     let filtered = Object.entries(newScores);
     filtered = filtered.sort(sorter).reverse();
 
     function sorter(a, b) {
-      if(a[1]==b[1]){
+      if (a[1] == b[1]) {
         return 0;
-      }
-      else{
-        return (a[1] < b[1]) ? -1 : 1;
+      } else {
+        return a[1] < b[1] ? -1 : 1;
       }
     }
 
-    return [filtered.map((s) => s[0]), matches];
+    return [filtered.map(s => s[0]), matches];
   };
 
   //determine if the selected filters will be cleared or not
@@ -174,7 +176,8 @@ const RecruiterLandingScreen = ({ navigation }) => {
       />
       {filterSettings === initialSettings ? null : (
         <Text style={styles.resultSummary}>
-          {filterStudents()[1]} student(s) matched your qualifications perfectly.
+          {filterStudents()[1]} student(s) matched your qualifications
+          perfectly.
         </Text>
       )}
 
@@ -206,6 +209,13 @@ const RecruiterLandingScreen = ({ navigation }) => {
           studentID={studentID}
         />
       </Portal>
+      <Portal>
+        <NotesModal
+          hideModal={hideNotes}
+          modalVisible={notesVisible}
+          studentID={studentID}
+        />
+      </Portal>
       <FlatList
         data={
           filterStudents()[1] == 0
@@ -214,7 +224,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
         }
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
-        renderItem={(item) => (
+        renderItem={item => (
           <CandidateCard
             studData={data.students[item.item]}
             id={item.item}
@@ -222,6 +232,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
             setFoldersVisible={setFoldersVisible}
             setStudentID={setStudentID}
             filterSettings={filterSettings}
+            setNotesVisible={setNotesVisible}
           />
         )}
       />
@@ -233,7 +244,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "stretch",
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "center"
   },
   chipSelection: {
     width: 60 + numSelected.toString().length * 10,
@@ -241,21 +252,21 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     paddingVertical: 4,
-    maxHeight: 40,
+    maxHeight: 40
   },
   chip: {
     height: 30,
-    margin: 1,
+    margin: 1
   },
   resultSummary: {
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 5
   },
   filterText: {
     color: "#ebae34",
     textAlignVertical: "top",
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 });
 
 export default RecruiterLandingScreen;

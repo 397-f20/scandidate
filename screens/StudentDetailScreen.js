@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { firebase } from "../firebase";
 import {
   SafeAreaView,
   ScrollView,
@@ -22,6 +23,7 @@ const Field = ({ label, value }) => {
 
 const StudentDetailScreen = ({ route }) => {
   const [foldersVisible, setFoldersVisible] = useState(false);
+  const [notesList, setNotesList] = useState([]);
   const hideFolders = () => setFoldersVisible(false);
   const openFolders = () => setFoldersVisible(true);
 
@@ -29,6 +31,28 @@ const StudentDetailScreen = ({ route }) => {
   const id = route.params.id;
 
   const { colors } = useTheme();
+
+  // database to retrieve notes
+  useEffect(() => {
+    const db =
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase
+            .database()
+            .ref("users/" + firebase.auth().currentUser.uid + "/Notes")
+        : null;
+
+    const handleData = (snapshot) => {
+      if (snapshot.val()) {
+        setNotesList(snapshot.val());
+      }
+    };
+    db.on("value", handleData, (error) => alert(error));
+    return () => {
+      db.off("value", handleData);
+    };
+  }, []);
+
+  const notesMsg = id in notesList ? notesList[id] : "Add a note ...";
 
   return (
     <SafeAreaView
@@ -56,6 +80,7 @@ const StudentDetailScreen = ({ route }) => {
           label="Skills"
           value={student.qualifications.skills.join(", ")}
         />
+        <Field label="Notes" value={notesMsg} />
       </ScrollView>
 
       <Portal>

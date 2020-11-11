@@ -10,16 +10,8 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
   const [loginError, setLoginError] = useState("");
 
   async function onLogin() {
-    // console.log("login entered");
-    // firebase
-    //   .auth()
-    //   .signInWithEmailAndPassword(email, password)
-    //   .catch(err => setLoginError(err.message))
-    //   .then(navigation.navigate("tabs"))
-    // alert(loginError)
     var errorCode = "success";
     const loginAction = () => {
-      // console.log("im outside: ", errorCode);
       if (errorCode == "success") {
         navigation.navigate("tabs");
       }
@@ -38,7 +30,6 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
   async function onSignUp() {
     var errorCode = "success";
     const signUpAction = () => {
-      // console.log("im outside: ", errorCode);
       if (errorCode == "success") {
         user = firebase.auth().currentUser.uid;
         // update the list of users
