@@ -15,7 +15,7 @@ const MultiSelectScreen = ({ route, navigation }) => {
   const hideNotes = () => setNotesVisible(false);
   const hideFolders = () => setFoldersVisible(false);
   const hideMultiSelect = () => setMultiSelectVisible(false);
-  
+
   const [studentID, setStudentID] = useState(null);
   const { colors } = useTheme();
   const folder = route.params;
@@ -36,17 +36,19 @@ const MultiSelectScreen = ({ route, navigation }) => {
       db.off("value", handleData);
     };
   }, []);
-  
+
   var isSelectAll = false;
   const selectAllAction = () => {
-      if(!isSelectAll){ //then we need to select all
-        isSelectAll = true
-        setSelectionData(students)
-      }else{ //deselect All
-        isSelectAll = false
-        setSelectionData([])
-      }
-  }
+    if (!isSelectAll) {
+      //then we need to select all
+      isSelectAll = true;
+      setSelectionData(students);
+    } else {
+      //deselect All
+      isSelectAll = false;
+      setSelectionData([]);
+    }
+  };
 
   const List = () => {
     return (
@@ -80,8 +82,8 @@ const MultiSelectScreen = ({ route, navigation }) => {
                 setFoldersVisible={setFoldersVisible}
                 setStudentID={setStudentID}
                 setNotesVisible={setNotesVisible}
-                selectionData = {selectionData}
-                setSelectionData = {setSelectionData}
+                selectionData={selectionData}
+                setSelectionData={setSelectionData}
               />
             );
           }}
@@ -99,30 +101,15 @@ const MultiSelectScreen = ({ route, navigation }) => {
           icon="select-all"
           onPress={() => {
             selectAllAction(); //selectALL
-          }}/>
+          }}
+        />
         <Appbar.Action
           icon="check"
           onPress={() => {
             console.log("press to mark done and go back");
-          }}/>
+          }}
+        />
       </Appbar.Header>
-    );
-  };
-
-  const Footer = () => {
-    return (
-      <Appbar style={styles.bottom}>
-            <Appbar.Action
-            icon="delete"
-            onPress={() => console.log('Pressed delete')}
-            />
-            <Appbar.Action
-            icon="export"
-            onPress={() => console.log('Pressed export all contract info')}
-            />
-            <Appbar.Action icon="plus" onPress={() => console.log('add to another folder')} />
-
-      </Appbar>
     );
   };
 
@@ -130,19 +117,55 @@ const MultiSelectScreen = ({ route, navigation }) => {
     <ScrollView style={{ backgroundColor: colors.background }}>
       <Header />
       <List />
-      <Footer />
+      <DynamicFooter selectionData={selectionData} setFoldersVisible={setFoldersVisible} />
     </ScrollView>
   );
 };
 
+function DynamicFooter(props){
+    if(props.selectionData.length != 0){ //there's at least some selection
+        return (
+            <Appbar style={styles.bottom}>
+              <Appbar.Action
+                icon="delete"
+                onPress={() => console.log("Pressed delete")}
+              />
+              <Appbar.Action
+                icon="export"
+                onPress={() => console.log("Pressed export all contract info")}
+              />
+              <Appbar.Action
+                icon="plus"
+                onPress={() => props.setFoldersVisible(true)}
+              />
+            </Appbar>
+          );
+    }else{
+        return (
+            <Appbar style={styles.disabled}>
+              <Appbar.Action
+                icon="delete"
+              />
+              <Appbar.Action
+                icon="export"
+              />
+              <Appbar.Action
+                icon="plus"
+              />
+            </Appbar>
+          );
+    }
+}
 const styles = StyleSheet.create({
-    bottom: {
-        // position: 'absolute',
-        // left: 0,
-        // right: 0,
-        // bottom: 0,
-      },
-  });
+  disabled:{
+    opacity:0.2
+  },
+  bottom: {
+    // position: 'absolute',
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
+  },
+});
 
-  
 export default MultiSelectScreen;
