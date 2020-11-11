@@ -22,7 +22,7 @@ const MultiSelectScreen = ({ route, navigation }) => {
   const title = "Multi-select Actions";
   const students = folder[1];
   const [data, setData] = useState({ students: {} });
-
+  const [selectionData, setSelectionData] = useState([]);
   // database
   useEffect(() => {
     const db = firebase.database().ref("students");
@@ -36,6 +36,17 @@ const MultiSelectScreen = ({ route, navigation }) => {
       db.off("value", handleData);
     };
   }, []);
+  
+  var isSelectAll = false;
+  const selectAllAction = () => {
+      if(!isSelectAll){ //then we need to select all
+        isSelectAll = true
+        setSelectionData(students)
+      }else{ //deselect All
+        isSelectAll = false
+        setSelectionData([])
+      }
+  }
 
   const List = () => {
     return (
@@ -69,6 +80,8 @@ const MultiSelectScreen = ({ route, navigation }) => {
                 setFoldersVisible={setFoldersVisible}
                 setStudentID={setStudentID}
                 setNotesVisible={setNotesVisible}
+                selectionData = {selectionData}
+                setSelectionData = {setSelectionData}
               />
             );
           }}
@@ -83,14 +96,14 @@ const MultiSelectScreen = ({ route, navigation }) => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={title} />
         <Appbar.Action
-          icon="box"
+          icon="select-all"
           onPress={() => {
-            setMultiSelectVisible(true); //selectALL
+            selectAllAction(); //selectALL
           }}/>
         <Appbar.Action
           icon="check"
           onPress={() => {
-            setMultiSelectVisible(true);
+            console.log("press to mark done and go back");
           }}/>
       </Appbar.Header>
     );
@@ -102,6 +115,10 @@ const MultiSelectScreen = ({ route, navigation }) => {
             <Appbar.Action
             icon="delete"
             onPress={() => console.log('Pressed delete')}
+            />
+            <Appbar.Action
+            icon="export"
+            onPress={() => console.log('Pressed export all contract info')}
             />
             <Appbar.Action icon="plus" onPress={() => console.log('add to another folder')} />
 

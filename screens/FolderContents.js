@@ -82,7 +82,7 @@ const FolderContents = ({ route, navigation }) => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={title} />
         <Appbar.Action
-          icon="set-all"
+          icon="hamburger"
           onPress={() => {
             navigation.navigate("MultiSelectScreen", folder)
           }}/>
