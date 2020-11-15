@@ -17,28 +17,67 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [userRole, setUserRole] = useState("");
+
   // const [uid, setUid] = useState(auth.uid);
   const userC = useContext(UserContext);
 
-  useEffect(() => {
+  /* useEffect(() => {
     firebase.auth().onAuthStateChanged((auth) => {
-      const isStudent = auth.uid && db.child(auth.uid).role === "Student";
+      //const isStudent = auth.uid && db.child(auth.uid).role === "Student";
       console.log(
         "child",
         db.child("7KbnZ2IPahXlwmswAZvStirsdLw2/role")
 
         // .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
       );
-      if (isStudent) navigation.navigate("student");
-      else navigation.navigate("tabs");
     });
   }, []);
+
+  useEffect(() => {
+    const db =
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase.database().ref(firebase.auth().currentUser.uid + "/role")
+        : null;
+
+    const handleData = (snapshot) => {
+      if (snapshot.val()) {
+        setUserRole(snapshot.val());
+        console.log(userRole);
+      }
+    };
+    db.on("value", handleData, (error) => alert(error));
+
+    if (auth.uid && db.child(auth.uid).role === "Student")
+      navigation.navigate("student");
+    else if (auth.uid && db.child(auth.uid).role === "Recruiter")
+      navigation.navigate("tabs");
+    else console.log("neither role found");
+
+    return () => {
+      db.off("value", handleData);
+    };
+  }, []); */
 
   async function onLogin() {
     var errorCode = "success";
     const loginAction = () => {
       if (errorCode == "success") {
-        console.log(userC);
+        //console.log("UID", firebase.auth().currentUser.uid);
+        let curId = firebase.auth().currentUser.uid;
+        console.log(curId);
+
+        db.child(curId).once("value", function (snapshot) {
+          snapshot.forEach(function (child) {
+            console.log("role = ", child.val());
+            if (child.val() == "Student") navigation.navigate("student");
+            //WIP - need to fix sign in/database error
+            else if (child.val() === "Recruiter") {
+              console.log("recruiter signing in...");
+              navigation.navigate("tabs");
+            } else console.log("neither role found");
+          });
+        });
       }
     };
     firebase
