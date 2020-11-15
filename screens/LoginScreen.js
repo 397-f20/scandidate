@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   Button,
   Image,
@@ -11,17 +11,34 @@ import {
 import { firebase } from "../firebase";
 
 const db = firebase.database().ref("users");
+const UserContext = createContext();
 
 const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  // const [uid, setUid] = useState(auth.uid);
+  const userC = useContext(UserContext);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((auth) => {
+      const isStudent = auth.uid && db.child(auth.uid).role === "Student";
+      console.log(
+        "child",
+        db.child("7KbnZ2IPahXlwmswAZvStirsdLw2/role")
+
+        // .ref("users/" + firebase.auth().currentUser.uid + "/Folders")
+      );
+      if (isStudent) navigation.navigate("student");
+      else navigation.navigate("tabs");
+    });
+  }, []);
 
   async function onLogin() {
     var errorCode = "success";
     const loginAction = () => {
       if (errorCode == "success") {
-        navigation.navigate("tabs");
+        console.log(userC);
       }
     };
     firebase
@@ -63,7 +80,7 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
         style={{ height: 100, width: 100 }}
       />
       <Text style={{ fontSize: 40 }}>Scandidate</Text>
-      <Text style={{ fontSize: 30 }}>Recruiter Login</Text>
+      <Text style={{ fontSize: 30 }}>Login</Text>
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}

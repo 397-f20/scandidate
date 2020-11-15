@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-
 import {
   SafeAreaView,
   ScrollView,
@@ -10,7 +9,6 @@ import {
 } from "react-native";
 
 const StudentLandingScreen = () => {
-  console.log("at student landing screen");
   return <View></View>;
 };
 

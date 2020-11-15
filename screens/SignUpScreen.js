@@ -46,7 +46,6 @@ const SignUpScreen = ({ navigation, auth, setAuth, user, setUser }) => {
             role: [roleIn],
           },
         });
-        console.log("navigating to recruiter landing screen");
         navigation.navigate("tabs");
       } else {
         //for students
@@ -57,7 +56,6 @@ const SignUpScreen = ({ navigation, auth, setAuth, user, setUser }) => {
             role: [roleIn],
           },
         });
-        console.log("navigating to student landing screen");
         navigation.navigate("StudentLandingScreen");
       }
     };

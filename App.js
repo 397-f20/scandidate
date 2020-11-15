@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import RecruiterLandingScreen from "./screens/RecruiterLandingScreen";
 import StudentDetailScreen from "./screens/StudentDetailScreen";
 import StudentLandingScreen from "./screens/StudentLandingScreen";
+import StudentProfileScreen from "./screens/StudentProfileScreen";
 import FolderScreen from "./screens/FolderScreen";
 import FolderContents from "./screens/FolderContents";
 import React, { useEffect, useState } from "react";
@@ -23,6 +24,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Login = createStackNavigator();
+const Student = createBottomTabNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -84,13 +86,50 @@ const App = () => {
             options={{ headerShown: false }}
           />
           <Login.Screen
-            component={StudentLandingScreen}
-            name="StudentLandingScreen"
+            component={student}
+            name="student"
             options={{ headerShown: false }}
           />
         </Login.Navigator>
       </NavigationContainer>
     </PaperProvider>
+  );
+};
+
+const student = () => {
+  return (
+    <Student.Navigator>
+      <Student.Screen
+        component={StudentLandingScreen}
+        name="StudentLandingScreen"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <List.Icon
+              name="home"
+              color={color}
+              size={20}
+              icon="wallet-travel"
+            />
+          ),
+        }}
+      />
+      <Student.Screen
+        component={StudentProfileScreen}
+        name="StudentProfileScreen"
+        options={{
+          title: "My Profile",
+          tabBarIcon: ({ color, size }) => (
+            <List.Icon
+              name="home"
+              color={color}
+              size={20}
+              icon="face-profile"
+            />
+          ),
+        }}
+      />
+    </Student.Navigator>
   );
 };
 
