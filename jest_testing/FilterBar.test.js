@@ -1,14 +1,15 @@
-/**
- * @jest-environment jsdom
- */
 import React from "react";
-import { fireEvent, render, waitFor } from "react-native-testing-library";
+//import { fireEvent, render, waitFor } from "react-native-testing-library";
 import { expect, it } from "@jest/globals";
 
+import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure, mount } from "enzyme";
 import { Modal, Button, Chip } from "react-native-paper";
 import FilterBar from "../components/FilterBar";
 import FlatList from "react-native";
+import { render } from "@testing-library/react-native";
+
+configure({ adapter: new Adapter() });
 
 const data = {
   title: "GPA",
@@ -61,8 +62,16 @@ describe("<FilterBar />", () => {
     const wrapper = shallow(
       <FilterBar filterSettings={fs} isSelected={false} />
     );
-    const fl = wrapper.find(Chip);
-    expect(fl.length).toEqual(1); //chips appear
+    const { getByText } = render(
+      <FilterBar filterSettings={fs} isSelected={true} />
+    );
+    const majorC = getByText("Major");
+    const gpaC = getByText("GPA");
+    const gradYearC = getByText("Graduation Year");
+    const degreeC = getByText("Degree");
+
+    //const fl = wrapper.find(Chip);
+    //expect(fl.length).toEqual(4); //chips appear
   });
 
   //it("renders modal when pressed", async () => {

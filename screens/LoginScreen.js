@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Button, Image, Text, TextInput, View, StyleSheet } from "react-native";
+import {
+  Button,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
 import { firebase } from "../firebase";
 
 const db = firebase.database().ref("users");
 
-const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   async function onLogin() {
     var errorCode = "success";
     const loginAction = () => {
-      if (errorCode == "success") {
-        navigation.navigate("tabs");
-      }
+      if (errorCode != "success") return;
+      let curId = firebase.auth().currentUser.uid;
+      db.child(curId).once("value", (snapshot) => {
+        var curRole = snapshot.child("role").val();
+        if (curRole == "Student") navigation.navigate("student");
+        else if (curRole == "Recruiter") navigation.navigate("tabs");
+      });
     };
     firebase
       .auth()
@@ -25,29 +38,7 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
         setLoginError(error.message);
       })
       .then(loginAction);
-  }
-
-  async function onSignUp() {
-    var errorCode = "success";
-    const signUpAction = () => {
-      if (errorCode == "success") {
-        user = firebase.auth().currentUser.uid;
-        // update the list of users
-        db.update({
-          [user]: {
-            Folders: { Favorites: [-1] },
-          },
-        });
-        // make a new favorites folder for the new user
-      }
-    };
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch((err) => setLoginError(err.message))
-      .then(signUpAction);
-  }
-
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -55,7 +46,7 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
         style={{ height: 100, width: 100 }}
       />
       <Text style={{ fontSize: 40 }}>Scandidate</Text>
-      <Text style={{ fontSize: 30 }}>Recruiter Login</Text>
+      <Text style={{ fontSize: 30 }}>Login</Text>
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}
@@ -69,9 +60,11 @@ const LoginScreen = ({ navigation, auth, setAuth, user, setUser }) => {
         secureTextEntry={true}
         style={styles.input}
       />
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "column" }}>
         <Button title={"Login"} style={styles.input} onPress={onLogin} />
-        <Button title={"Sign Up"} style={styles.input} onPress={onSignUp} />
+        <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+          <Text>Sign Up</Text>
+        </TouchableOpacity>
       </View>
       <Text>{loginError}</Text>
     </View>

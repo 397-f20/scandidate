@@ -1,7 +1,6 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
 import { render } from '@testing-library/react-native';
-import 'jest-styled-components'
 import { shallow, configure, mount, ReactWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import CandidateCard from "../components/CandidateCard";
