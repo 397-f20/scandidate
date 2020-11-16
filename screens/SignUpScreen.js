@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Image, Text, TextInput, View, StyleSheet } from "react-native";
 import { Menu, useTheme } from "react-native-paper";
 import { firebase } from "../firebase";
+
 const db = firebase.database().ref("users");
 
-const SignUpScreen = ({ navigation, auth, setAuth, user, setUser }) => {
+const SignUpScreen = ({ navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signupError, setSignupError] = useState("");
   const [role, setRole] = useState("Select your role");
-
-  const openMenu = () => setMenuVisible(true);
-  const closeMenu = () => setMenuVisible(false);
 
   const { colors } = useTheme();
 
@@ -32,62 +30,65 @@ const SignUpScreen = ({ navigation, auth, setAuth, user, setUser }) => {
       return;
     }
     var errorCode = "success";
-    const signUpAction = (roleIn) => {
-      if (errorCode != "success") {
-        return;
-      }
 
+    const signUpAction = (roleIn, email, userCredential, errorCode) => {
+      if (errorCode != "success") return;
+      const user = userCredential.user.uid;
       if (roleIn == "Recruiter") {
-        user = firebase.auth().currentUser.uid;
         // update the list of users
         db.update({
           [user]: {
             Folders: { Favorites: [-1] },
-            role: [roleIn],
+            role: roleIn,
+            email: email,
           },
         });
         navigation.navigate("tabs");
       } else {
         //for students
-        user = firebase.auth().currentUser.uid;
-
         db.update({
           [user]: {
-            role: [roleIn],
+            role: roleIn,
+            email: email,
           },
         });
-        navigation.navigate("StudentLandingScreen");
+        navigation.navigate("student");
       }
     };
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .catch((err) => setSignupError(err.message))
-      .then(signUpAction(role));
+      .catch((err) => {
+        errorCode = err.code;
+        setSignupError(err.message);
+      })
+      .then((userCredential) => {
+          signUpAction(role, email, userCredential, errorCode)
+      });
   }
 
   const selectRole = (
-    <Text style={styles.roleSelect} onPress={openMenu}>
+    <Text style={styles.roleSelect} onPress={() => setMenuVisible(true)}>
       {role}
     </Text>
   );
   const menu = (
     <Menu
       visible={menuVisible}
-      onDismiss={closeMenu}
+      onDismiss={() => setMenuVisible(false)}
       anchor={selectRole}
       contentStyle={{ backgroundColor: colors.background }}
     >
       <Menu.Item
         onPress={() => {
-          closeMenu();
+          setMenuVisible(false);
           setRole("Student");
         }}
         title="Student"
       />
       <Menu.Item
         onPress={() => {
-          closeMenu();
+          setMenuVisible(false);
           setRole("Recruiter");
         }}
         title="Recruiter"

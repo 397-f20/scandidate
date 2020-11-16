@@ -10,6 +10,7 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { firebase } from "./firebase";
+import UserContext from './UserContext';
 import {
   List,
   BottomNavigation,
@@ -45,7 +46,6 @@ const App = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((auth) => {
       setAuth(auth);
-      //console.log(auth);
     });
   }, []);
 
@@ -65,34 +65,34 @@ const App = () => {
   }, [auth]);
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer data-cy="nav">
-        <Login.Navigator>
-          <Login.Screen
-            component={LoginScreen}
-            name="LoginScreen"
-            options={{ title: "Login" }}
-            initialParams={{ auth, setAuth, user, setUser }}
-          />
-          <Login.Screen
-            component={SignUpScreen}
-            name="signup"
-            options={{ title: "Sign Up" }}
-            initialParams={{ auth, setAuth, user, setUser }}
-          />
-          <Login.Screen
-            component={tabs}
-            name="tabs"
-            options={{ headerShown: false }}
-          />
-          <Login.Screen
-            component={student}
-            name="student"
-            options={{ headerShown: false }}
-          />
-        </Login.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <UserContext.Provider value={user}>
+        <PaperProvider theme={theme}>
+          <NavigationContainer data-cy="nav">
+            <Login.Navigator>
+              <Login.Screen
+                component={LoginScreen}
+                name="LoginScreen"
+                options={{ title: "Login" }}
+              />
+              <Login.Screen
+                component={SignUpScreen}
+                name="signup"
+                options={{ title: "Sign Up" }}
+              />
+              <Login.Screen
+                component={tabs}
+                name="tabs"
+                options={{ headerShown: false }}
+              />
+              <Login.Screen
+                component={student}
+                name="student"
+                options={{ headerShown: false }}
+              />
+            </Login.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+    </UserContext.Provider>
   );
 };
 
