@@ -24,9 +24,9 @@ describe('all component renders', () => {
         const wrapper = shallow(<LoginScreen />);
         expect(wrapper.find(TextInput).length).toEqual(2);
     })
-    it('should render buttons', () => {
+    it('should render login button', () => {
         const wrapper = shallow(<LoginScreen />);
-        expect(wrapper.find(Button).length).toEqual(2);
+        expect(wrapper.find(Button).length).toEqual(1);
     })
 });
 
@@ -67,7 +67,7 @@ describe('error when email is not in email format', () => {
         //todo...
         container.find(TextInput).first().props().value = "admin"
         container.find(TextInput).at(1).props().value = "123"
-        container.find(Button).at(0).props().onPress() 
+        container.find(Button).at(0).props().onPress()
         container.update();
     });
 
@@ -75,7 +75,7 @@ describe('error when email is not in email format', () => {
     //     const mockOnClick = jest.fn();
     //     const wrapper = shallow(<LoginScreen onPress={mockOnClick} />)
     //     wrapper.find(Button).at(0).simulate('press', 'junk')
-    //     expect(mockOnClick.mock.calls.length).toEqual(0) //i tried....   
+    //     expect(mockOnClick.mock.calls.length).toEqual(0) //i tried....
     // })
 
     it('should the error msg being returned', () => {
@@ -84,10 +84,7 @@ describe('error when email is not in email format', () => {
             expect(container.update().find(Button).at(0).props()).toHaveProperty("onPress")
             // expect(container.update().find(TextInput).at(0).props().value).toBe("admin")
             expect(container.update().find(Text).at(2).dive().text()).toBe(
-                "The email address is badly formatted."); 
+                "The email address is badly formatted.");
         }
     })
 });
-
-
-
