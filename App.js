@@ -5,6 +5,8 @@ import StudentLandingScreen from "./screens/StudentLandingScreen";
 import StudentProfileScreen from "./screens/StudentProfileScreen";
 import FolderScreen from "./screens/FolderScreen";
 import FolderContents from "./screens/FolderContents";
+import MultiSelectScreen from "./screens/MultiSelectScreen";
+
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
@@ -181,6 +183,11 @@ const folders = () => {
       <Stack.Screen
         component={FolderContents}
         name="FolderContents"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={MultiSelectScreen}
+        name="MultiSelectScreen"
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
