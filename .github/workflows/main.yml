@@ -16,7 +16,7 @@ jobs:
         with:
           expo-version: 3.x
       - run: npm install
-      - run: npm run test:ci
+      - run: npm test
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
