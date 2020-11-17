@@ -102,7 +102,7 @@ const StaticCandidateCard = ({
         subtitle={description(studData)}
         subtitleStyle={styles.subtitle}
         left={avatar}
-        right={icon1}
+        // right={icon1}
       />
     </Card>
   );

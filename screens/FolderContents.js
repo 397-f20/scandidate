@@ -17,8 +17,15 @@ const FolderContents = ({ route, navigation }) => {
   const { colors } = useTheme();
   const folder = route.params.folder;
   const title = folder[0];
-  const students = folder[1];
+  const [students, setStudents] = useState(folder[1]); //keep updating
   const [data, setData] = useState({ students: {} });
+
+  let db_userFolder =
+  firebase.auth() && firebase.auth().currentUser
+    ? firebase
+        .database()
+        .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + title)
+    : null;
 
   // database
   useEffect(() => {
@@ -29,8 +36,22 @@ const FolderContents = ({ route, navigation }) => {
       }
     };
     db.on("value", handleData, (error) => alert(error));
+
+    db_userFolder =
+    firebase.auth() && firebase.auth().currentUser
+      ? firebase
+          .database()
+          .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + title)
+      : null; 
+    const handleFolderData = (snapshot) => {
+        if (snapshot.val()) {
+          setStudents(snapshot.val());
+        }
+    }; //keep watching folder content changes
+    db_userFolder.on("value", handleFolderData, (error) => alert(error));
     return () => {
-      db.off("value", handleData);
+        db.off("value", handleData);
+        db_userFolder.off("value", handleFolderData);
     };
   }, []);
 
@@ -75,7 +96,7 @@ const FolderContents = ({ route, navigation }) => {
       </SafeAreaView>
     );
   };
-
+  const folder_data = {folder, data}; //packed and passed to multiSelectScreen
   const Header = () => {
     return (
       <Appbar.Header>
@@ -84,17 +105,19 @@ const FolderContents = ({ route, navigation }) => {
         <Appbar.Action
           icon="hamburger"
           onPress={() => {
-            navigation.navigate("MultiSelectScreen", folder)
+            navigation.navigate("MultiSelectScreen", folder_data);
           }}/>
       </Appbar.Header>
     );
   };
 
   return (
-    <ScrollView style={{ backgroundColor: colors.background }}>
-      <Header />
-      <List />
-    </ScrollView>
+    <View style={{flex: 1}}>
+        <View><Header /></View>
+        <ScrollView style={{ backgroundColor: colors.background }}>
+        <List />
+        </ScrollView>
+    </View>
   );
 };
 

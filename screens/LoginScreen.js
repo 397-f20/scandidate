@@ -19,6 +19,7 @@ const LoginScreen = ({ navigation }) => {
   const [userRole, setUserRole] = useState("");
 
   async function onLogin() {
+    // navigation.navigate("tabs"); //for easier debugging...
     var errorCode = "success";
     const loginAction = () => {
       if (errorCode != "success") return;
