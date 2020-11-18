@@ -22,7 +22,7 @@ const Field = ({ label, value }) => {
 };
 
 const StudentProfileScreen = () => {
-  const [student, setStudent] = useState({});
+  const [student, setStudent] = useState(null);
   const { colors } = useTheme();
 
   useEffect(() => {
@@ -49,21 +49,21 @@ const StudentProfileScreen = () => {
         backgroundColor: colors.background,
       })}
     >
+      {student ? 
       <ScrollView>
-        <Text>{student.name}</Text>
-        <Text>{JSON.stringify(student)}</Text>
-        {/* <Profile student={student} /> */}
-        {/* <Field label="Degree" value={student.qualifications.Degree} />
+        <Profile student={student} /> 
+        <Field label="Degree" value={student.qualifications.Degree} />
         <Field label="GPA" value={student.qualifications.GPA} />
         <Field
           label="Graduation Year"
           value={student.qualifications["Graduation Year"]}
         />
-        <Field
+        {/* <Field
           label="Skills"
           value={student.qualifications.skills.join(", ")}
         /> */}
       </ScrollView>
+      : null }
     </SafeAreaView>
   );
 };
