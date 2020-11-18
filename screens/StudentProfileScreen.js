@@ -22,19 +22,19 @@ const Field = ({ label, value }) => {
 };
 
 const StudentProfileScreen = () => {
-  const [student, setStudent] = useState();
+  const [student, setStudent] = useState({});
   const { colors } = useTheme();
 
   useEffect(() => {
     const db =
       firebase.auth() && firebase.auth().currentUser
-        ? firebase.database().ref("students/srUHsWjQuAQyGphnOmoStO8vhDp1")
+        ? firebase.database().ref("students/" + firebase.auth().currentUser.uid)
         : null;
 
     const handleData = (snapshot) => {
       if (snapshot.val()) {
+        console.log(snapshot.val());
         setStudent(snapshot.val());
-        console.log("Student data = ", student);
       }
     };
     db.on("value", handleData, (error) => alert(error));
@@ -49,14 +49,11 @@ const StudentProfileScreen = () => {
         backgroundColor: colors.background,
       })}
     >
-      <ScrollView></ScrollView>
-    </SafeAreaView>
-  );
-};
-
-/*
-<Profile student={student} />
-        <Field label="Degree" value={student.qualifications.Degree} />
+      <ScrollView>
+        <Text>{student.name}</Text>
+        <Text>{JSON.stringify(student)}</Text>
+        {/* <Profile student={student} /> */}
+        {/* <Field label="Degree" value={student.qualifications.Degree} />
         <Field label="GPA" value={student.qualifications.GPA} />
         <Field
           label="Graduation Year"
@@ -65,9 +62,11 @@ const StudentProfileScreen = () => {
         <Field
           label="Skills"
           value={student.qualifications.skills.join(", ")}
-        />
-        <Field label="Notes" value={notesMsg} />
-*/
+        /> */}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
