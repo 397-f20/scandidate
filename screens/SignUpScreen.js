@@ -5,6 +5,21 @@ import { firebase } from "../firebase";
 
 const db = firebase.database().ref("users");
 
+const newStudent = {
+  Preferences: { job: "", job_type: "", location: "" },
+  name: "",
+  profile_photo: "",
+  qualifications: {
+    Degree: "",
+    Major: "",
+    GPA: "",
+    "Graduation Year": "",
+    skills: [-1],
+  },
+  resume_link: "",
+  university: "",
+};
+
 const SignUpScreen = ({ navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [email, setEmail] = useState("");
@@ -52,6 +67,12 @@ const SignUpScreen = ({ navigation }) => {
             email: email,
           },
         });
+        firebase
+          .database()
+          .ref("students")
+          .update({
+            [user]: newStudent,
+          });
         navigation.navigate("student");
       }
     };
@@ -63,7 +84,7 @@ const SignUpScreen = ({ navigation }) => {
         setSignupError(err.message);
       })
       .then((userCredential) => {
-          signUpAction(role, email, userCredential, errorCode)
+        signUpAction(role, email, userCredential, errorCode);
       });
   }
 

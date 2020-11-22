@@ -33,7 +33,6 @@ const StudentProfileScreen = () => {
 
     const handleData = (snapshot) => {
       if (snapshot.val()) {
-        console.log(snapshot.val());
         setStudent(snapshot.val());
       }
     };
@@ -49,21 +48,21 @@ const StudentProfileScreen = () => {
         backgroundColor: colors.background,
       })}
     >
-      {student ? 
-      <ScrollView>
-        <Profile student={student} /> 
-        <Field label="Degree" value={student.qualifications.Degree} />
-        <Field label="GPA" value={student.qualifications.GPA} />
-        <Field
-          label="Graduation Year"
-          value={student.qualifications["Graduation Year"]}
-        />
-        {/* <Field
-          label="Skills"
-          value={student.qualifications.skills.join(", ")}
-        /> */}
-      </ScrollView>
-      : null }
+      {student ? (
+        <ScrollView style={styles.scroll}>
+          <Profile student={student} />
+          <Field label="Degree" value={student.qualifications.Degree} />
+          <Field label="GPA" value={student.qualifications.GPA} />
+          <Field
+            label="Graduation Year"
+            value={student.qualifications["Graduation Year"]}
+          />
+          <Field
+            label="Skills"
+            value={student.qualifications.skills.join(", ")}
+          />
+        </ScrollView>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -90,6 +89,10 @@ const styles = StyleSheet.create({
   button: {
     width: 200,
     height: 40,
+  },
+  scroll: {
+    flex: 1,
+    width: "100%",
   },
 });
 
