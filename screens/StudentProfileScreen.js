@@ -8,10 +8,19 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
-import { Appbar, useTheme, Button, Portal } from "react-native-paper";
+import {
+  Appbar,
+  Checkbox,
+  Modal,
+  Menu,
+  Button,
+  useTheme,
+  Portal,
+  RadioButton,
+} from "react-native-paper";
 import Profile from "./profile";
 import { set } from "react-native-reanimated";
 const Field = ({ label, value }) => {
@@ -25,6 +34,10 @@ const Field = ({ label, value }) => {
 
 const StudentProfileScreen = () => {
   const [student, setStudent] = useState(null);
+  const [degreeVisible, setDegreeVisible] = useState(false);
+  const [gpaVisible, setGpaVisible] = useState(false);
+  const [gradVisible, setGradVisible] = useState(false);
+  const [skillsVisible, setSkillsVisible] = useState(false);
   const { colors } = useTheme();
 
   useEffect(() => {
@@ -44,6 +57,33 @@ const StudentProfileScreen = () => {
     };
   }, []);
 
+  const SingleSelect = () => {
+    return (
+      <View style={styles.singleSelect}>
+        <RadioButton.Group
+          onValueChange={(value) => {
+            setStudent({
+              ...student,
+              qualifications: { ...student.qualifications, Degree: value },
+            });
+          }}
+          value={student.qualifications.Degree}
+        >
+          <FlatList
+            data={["Bachelors", "Masters", "Doctorate"]}
+            renderItem={({ item }) => (
+              <View style={styles.selectButton}>
+                <RadioButton.Android value={item.name} />
+                <Text>{item.name}</Text>
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </RadioButton.Group>
+      </View>
+    );
+  };
+
   const Header = () => {
     return (
       <Appbar.Header>
@@ -61,7 +101,9 @@ const StudentProfileScreen = () => {
   const FieldSaved = () => {
     return (
       <View>
-        <Field label="Degree" value={student.qualifications.Degree} />
+        <TouchableOpacity onPress={() => setVisible(true)}>
+          <Field label="Degree" value={student.qualifications.Degree} />
+        </TouchableOpacity>
         <Field label="GPA" value={student.qualifications.GPA} />
         <Field
           label="Graduation Year"
@@ -75,19 +117,130 @@ const StudentProfileScreen = () => {
     );
   };
 
+  const selectDegree = student ? (
+    <TouchableOpacity onPress={() => setDegreeVisible(true)}>
+      <Text style={styles.label}>Degree</Text>
+      <Text style={styles.roleSelect}>{student.qualifications.Degree}</Text>
+    </TouchableOpacity>
+  ) : null;
+
+  const degreeMenu = (
+    <Menu
+      visible={degreeVisible}
+      onDismiss={() => setDegreeVisible(false)}
+      anchor={selectDegree}
+      contentStyle={{ backgroundColor: colors.background }}
+    >
+      <Menu.Item
+        onPress={() => {
+          setDegreeVisible(false);
+          setStudent({
+            ...student,
+            qualifications: { ...student.qualifications, Degree: "Bachelor's" },
+          });
+        }}
+        title="Bachelor's"
+      />
+      <Menu.Item
+        onPress={() => {
+          setDegreeVisible(false);
+          setStudent({
+            ...student,
+            qualifications: { ...student.qualifications, Degree: "Master's" },
+          });
+        }}
+        title="Master's"
+      />
+      <Menu.Item
+        onPress={() => {
+          setDegreeVisible(false);
+          setStudent({
+            ...student,
+            qualifications: { ...student.qualifications, Degree: "Doctorate" },
+          });
+        }}
+        title="Doctorate"
+      />
+    </Menu>
+  );
+
+  const selectGradYear = student ? (
+    <TouchableOpacity onPress={() => setGradVisible(true)}>
+      <Text style={styles.label}>Graduation Year</Text>
+      <Text style={styles.roleSelect}>
+        {student.qualifications["Graduation Year"]}
+      </Text>
+    </TouchableOpacity>
+  ) : null;
+
+  const gradMenu = (
+    <Menu
+      visible={gradVisible}
+      onDismiss={() => setGradVisible(false)}
+      anchor={selectGradYear}
+      contentStyle={{ backgroundColor: colors.background }}
+    >
+      <Menu.Item
+        onPress={() => {
+          setGradVisible(false);
+          setStudent({
+            ...student,
+            qualifications: {
+              ...student.qualifications,
+              "Graduation Year": 2020,
+            },
+          });
+        }}
+        title="2020"
+      />
+      <Menu.Item
+        onPress={() => {
+          setGradVisible(false);
+          setStudent({
+            ...student,
+            qualifications: {
+              ...student.qualifications,
+              "Graduation Year": 2021,
+            },
+          });
+        }}
+        title="2021"
+      />
+      <Menu.Item
+        onPress={() => {
+          setGradVisible(false);
+          setStudent({
+            ...student,
+            qualifications: {
+              ...student.qualifications,
+              "Graduation Year": 2022,
+            },
+          });
+        }}
+        title="2022"
+      />
+      <Menu.Item
+        onPress={() => {
+          setGradVisible(false);
+          setStudent({
+            ...student,
+            qualifications: {
+              ...student.qualifications,
+              "Graduation Year": 2023,
+            },
+          });
+        }}
+        title="2023"
+      />
+    </Menu>
+  );
+
   const FieldEdit = () => {
     return (
       <View>
+        <Text style={styles.label}>GPA</Text>
         <TextInput
-          onEndEditing={(value) =>
-            setStudent({
-              ...student,
-              qualifications: { ...student.qualifications, Degree: value },
-            })
-          }
-          defaultValue={student.qualifications.Degree}
-        />
-        <TextInput
+          keyboardType="number-pad"
           onEndEditing={(value) =>
             setStudent({
               ...student,
@@ -95,22 +248,14 @@ const StudentProfileScreen = () => {
             })
           }
           defaultValue={student.qualifications.GPA}
+          maxLength={4}
+          style={styles.roleSelect}
         />
-        <TextInput
-          onEndEditing={(value) =>
-            setStudent({
-              ...student,
-              qualifications: {
-                ...student.qualifications,
-                "Graudation Year": value,
-              },
-            })
-          }
-          defaultValue={student.qualifications["Graduation Year"]}
-        />
+        <Text style={styles.label}>Skills</Text>
         <TextInput
           //onChangeText ={(value)=> setStudent({...student, qualifications: {...qualifications, Skills:value}})}
           value={student.qualifications.skills.join(", ")}
+          style={styles.roleSelect}
         />
       </View>
     );
@@ -126,6 +271,8 @@ const StudentProfileScreen = () => {
         <ScrollView style={styles.scroll}>
           <Header />
           <Profile student={student} />
+          {degreeMenu}
+          {gradMenu}
           <FieldEdit />
         </ScrollView>
       ) : null}
@@ -159,6 +306,12 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     width: "100%",
+  },
+  roleSelect: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 5,
+    marginHorizontal: 10,
   },
 });
 
