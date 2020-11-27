@@ -10,7 +10,7 @@ import {
   View,
   Image,
 } from "react-native";
-import { useTheme, Button, Portal } from "react-native-paper";
+import { Appbar, useTheme, Button, Portal } from "react-native-paper";
 import Profile from "./profile";
 const Field = ({ label, value }) => {
   return (
@@ -42,15 +42,24 @@ const StudentProfileScreen = () => {
     };
   }, []);
 
-  return (
-    <SafeAreaView
-      style={StyleSheet.compose(styles.container, {
-        backgroundColor: colors.background,
-      })}
-    >
-      {student ? (
-        <ScrollView style={styles.scroll}>
-          <Profile student={student} />
+
+  const Header = () => {
+    return (
+      <Appbar.Header>
+        <Appbar.Content title="My Profile" />
+        <Appbar.Action
+          icon="plus"
+          onPress={() => {
+            setEditModalVisible(true);
+          }}
+        />
+      </Appbar.Header>
+    );
+  };
+
+  const FieldSaved = () => {
+    return (
+      <View>
           <Field label="Degree" value={student.qualifications.Degree} />
           <Field label="GPA" value={student.qualifications.GPA} />
           <Field
@@ -61,6 +70,22 @@ const StudentProfileScreen = () => {
             label="Skills"
             value={student.qualifications.skills.join(", ")}
           />
+      </View>
+    );
+  };
+
+
+  return (
+    <SafeAreaView
+      style={StyleSheet.compose(styles.container, {
+        backgroundColor: colors.background,
+      })}
+    >
+      {student ? (
+        <ScrollView style={styles.scroll}>
+          <Header />
+          <Profile student={student} />
+          <FieldSaved />
         </ScrollView>
       ) : null}
     </SafeAreaView>

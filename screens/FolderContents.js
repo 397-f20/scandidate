@@ -56,6 +56,7 @@ const FolderContents = ({ route, navigation }) => {
   }, []);
 
   const List = () => {
+    console.log(students);
     return (
       <SafeAreaView>
         <Portal>
@@ -80,6 +81,7 @@ const FolderContents = ({ route, navigation }) => {
             if (data.students[item.item] == null) {
               return null;
             }
+            {console.log("ITEM: ", item)}
             return (
               <CandidateCard
                 studData={data.students[item.item]}
