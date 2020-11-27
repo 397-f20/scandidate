@@ -9,9 +9,11 @@ import {
   Text,
   View,
   Image,
+  TextInput,
 } from "react-native";
 import { Appbar, useTheme, Button, Portal } from "react-native-paper";
 import Profile from "./profile";
+import { set } from "react-native-reanimated";
 const Field = ({ label, value }) => {
   return (
     <View style={styles.fieldContainer}>
@@ -42,7 +44,6 @@ const StudentProfileScreen = () => {
     };
   }, []);
 
-
   const Header = () => {
     return (
       <Appbar.Header>
@@ -60,20 +61,60 @@ const StudentProfileScreen = () => {
   const FieldSaved = () => {
     return (
       <View>
-          <Field label="Degree" value={student.qualifications.Degree} />
-          <Field label="GPA" value={student.qualifications.GPA} />
-          <Field
-            label="Graduation Year"
-            value={student.qualifications["Graduation Year"]}
-          />
-          <Field
-            label="Skills"
-            value={student.qualifications.skills.join(", ")}
-          />
+        <Field label="Degree" value={student.qualifications.Degree} />
+        <Field label="GPA" value={student.qualifications.GPA} />
+        <Field
+          label="Graduation Year"
+          value={student.qualifications["Graduation Year"]}
+        />
+        <Field
+          label="Skills"
+          value={student.qualifications.skills.join(", ")}
+        />
       </View>
     );
   };
 
+  const FieldEdit = () => {
+    return (
+      <View>
+        <TextInput
+          onEndEditing={(value) =>
+            setStudent({
+              ...student,
+              qualifications: { ...student.qualifications, Degree: value },
+            })
+          }
+          defaultValue={student.qualifications.Degree}
+        />
+        <TextInput
+          onEndEditing={(value) =>
+            setStudent({
+              ...student,
+              qualifications: { ...student.qualifications, GPA: value },
+            })
+          }
+          defaultValue={student.qualifications.GPA}
+        />
+        <TextInput
+          onEndEditing={(value) =>
+            setStudent({
+              ...student,
+              qualifications: {
+                ...student.qualifications,
+                "Graudation Year": value,
+              },
+            })
+          }
+          defaultValue={student.qualifications["Graduation Year"]}
+        />
+        <TextInput
+          //onChangeText ={(value)=> setStudent({...student, qualifications: {...qualifications, Skills:value}})}
+          value={student.qualifications.skills.join(", ")}
+        />
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView
@@ -85,7 +126,7 @@ const StudentProfileScreen = () => {
         <ScrollView style={styles.scroll}>
           <Header />
           <Profile student={student} />
-          <FieldSaved />
+          <FieldEdit />
         </ScrollView>
       ) : null}
     </SafeAreaView>
