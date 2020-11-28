@@ -89,12 +89,19 @@ const StudentProfileScreen = () => {
     return (
       <Appbar.Header>
         <Appbar.Content title="My Profile" />
-        {editMode ? 
+        {editMode ?
           <Appbar.Action
           icon="content-save"
           onPress={() => {
+              const db =
+                firebase.auth() && firebase.auth().currentUser
+                  ? firebase.database().ref("students/" + firebase.auth().currentUser.uid)
+                  : null;
           setEditMode(false);
-          }}
+          console.log(student);
+          db.update(student).catch((err) => {console.log(err.message);})
+          }
+        }
       />
           :
         <Appbar.Action
@@ -290,7 +297,7 @@ const StudentProfileScreen = () => {
               <FieldSaved />
 
           }
-    
+
         </ScrollView>
       ) : null}
     </SafeAreaView>
