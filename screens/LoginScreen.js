@@ -20,6 +20,7 @@ const LoginScreen = ({ navigation }) => {
 
   async function onLogin() {
     // navigation.navigate("tabs"); //for easier debugging...
+    // navigation.navigate("student");
     var errorCode = "success";
     const loginAction = () => {
       if (errorCode != "success") return;

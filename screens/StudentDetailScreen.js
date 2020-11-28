@@ -68,7 +68,7 @@ const StudentDetailScreen = ({ route }) => {
       >
         Add to Folder
       </Button>
-      <ScrollView>
+      <ScrollView style={styles.scroll}>
         <Profile student={student} />
         <Field label="Degree" value={student.qualifications.Degree} />
         <Field label="GPA" value={student.qualifications.GPA} />
@@ -107,15 +107,21 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   fieldContainer: {
+    flex: 1,
     marginBottom: 20,
   },
   label: {
     marginHorizontal: 10,
+    flex: 1,
     fontWeight: "bold",
   },
   button: {
     width: 200,
     height: 40,
+  },
+  scroll: {
+    flex: 1,
+    width: "100%",
   },
 });
 

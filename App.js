@@ -12,7 +12,7 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { firebase } from "./firebase";
-import UserContext from './UserContext';
+import UserContext from "./UserContext";
 import {
   List,
   BottomNavigation,
@@ -68,32 +68,32 @@ const App = () => {
 
   return (
     <UserContext.Provider value={user}>
-        <PaperProvider theme={theme}>
-          <NavigationContainer data-cy="nav">
-            <Login.Navigator>
-              <Login.Screen
-                component={LoginScreen}
-                name="LoginScreen"
-                options={{ title: "Login" }}
-              />
-              <Login.Screen
-                component={SignUpScreen}
-                name="signup"
-                options={{ title: "Sign Up" }}
-              />
-              <Login.Screen
-                component={tabs}
-                name="tabs"
-                options={{ headerShown: false }}
-              />
-              <Login.Screen
-                component={student}
-                name="student"
-                options={{ headerShown: false }}
-              />
-            </Login.Navigator>
-          </NavigationContainer>
-        </PaperProvider>
+      <PaperProvider theme={theme}>
+        <NavigationContainer data-cy="nav">
+          <Login.Navigator>
+            <Login.Screen
+              component={LoginScreen}
+              name="LoginScreen"
+              options={{ title: "Login" }}
+            />
+            <Login.Screen
+              component={SignUpScreen}
+              name="signup"
+              options={{ title: "Sign Up" }}
+            />
+            <Login.Screen
+              component={tabs}
+              name="tabs"
+              options={{ headerShown: false }}
+            />
+            <Login.Screen
+              component={student}
+              name="student"
+              options={{ headerShown: false }}
+            />
+          </Login.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     </UserContext.Provider>
   );
 };
@@ -101,7 +101,7 @@ const App = () => {
 const student = () => {
   return (
     <Student.Navigator>
-      <Student.Screen
+      {/* <Student.Screen
         component={StudentLandingScreen}
         name="StudentLandingScreen"
         options={{
@@ -115,7 +115,7 @@ const student = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Student.Screen
         component={StudentProfileScreen}
         name="StudentProfileScreen"

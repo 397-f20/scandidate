@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Avatar } from "react-native-paper";
+import { Avatar, useTheme } from "react-native-paper";
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
@@ -92,13 +92,12 @@ const styles = StyleSheet.create({
 
 function TextStyle(props) {
   //change the text color if being selected
-  let name = props.name.replace(/&#(?:x([\da-f]+)|(\d+));/gi, function (
-    _,
-    hex,
-    dec
-  ) {
-    return String.fromCharCode(dec || +("0x" + hex));
-  });
+  let name = props.name.replace(
+    /&#(?:x([\da-f]+)|(\d+));/gi,
+    function (_, hex, dec) {
+      return String.fromCharCode(dec || +("0x" + hex));
+    }
+  );
   return <Text>{name}</Text>;
 }
 
@@ -127,11 +126,39 @@ const Profile = ({ student }) => {
   const ContactHeader = () => {
     const avatar = student.profile_photo;
     const major = student.qualifications.Major;
+    const { colors } = useTheme();
+
+    const initials = (
+      <View
+        style={StyleSheet.compose(
+          {
+            backgroundColor: colors.accent,
+            justifyContent: "center",
+            textAlign: "center",
+            alignItems: "center",
+          },
+          styles.userImage
+        )}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontSize: 80,
+          }}
+        >
+          {student.name[0]}
+        </Text>
+      </View>
+    );
 
     return (
       <View style={styles.headerContainer}>
         <View style={styles.userRow}>
-          <Image style={styles.userImage} source={{ uri: avatar }} />
+          {student.profile_photo == "placeholder" ? (
+            initials
+          ) : (
+            <Image style={styles.userImage} source={{ uri: avatar }} />
+          )}
           <View style={styles.userNameRow}>
             <TextStyle style={styles.userNameText} name={student.name}>
               {name}

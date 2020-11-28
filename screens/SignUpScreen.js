@@ -5,7 +5,24 @@ import { firebase } from "../firebase";
 
 const db = firebase.database().ref("users");
 
+const newStudent = {
+  Preferences: { job: "", job_type: "", location: "" },
+  name: "",
+  profile_photo: "placeholder",
+  qualifications: {
+    Degree: "",
+    Major: "",
+    GPA: "",
+    "Graduation Year": "",
+    skills: ["None"],
+  },
+  resume_link: "",
+  university: "",
+};
+
 const SignUpScreen = ({ navigation }) => {
+  const [info, setInfo] = useState(newStudent);
+  const [name, setName] = useState("");
   const [menuVisible, setMenuVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,6 +69,12 @@ const SignUpScreen = ({ navigation }) => {
             email: email,
           },
         });
+        firebase
+          .database()
+          .ref("students")
+          .update({
+            [user]: {...newStudent, name: name},
+          });
         navigation.navigate("student");
       }
     };
@@ -63,7 +86,7 @@ const SignUpScreen = ({ navigation }) => {
         setSignupError(err.message);
       })
       .then((userCredential) => {
-          signUpAction(role, email, userCredential, errorCode)
+        signUpAction(role, email, userCredential, errorCode);
       });
   }
 
@@ -107,6 +130,12 @@ const SignUpScreen = ({ navigation }) => {
         <Text>Role:</Text>
         {menu}
       </View>
+      <TextInput
+        value={name}
+        onChangeText={(name) => setName(name)}
+        placeholder={"First Last"}
+        style={styles.input}
+      />
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}
