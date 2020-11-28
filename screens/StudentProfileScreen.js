@@ -41,6 +41,8 @@ const StudentProfileScreen = () => {
   const [editMode, setEditMode] = useState(false);
   const { colors } = useTheme();
 
+  const [GPA, setGPA] = useState("");
+
   useEffect(() => {
     const db =
       firebase.auth() && firebase.auth().currentUser
@@ -58,59 +60,35 @@ const StudentProfileScreen = () => {
     };
   }, []);
 
-  const SingleSelect = () => {
-    return (
-      <View style={styles.singleSelect}>
-        <RadioButton.Group
-          onValueChange={(value) => {
-            setStudent({
-              ...student,
-              qualifications: { ...student.qualifications, Degree: value },
-            });
-          }}
-          value={student.qualifications.Degree}
-        >
-          <FlatList
-            data={["Bachelors", "Masters", "Doctorate"]}
-            renderItem={({ item }) => (
-              <View style={styles.selectButton}>
-                <RadioButton.Android value={item.name} />
-                <Text>{item.name}</Text>
-              </View>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </RadioButton.Group>
-      </View>
-    );
-  };
-
   const Header = () => {
     return (
       <Appbar.Header>
         <Appbar.Content title="My Profile" />
-        {editMode ?
+        {editMode ? (
           <Appbar.Action
-          icon="content-save"
-          onPress={() => {
+            icon="content-save"
+            onPress={() => {
               const db =
                 firebase.auth() && firebase.auth().currentUser
-                  ? firebase.database().ref("students/" + firebase.auth().currentUser.uid)
+                  ? firebase
+                      .database()
+                      .ref("students/" + firebase.auth().currentUser.uid)
                   : null;
-          setEditMode(false);
-          console.log(student);
-          db.update(student).catch((err) => {console.log(err.message);})
-          }
-        }
-      />
-          :
-        <Appbar.Action
-          icon="lead-pencil"
-          onPress={() => {
-            setEditMode(true);
-          }}/>
-        }
-
+              setEditMode(false);
+              console.log(GPA);
+              db.update(student).catch((err) => {
+                console.log(err.message);
+              });
+            }}
+          />
+        ) : (
+          <Appbar.Action
+            icon="lead-pencil"
+            onPress={() => {
+              setEditMode(true);
+            }}
+          />
+        )}
       </Appbar.Header>
     );
   };
@@ -258,13 +236,25 @@ const StudentProfileScreen = () => {
         <Text style={styles.label}>GPA</Text>
         <TextInput
           keyboardType="number-pad"
-          onEndEditing={(value) =>
+          // onEndEditing={(value) =>
+          // setStudent({
+          //   ...student,
+          //   qualifications: { ...student.qualifications, GPA: value },
+          // })
+          // }
+          onChangeText={(GPA) => {
+            setGPA(GPA);
+            console.log("GPA in edit", GPA);
             setStudent({
               ...student,
-              qualifications: { ...student.qualifications, GPA: value },
-            })
-          }
-          defaultValue={student.qualifications.GPA}
+              qualifications: {
+                ...student.qualifications,
+                GPA: GPA,
+              },
+            });
+          }}
+          //defaultValue={student.qualifications.GPA}
+          value={GPA}
           maxLength={4}
           style={styles.roleSelect}
         />
@@ -288,16 +278,15 @@ const StudentProfileScreen = () => {
         <ScrollView style={styles.scroll}>
           <Header />
           <Profile student={student} />
-          { editMode ?
-          <View>
-               {degreeMenu}
-               {gradMenu}
+          {editMode ? (
+            <View>
+              {degreeMenu}
+              {gradMenu}
               <FieldEdit />
-          </View> :
-              <FieldSaved />
-
-          }
-
+            </View>
+          ) : (
+            <FieldSaved />
+          )}
         </ScrollView>
       ) : null}
     </SafeAreaView>
