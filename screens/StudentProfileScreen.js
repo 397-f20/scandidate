@@ -38,6 +38,7 @@ const StudentProfileScreen = () => {
   const [gpaVisible, setGpaVisible] = useState(false);
   const [gradVisible, setGradVisible] = useState(false);
   const [skillsVisible, setSkillsVisible] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const { colors } = useTheme();
 
   useEffect(() => {
@@ -88,12 +89,21 @@ const StudentProfileScreen = () => {
     return (
       <Appbar.Header>
         <Appbar.Content title="My Profile" />
-        <Appbar.Action
-          icon="plus"
+        {editMode ? 
+          <Appbar.Action
+          icon="content-save"
           onPress={() => {
-            setEditModalVisible(true);
+          setEditMode(false);
           }}
-        />
+      />
+          :
+        <Appbar.Action
+          icon="lead-pencil"
+          onPress={() => {
+            setEditMode(true);
+          }}/>
+        }
+
       </Appbar.Header>
     );
   };
@@ -271,9 +281,16 @@ const StudentProfileScreen = () => {
         <ScrollView style={styles.scroll}>
           <Header />
           <Profile student={student} />
-          {degreeMenu}
-          {gradMenu}
-          <FieldEdit />
+          { editMode ?
+          <View>
+               {degreeMenu}
+               {gradMenu}
+              <FieldEdit />
+          </View> :
+              <FieldSaved />
+
+          }
+    
         </ScrollView>
       ) : null}
     </SafeAreaView>

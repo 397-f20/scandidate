@@ -44,12 +44,12 @@ const FoldersModal = ({ hideModal, modalVisible, studentID }) => {
 
   const saveButton = () => {
     checked.map((folder) => {
-      if (folders[folder].includes(parseInt(studentID))) {
+      if (folders[folder].includes(studentID)) {
         console.log(
           "This student has already been added to the " + folder + " folder"
         );
       } else {
-        const newList = [...folders[folder], parseInt(studentID)];
+        const newList = [...folders[folder], studentID];
         db.child(folder).set(newList);
       }
     });
