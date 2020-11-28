@@ -40,7 +40,7 @@ const NotesModal = ({ hideModal, modalVisible, studentID }) => {
 
       //if not then updating note
       db.update({
-        [parseInt(studentID)]: notesText,
+        [studentID]: notesText,
       }).catch((error) => {
         alert(error.message);
       });

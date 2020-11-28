@@ -63,7 +63,10 @@ const StudentProfileScreen = () => {
   const Header = () => {
     return (
       <Appbar.Header>
-        <Appbar.Content title="My Profile" />
+        <Appbar.Content
+          title="My Profile"
+          subtitle={editMode ? "Editing Profile" : null}
+        />
         {editMode ? (
           <Appbar.Action
             icon="content-save"
@@ -75,7 +78,6 @@ const StudentProfileScreen = () => {
                       .ref("students/" + firebase.auth().currentUser.uid)
                   : null;
               setEditMode(false);
-              console.log(GPA);
               db.update(student).catch((err) => {
                 console.log(err.message);
               });
@@ -244,7 +246,6 @@ const StudentProfileScreen = () => {
           // }
           onChangeText={(GPA) => {
             setGPA(GPA);
-            console.log("GPA in edit", GPA);
             setStudent({
               ...student,
               qualifications: {
@@ -253,7 +254,7 @@ const StudentProfileScreen = () => {
               },
             });
           }}
-          //defaultValue={student.qualifications.GPA}
+          placeholder={student.qualifications.GPA}
           value={GPA}
           maxLength={4}
           style={styles.roleSelect}

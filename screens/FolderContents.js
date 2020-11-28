@@ -21,11 +21,11 @@ const FolderContents = ({ route, navigation }) => {
   const [data, setData] = useState({ students: {} });
 
   let db_userFolder =
-  firebase.auth() && firebase.auth().currentUser
-    ? firebase
-        .database()
-        .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + title)
-    : null;
+    firebase.auth() && firebase.auth().currentUser
+      ? firebase
+          .database()
+          .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + title)
+      : null;
 
   // database
   useEffect(() => {
@@ -38,25 +38,26 @@ const FolderContents = ({ route, navigation }) => {
     db.on("value", handleData, (error) => alert(error));
 
     db_userFolder =
-    firebase.auth() && firebase.auth().currentUser
-      ? firebase
-          .database()
-          .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + title)
-      : null; 
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase
+            .database()
+            .ref(
+              "users/" + firebase.auth().currentUser.uid + "/Folders/" + title
+            )
+        : null;
     const handleFolderData = (snapshot) => {
-        if (snapshot.val()) {
-          setStudents(snapshot.val());
-        }
+      if (snapshot.val()) {
+        setStudents(snapshot.val());
+      }
     }; //keep watching folder content changes
     db_userFolder.on("value", handleFolderData, (error) => alert(error));
     return () => {
-        db.off("value", handleData);
-        db_userFolder.off("value", handleFolderData);
+      db.off("value", handleData);
+      db_userFolder.off("value", handleFolderData);
     };
   }, []);
 
   const List = () => {
-    console.log(students);
     return (
       <SafeAreaView>
         <Portal>
@@ -81,7 +82,6 @@ const FolderContents = ({ route, navigation }) => {
             if (data.students[item.item] == null) {
               return null;
             }
-            {console.log("ITEM: ", item)}
             return (
               <CandidateCard
                 studData={data.students[item.item]}
@@ -98,7 +98,7 @@ const FolderContents = ({ route, navigation }) => {
       </SafeAreaView>
     );
   };
-  const folder_data = {folder, data}; //packed and passed to multiSelectScreen
+  const folder_data = { folder, data }; //packed and passed to multiSelectScreen
   const Header = () => {
     return (
       <Appbar.Header>
@@ -108,17 +108,20 @@ const FolderContents = ({ route, navigation }) => {
           icon="hamburger"
           onPress={() => {
             navigation.navigate("MultiSelectScreen", folder_data);
-          }}/>
+          }}
+        />
       </Appbar.Header>
     );
   };
 
   return (
-    <View style={{flex: 1}}>
-        <View><Header /></View>
-        <ScrollView style={{ backgroundColor: colors.background }}>
+    <View style={{ flex: 1 }}>
+      <View>
+        <Header />
+      </View>
+      <ScrollView style={{ backgroundColor: colors.background }}>
         <List />
-        </ScrollView>
+      </ScrollView>
     </View>
   );
 };

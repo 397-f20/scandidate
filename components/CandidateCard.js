@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import {
   Avatar,
   Card,
@@ -29,11 +29,32 @@ const CandidateCard = ({
     const photo = studData.profile_photo;
     if (photo == "placeholder") {
       return (
-        <Avatar.Icon
-          {...props}
-          icon="account-circle"
-          backgroundColor={colors.accent}
-        />
+        // <Avatar.Icon
+        //   {...props}
+        //   icon="account-circle"
+        //   backgroundColor={colors.accent}
+        // />
+
+        <View
+          style={StyleSheet.compose(
+            {
+              backgroundColor: colors.accent,
+              justifyContent: "center",
+              textAlign: "center",
+              alignItems: "center",
+            },
+            styles.photo
+          )}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 24,
+            }}
+          >
+            {studData.name[0]}
+          </Text>
+        </View>
       );
     }
     return <Image style={styles.photo} source={{ uri: photo }} />;
@@ -48,7 +69,7 @@ const CandidateCard = ({
       anchor={dots}
       contentStyle={{ backgroundColor: colors.background }}
     >
-      <Menu.Item onPress={() => {}} title="Hide Profile" />
+      {/* <Menu.Item onPress={() => {}} title="Hide Profile" /> */}
       <Menu.Item
         onPress={() => {
           closeMenu();
@@ -97,13 +118,12 @@ const CandidateCard = ({
       }
     >
       <Card.Title
-        title={studData.name.replace(/&#(?:x([\da-f]+)|(\d+));/gi, function (
-          _,
-          hex,
-          dec
-        ) {
-          return String.fromCharCode(dec || +("0x" + hex));
-        })}
+        title={studData.name.replace(
+          /&#(?:x([\da-f]+)|(\d+));/gi,
+          function (_, hex, dec) {
+            return String.fromCharCode(dec || +("0x" + hex));
+          }
+        )}
         subtitle={description(studData)}
         subtitleStyle={styles.subtitle}
         left={avatar}
