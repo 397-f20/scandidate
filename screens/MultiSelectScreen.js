@@ -165,9 +165,9 @@ const MultiSelectScreen = ({ route, navigation }) => {
         <List />
         <Portal> 
             <Dialog visible={deleteDiagVisible} onDismiss={hideDeleteDialog}>
-            <Dialog.Title>Delete Candidate</Dialog.Title>
+            <Dialog.Title>Delete Candidate from {folderName} Folder</Dialog.Title>
             <Dialog.Content>
-                <Paragraph>Are you sure to delete the {selectionData.length} selected candidates?</Paragraph>
+  <Paragraph>Are you sure to delete the {selectionData.length} selected candidates from {folderName} folder?</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
                 <Button onPress={hideDeleteDialog}>Cancel</Button>

@@ -59,7 +59,7 @@ const FolderScreen = ({ navigation }) => {
   };
   const Header = () => {
     return (
-      <Appbar.Header>
+      <Appbar.Header style={{ backgroundColor: colors.primary }}>
         <Appbar.Content title="My Folders" />
         <Appbar.Action
           icon="plus"
