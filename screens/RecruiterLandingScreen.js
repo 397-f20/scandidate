@@ -176,7 +176,7 @@ const RecruiterLandingScreen = ({ navigation }) => {
       />
       {filterSettings === initialSettings ? null : (
         <Text style={styles.resultSummary}>
-          {filterStudents()[1]} student(s) matched your qualifications
+          {filterStudents()[1]} student(s) matched the requirements
           perfectly.
         </Text>
       )}

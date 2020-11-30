@@ -49,6 +49,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <Text style={{ fontSize: 40 }}>Scandidate</Text>
       <Text style={{ fontSize: 30 }}>Login</Text>
+      <Text style={{ fontSize: 10 }}>Connecting recruiters and students at career fairs</Text>
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}

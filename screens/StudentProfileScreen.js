@@ -184,7 +184,7 @@ const StudentProfileScreen = () => {
             ...student,
             qualifications: {
               ...student.qualifications,
-              "Graduation Year": 2020,
+              "Graduation Year": "2020",
             },
           });
         }}
@@ -197,7 +197,7 @@ const StudentProfileScreen = () => {
             ...student,
             qualifications: {
               ...student.qualifications,
-              "Graduation Year": 2021,
+              "Graduation Year": "2021",
             },
           });
         }}
@@ -210,7 +210,7 @@ const StudentProfileScreen = () => {
             ...student,
             qualifications: {
               ...student.qualifications,
-              "Graduation Year": 2022,
+              "Graduation Year": "2022",
             },
           });
         }}
@@ -223,7 +223,7 @@ const StudentProfileScreen = () => {
             ...student,
             qualifications: {
               ...student.qualifications,
-              "Graduation Year": 2023,
+              "Graduation Year": "2023",
             },
           });
         }}

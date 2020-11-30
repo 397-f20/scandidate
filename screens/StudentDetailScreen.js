@@ -11,6 +11,7 @@ import {
 import { useTheme, Button, Portal } from "react-native-paper";
 import Profile from "./profile";
 import FoldersModal from "../components/FoldersModal";
+import NotesModal from "../components/NotesModal";
 
 const Field = ({ label, value }) => {
   return (
@@ -23,9 +24,12 @@ const Field = ({ label, value }) => {
 
 const StudentDetailScreen = ({ route }) => {
   const [foldersVisible, setFoldersVisible] = useState(false);
+  const [notesVisible, setNotesVisible] = useState(false);
   const [notesList, setNotesList] = useState([]);
   const hideFolders = () => setFoldersVisible(false);
   const openFolders = () => setFoldersVisible(true);
+  const hideNotes = () => setNotesVisible(false);
+  const showNotes = () => setNotesVisible(true);
 
   const student = route.params.studData;
   const id = route.params.id;
@@ -52,7 +56,7 @@ const StudentDetailScreen = ({ route }) => {
     };
   }, []);
 
-  const notesMsg = id in notesList ? notesList[id] : "Add a note ...";
+  const notesMsg = id in notesList ? notesList[id] : "None";
 
   return (
     <SafeAreaView
@@ -81,12 +85,27 @@ const StudentDetailScreen = ({ route }) => {
           value={student.qualifications.skills.join(", ")}
         />
         <Field label="Notes" value={notesMsg} />
+        <View style={styles.container}>
+        <Button
+          icon="plus"
+          onPress={showNotes}
+          //mode="contained"
+          style={styles.button}
+        >
+          Add a Note
+        </Button>
+        </View>
       </ScrollView>
 
       <Portal>
         <FoldersModal
           hideModal={hideFolders}
           modalVisible={foldersVisible}
+          studentID={id}
+        />
+        <NotesModal
+          hideModal={hideNotes}
+          modalVisible={notesVisible}
           studentID={id}
         />
       </Portal>

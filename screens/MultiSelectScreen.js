@@ -35,13 +35,13 @@ const MultiSelectScreen = ({ route, navigation }) => {
         .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + folderName)
     : null;
 
-  useEffect(() => {   
+  useEffect(() => {
     db_userFolder =
     firebase.auth() && firebase.auth().currentUser
       ? firebase
           .database()
           .ref("users/" + firebase.auth().currentUser.uid + "/Folders/" + folderName)
-      : null; 
+      : null;
     const handleData = (snapshot) => {
       if (snapshot.val()) {
         setStudents(snapshot.val());
@@ -163,11 +163,11 @@ const MultiSelectScreen = ({ route, navigation }) => {
         <View><Header /></View>
         <ScrollView style={{ backgroundColor: colors.background }}>
         <List />
-        <Portal> 
+        <Portal>
             <Dialog visible={deleteDiagVisible} onDismiss={hideDeleteDialog}>
-            <Dialog.Title>Delete Candidate from {folderName} Folder</Dialog.Title>
+            <Dialog.Title>Delete candidate from {folderName} folder?</Dialog.Title>
             <Dialog.Content>
-  <Paragraph>Are you sure to delete the {selectionData.length} selected candidates from {folderName} folder?</Paragraph>
+  <Paragraph>Are you sure you want to delete the {selectionData.length} selected candidate(s) from the {folderName} folder?</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
                 <Button onPress={hideDeleteDialog}>Cancel</Button>
@@ -175,7 +175,7 @@ const MultiSelectScreen = ({ route, navigation }) => {
             </Dialog.Actions>
             </Dialog>
         </Portal>
-        <Portal> 
+        <Portal>
             <Dialog visible={exportDiagVisible} onDismiss={hideExportDiagVisible}>
             <Dialog.Title>{selectionData.length} Candidate(s) Contact Info</Dialog.Title>
             <ScrollView>
@@ -190,10 +190,10 @@ const MultiSelectScreen = ({ route, navigation }) => {
         </Portal>
         </ScrollView>
         <View>
-            <DynamicFooter 
+            <DynamicFooter
                 folderData={students} //all existing folder data
-                selectionData={selectionData} 
-                setFoldersVisible={setFoldersVisible} 
+                selectionData={selectionData}
+                setFoldersVisible={setFoldersVisible}
                 setDeleteDiagVisible={setDeleteDiagVisible}
                 getAllSelectedContactInfo={getAllSelectedContactInfo}
             />
