@@ -184,7 +184,7 @@ const MultiSelectScreen = ({ route, navigation }) => {
                 </Dialog.Content>
             </ScrollView>
             <Dialog.Actions style={styles.clipboardButton}>
-                <Button onPress={() => {copyToClipboard();}} >Copy to Clickboard</Button>
+                <Button onPress={() => {copyToClipboard();}} >Copy to Clipboard</Button>
             </Dialog.Actions>
             </Dialog>
         </Portal>
